@@ -1,0 +1,8 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.lang.annotation.*;
+
+
+public @interface CliPrompt {
+	String value();
+}

@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package bxt.unilectures.vorkurs.helloworld;
+
+/**
+ * @author Burny
+ *
+ */
+public class Rechnung {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

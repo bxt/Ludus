@@ -1,0 +1,10 @@
+1303897609890	Delete element
+1303897970265	Rename type 'VisitenkartenRenderer'
+1303899051312	Extract superclass 'BoxRenderer'
+1303899100515	Rename type 'BoxRenderer'
+1303899668437	Encapsulate field 'phonenumber'
+1303900190921	Rename local variable 'name'
+1303900200453	Rename local variable 'methodname'
+1303901471437	Rename field 'giarticlesdg'
+1303901479468	Rename field 'gIArticlesDaGen'
+1303901497500	Rename local variable 'giarticlesdg'

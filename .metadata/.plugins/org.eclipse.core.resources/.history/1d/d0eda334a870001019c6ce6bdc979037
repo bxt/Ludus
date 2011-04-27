@@ -1,0 +1,14 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+public class CliInputFactory {
+	public <T> T create(Class<T> type) {
+		try {
+			return type.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

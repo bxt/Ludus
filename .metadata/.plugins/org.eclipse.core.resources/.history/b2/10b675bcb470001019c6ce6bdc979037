@@ -1,0 +1,13 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+public class Kontaktdaten {
+	private String vorname=null;
+	private String nachname=null;
+	private String profession=null;
+	private String strasse=null;
+	private Integer hausnummer=null;
+	private String wohnort=null;
+	private Integer plz=null;
+	private String mailadresse=null;
+	
+}

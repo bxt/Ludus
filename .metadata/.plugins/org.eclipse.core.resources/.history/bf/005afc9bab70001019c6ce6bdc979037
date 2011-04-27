@@ -1,0 +1,39 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class CliInputFactory {
+	InputStream in=null;
+	PrintStream out=null;
+	CliInputFactory () {
+		this(System.in,System.out);
+	}
+	CliInputFactory(InputStream in, PrintStream out) {
+		this.in=in;
+		this.out=out;
+	}
+	public <T> T create(Class<T> type) {
+		return create(type,"Bitte geben sie ein %s ein: ");
+	}
+	public <T> T create(Class<T> type,String message) {
+		out.println();
+		out.printf(message,type.getSimpleName());
+		try {
+			if (type.isAssignableFrom(String.class)) {
+				Scanner sc = new Scanner(in);
+				String created= sc.next();
+				return type.cast(created);
+			} else {
+				T created = type.newInstance();
+				return created;
+			}
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

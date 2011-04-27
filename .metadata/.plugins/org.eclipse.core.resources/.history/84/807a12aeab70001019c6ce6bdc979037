@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package bxt.unilectures.vorkurs.visitenkarte;
+
+/**
+ * @author Burny
+ *
+ */
+public class Visitenkarte {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

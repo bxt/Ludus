@@ -1,0 +1,58 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Scanner;
+
+public class CliInputFactory {
+	InputStream in=null;
+	PrintStream out=null;
+	CliInputFactory () {
+		this(System.in,System.out);
+	}
+	CliInputFactory(InputStream in, PrintStream out) {
+		this.in=in;
+		this.out=out;
+	}
+	public <T> T create(Class<T> type) {
+		return create(type,"Bitte geben sie ein(e) %s ein: ");
+	}
+	public <T> T create(Class<T> type,String message) {
+		out.println();
+		out.printf(message,type.getSimpleName());
+		try {
+			if (type.isAssignableFrom(String.class)) {
+				Scanner sc = new Scanner(in);
+				String created= sc.next();
+				return type.cast(created);
+			} else {
+				T created = type.newInstance();
+				Method[] methods = type.getMethods();
+				for(Method method : methods){
+					String name = method.getName();
+					int argcount = method.getParameterTypes().length;
+					boolean hasSetterName = name.startsWith("set");
+					boolean hasOneAndOnlyOneArgument = 1 == argcount;
+					if(hasSetterName && hasOneAndOnlyOneArgument) {
+						Object[] params={create(method.getParameterTypes()[0])};
+						try {
+							method.invoke(created, params);
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace(out);
+						} catch (InvocationTargetException e) {
+							e.printStackTrace(out);
+						}
+					}
+				}
+				return created;
+			}
+		} catch (InstantiationException e) {
+			e.printStackTrace(out);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace(out);
+		}
+		return null;
+	}
+}

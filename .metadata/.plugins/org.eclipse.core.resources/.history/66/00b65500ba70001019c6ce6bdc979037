@@ -1,0 +1,75 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Scanner;
+
+import org.apache.commons.lang.StringUtils;
+
+public class CliInputFactory {
+	InputStream in=null;
+	PrintStream out=null;
+	CliInputFactory () {
+		this(System.in,System.out);
+	}
+	CliInputFactory(InputStream in, PrintStream out) {
+		this.in=in;
+		this.out=out;
+	}
+	public <T> T create(Class<T> type) {
+		return create(type,"Bitte geben sie ein(e) %s ein: ");
+	}
+	public <T> T create(Class<T> type,String message) {
+		out.println();
+		out.printf(message,type.getSimpleName());
+		try {
+			if (type.isAssignableFrom(String.class)) {
+				Scanner sc = new Scanner(in);
+				String created= sc.next();
+				return type.cast(created);
+			} else if (type.isAssignableFrom(Integer.class)) {
+				Scanner sc = new Scanner(in);
+				Integer created= sc.nextInt();
+				return type.cast(created);
+			} else if (type.isAssignableFrom(Double.class)) {
+				Scanner sc = new Scanner(in);
+				Double created= sc.nextDouble();
+				return type.cast(created);
+			} else {
+				T created = type.newInstance();
+				createChildren(created);
+				return created;
+			}
+		} catch (InstantiationException e) {
+			e.printStackTrace(out);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace(out);
+		}
+		return null;
+	}
+	private <T> void createChildren(T object) {
+		Method[] methods = object.getClass().getMethods();
+		for(Method method : methods){
+			String methodName = method.getName();
+			int argcount = method.getParameterTypes().length;
+			boolean hasSetterName = methodName.startsWith("set");
+			boolean hasOneAndOnlyOneArgument = 1 == argcount;
+			String name=methodName.substring(3);
+			if(hasSetterName && hasOneAndOnlyOneArgument) {
+				if(object.getClass().getDeclaredField(StringUtils()))
+				Object[] params={create(method.getParameterTypes()[0],"Bitte geben sie ein(e) "+name+" (%s) ein: ")};
+				try {
+					method.invoke(object, params);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace(out);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace(out);
+				} catch (InvocationTargetException e) {
+					e.printStackTrace(out);
+				}
+			}
+		}
+	}
+}

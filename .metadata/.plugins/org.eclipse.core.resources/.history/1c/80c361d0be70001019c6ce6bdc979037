@@ -1,0 +1,10 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.lang.annotation.*;
+
+import bxt.unilectures.vorkurs.visitenkarte.LanguageGender.Gender;
+
+public @interface CliPrompt {
+	Gender value();
+	enum Gender {MALE,FEMALE,NEUTRUM,OTHER}
+}

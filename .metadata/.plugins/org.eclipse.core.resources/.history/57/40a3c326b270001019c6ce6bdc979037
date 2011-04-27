@@ -1,0 +1,39 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.io.PrintStream;
+
+public class VisitenkartenRenderer {
+	int width;
+	PrintStream out=null;
+	VisitenkartenRenderer() {
+		this(80,System.out);
+	}
+	VisitenkartenRenderer(int width,PrintStream out) {
+		this.width=width;
+		this.out=out;
+	}
+	public void render(PrintStream out) {
+		for(int i=0;i<width;i++) {
+			out.print(Border.horizontal);
+		}
+		out.println();
+	}
+	private void renderLineBorder() {
+		out.print(Border.edge);
+		StringBuilder b=new StringBuilder();
+		for(int i=0;i<width;i++) {
+			b.append(Border.horizontal);
+		}
+		out.println(Border.edge);
+	}
+	private void renderLine(String line) {
+		out.print(Border.vertical);
+		out.print(line);
+		out.println(Border.vertical);
+	}
+	static class Border {
+		public static final char vertical='|';
+		public static final char horizontal='-';
+		public static final char edge='*';
+	}
+}

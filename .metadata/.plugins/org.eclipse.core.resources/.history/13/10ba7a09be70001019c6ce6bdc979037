@@ -1,0 +1,6 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+public @interface LanguageGender {
+	Gender value();
+	enum Gender {MALE,FEMALE,NEUTRUM,OTHER}
+}

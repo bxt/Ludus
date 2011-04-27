@@ -1,0 +1,65 @@
+package bxt.unilectures.vorkurs.visitenkarte;
+
+import java.io.PrintStream;
+import org.apache.commons.lang.StringUtils;
+
+public class KontaktdatenRenderer {
+	private int width;
+	private PrintStream out=null;
+	private StringBuilder outStr=null;
+	KontaktdatenRenderer() {
+		this(40,System.out);
+	}
+	KontaktdatenRenderer(int width,PrintStream out) {
+		this.width=width;
+		this.out=out;
+	}
+	public void render(Kontaktdaten k) {
+		this.outStr=new StringBuilder();
+		renderLineBorder();
+		renderLineLeftAligned("");
+		renderLineLeftAligned(k.getNachname()+", "+k.getVorname());
+		renderLineLeftAligned(k.getProfession());
+		renderLineLeftAligned("");
+		renderLineLeftAligned(k.getStrasse()+" "+k.getHausnummer());
+		renderLineLeftAligned(k.getPlz()+" "+k.getWohnort());
+		renderLineLeftAligned("");
+		renderLineRightAligned("(eMail: "+k.getMailadresse()+", "+k.getVorname()+")");
+		renderLineLeftAligned("");
+		renderLineBorder();
+		out.print(outStr);
+	}
+	private void renderLineLeftAligned(String line) {
+		renderLine(StringUtils.rightPad(line, width));
+	}
+	private void renderLineRightAligned(String line) {
+		renderLine(StringUtils.leftPad(line, width));
+	}
+	private void renderLineBorder() {
+		outStr.append(Border.edge);
+		for(int i=0;i<width+Border.verticalPadding*2;i++) {
+			outStr.append(Border.horizontal);
+		}
+		outStr.append(Border.edge);
+		outStr.append("\n");
+	}
+	private void renderLine(String line) {
+		outStr.append(Border.vertical);
+		for(int i=0;i<Border.verticalPadding;i++) {
+			outStr.append(Border.space);
+		}
+		outStr.append(line);
+		for(int i=0;i<Border.verticalPadding;i++) {
+			outStr.append(Border.space);
+		}
+		outStr.append(Border.vertical);
+		outStr.append("\n");
+	}
+	static class Border {
+		public static final char vertical='|';
+		public static final char horizontal='-';
+		public static final char edge='*';
+		public static final int verticalPadding=3;
+		public static final char space=' ';
+	}
+}
