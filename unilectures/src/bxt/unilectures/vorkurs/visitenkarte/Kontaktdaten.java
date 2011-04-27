@@ -2,23 +2,14 @@ package bxt.unilectures.vorkurs.visitenkarte;
 
 @CliPrompt("Geben sie nachfolgend die Kontaktdaten ein. ")
 public class Kontaktdaten {
-	@LanguageGender(LanguageGender.Gender.MALE)
 	private String vorname=null;
-	@LanguageGender(LanguageGender.Gender.MALE)
 	private String nachname=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private String profession=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private String strasse=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private Integer hausnummer=null;
-	@LanguageGender(LanguageGender.Gender.MALE)
 	private String wohnort=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private Integer plz=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private String mailadresse=null;
-	@LanguageGender(LanguageGender.Gender.FEMALE)
 	private Phonenumber handynummer=null;
 	public String getVorname() {
 		return vorname;

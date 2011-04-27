@@ -13,16 +13,6 @@ import java.util.Scanner;
 import org.apache.commons.lang.StringUtils;
 
 public class CliInputFactory {
-	/**
-	 * German indefinite articles in dative case by gender
-	 */
-	private static final Map<LanguageGender.Gender, String> gIndefArticlesDaGen=new HashMap<LanguageGender.Gender, String>(4);
-    static {
-        gIndefArticlesDaGen.put(LanguageGender.Gender.OTHER, "einen/eine/ein");
-        gIndefArticlesDaGen.put(LanguageGender.Gender.MALE, "einen");
-        gIndefArticlesDaGen.put(LanguageGender.Gender.FEMALE, "eine");
-        gIndefArticlesDaGen.put(LanguageGender.Gender.NEUTRUM, "ein");
-    }
     private InputStream in=null;
     private PrintStream out=null;
 	CliInputFactory () {
@@ -74,20 +64,7 @@ public class CliInputFactory {
 			boolean hasSetterName = methodName.startsWith("set");
 			boolean hasOneAndOnlyOneArgument = 1 == method.getParameterTypes().length;
 			if(hasSetterName && hasOneAndOnlyOneArgument) {
-				LanguageGender.Gender gender=LanguageGender.Gender.OTHER;
-				try {
-					Field field = object.getClass().getDeclaredField(StringUtils.lowerCase(name));
-					if(field!=null) {
-						Annotation fieldAnnotation=field.getAnnotation(LanguageGender.class);
-						if( fieldAnnotation != null ) {
-							gender=object.getClass().getDeclaredField(StringUtils.lowerCase(name)).getAnnotation(LanguageGender.class).value();
-						}
-					}
-				} catch (SecurityException e1) {
-					e1.printStackTrace(out);
-				} catch (NoSuchFieldException e1) {
-				}
-				Object[] params={create(method.getParameterTypes()[0],"Bitte geben sie "+gIndefArticlesDaGen.get(gender)+" "+name+" (%s) ein: ")};
+				Object[] params={create(method.getParameterTypes()[0],"Bitte "+name+" (%s) eingeben: ")};
 				try {
 					method.invoke(object, params);
 				} catch (IllegalArgumentException e) {
