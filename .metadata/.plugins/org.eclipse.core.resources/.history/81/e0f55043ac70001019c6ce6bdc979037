@@ -1,8 +1,0 @@
-package bxt.unilectures.vorkurs.visitenkarte;
-
-public class Kontaktdaten {
-	String vorname=null;
-	String nachname=null;
-	String strasse=null;
-	String mailadresse=null;
-}
