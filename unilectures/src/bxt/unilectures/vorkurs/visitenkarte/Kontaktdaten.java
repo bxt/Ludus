@@ -1,5 +1,9 @@
 package bxt.unilectures.vorkurs.visitenkarte;
 
+/**
+ * Bean holding a Visitenkarte's information 
+ * @author bxt
+ */
 @CliPrompt("Geben sie nachfolgend die Kontaktdaten ein. ")
 public class Kontaktdaten {
 	private String vorname=null;

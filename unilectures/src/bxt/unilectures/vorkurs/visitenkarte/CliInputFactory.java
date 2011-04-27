@@ -2,29 +2,63 @@ package bxt.unilectures.vorkurs.visitenkarte;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-import org.apache.commons.lang.StringUtils;
-
+/**
+ * Build a new Instance and accumulate with values from CLI user input
+ * @author bxt
+ *
+ */
 public class CliInputFactory {
+	/**
+	 * A default prompt message
+	 */
+	private static final String defaultPromt="Bitte geben sie ein(e) %s ein: ";
+	/**
+	 * Read user input from here
+	 * @see System.in
+	 */
     private InputStream in=null;
+    /**
+     * Write prompts and errors into this stream
+     * @see System.out
+     */
     private PrintStream out=null;
+    /**
+     * No-arg constructor, defaulting to System's streams
+     */
 	CliInputFactory () {
 		this(System.in,System.out);
 	}
+	/**
+	 * Use custom streams
+	 * @param in Read user input from here
+	 * @param out Write prompts and errors into this stream
+	 */
 	CliInputFactory(InputStream in, PrintStream out) {
 		this.in=in;
 		this.out=out;
 	}
+	/**
+	 * Create a class using CLI input
+	 * 
+	 * Like {@link #create(Class, String)} but with default message {@link #defaultPromt}
+	 * @param <T> Generic target type of the desired instance
+	 * @param type Reflection target type of the desired instance
+	 * @return The resulting instance
+	 */
 	public <T> T create(Class<T> type) {
-		return create(type,"Bitte geben sie ein(e) %s ein: ");
+		return create(type,defaultPromt);
 	}
+	/**
+	 * Create a class using CLI input and a prompt message
+	 * @param <T> Generic target type of the desired instance
+	 * @param type Reflection target type of the desired instance
+	 * @param message A message to display as prompt. One %s will be replaced with the simple name of the target type
+	 * @return The resulting instance
+	 */
 	public <T> T create(Class<T> type,String message) {
 		out.println();
 		if(type.getAnnotation(CliPrompt.class) != null) {
@@ -56,6 +90,11 @@ public class CliInputFactory {
 		}
 		return null;
 	}
+	/**
+	 * For all setters display prompts too
+	 * @param <T> generic target type
+	 * @param object target object whose setters are iterated
+	 */
 	private <T> void createChildren(T object) {
 		Method[] methods = object.getClass().getMethods();
 		for(Method method : methods){
