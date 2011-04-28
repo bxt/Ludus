@@ -1,7 +1,10 @@
 package bxt.unilectures.vorkurs.pi;
 
-public class MonteCarloPi implements piStrategy {
-
+/**
+ * Calculate Pi via Monte Carlo integration over a circle using pseudo random points
+ * @author bxt
+ */
+public class MonteCarloPi implements PiStrategy {
 	@Override
 	public double getPi(int iterations) {
 		int countInside=0;
@@ -13,5 +16,4 @@ public class MonteCarloPi implements piStrategy {
 		}
 		return (double)countInside/iterations*4.0;
 	}
-
 }

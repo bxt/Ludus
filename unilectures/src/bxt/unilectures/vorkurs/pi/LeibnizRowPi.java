@@ -1,9 +1,11 @@
 package bxt.unilectures.vorkurs.pi;
 
-public class LeibnizRowPi implements piStrategy {
-	/* (non-Javadoc)
-	 * @see bxt.unilectures.vorkurs.pi.piStrategy#getPi(int)
-	 */
+/**
+ * Calculate Pi using Leibniz formula
+ * Calculates ( +1/1 -1/3 +1/5 -1/7 +1/9 ... )*4
+ * @author bxt
+ */
+public class LeibnizRowPi implements PiStrategy {
 	@Override
 	public double getPi(int iterations) {
 		boolean isNextAddition = true;
