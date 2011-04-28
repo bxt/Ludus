@@ -17,7 +17,8 @@ public class CalculatePi {
 	private static final Map<Integer,Class<? extends PiStrategy>> algoMap=new HashMap<Integer,Class<? extends PiStrategy>>(2);
 	static {
 		algoMap.put(Integer.valueOf(0), LeibnizRowPi.class);
-		algoMap.put(Integer.valueOf(1), MonteCarloPi.class);
+		algoMap.put(Integer.valueOf(1), MonteCarloRandomPi.class);
+		algoMap.put(Integer.valueOf(2), MonteCarloRasterPi.class);
 	}
 	
 	/**
@@ -36,6 +37,7 @@ public class CalculatePi {
 			System.out.println("Wieviele iterationen? ");
 			int iterations=sc.nextInt();
 			System.out.println("Pi ist etwa: "+calculator.getPi(iterations));
+			System.out.println("Pi ist aber: "+Math.PI);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
