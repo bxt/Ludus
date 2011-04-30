@@ -68,7 +68,7 @@ public class CliInputFactory {
 		try {
 			if (type.isAssignableFrom(String.class)) {
 				Scanner sc = new Scanner(in);
-				String created= sc.next();
+				String created= sc.nextLine();
 				return type.cast(created);
 			} else if (type.isAssignableFrom(Integer.class)) {
 				Scanner sc = new Scanner(in);
