@@ -1,4 +1,4 @@
-package bxt.unilectures.geometry;
+package bxt.unilectures.vorkurs.geometry;
 
 public class Quadrat {
     public double xM;
