@@ -56,22 +56,22 @@ public class Flaechenberechnung {
      * @param args CLI-Argumente
      */
     public static void main(String [] args) {
-    	Punkt[] punkte={
-    			new Punkt(3,1),
-     			new Punkt(5,2),
-    			new Punkt(3,3),
-    			new Punkt(2,4),
-    			new Punkt(1,1)};
-    	Polygon p= new Polygon(punkte);
+    	final Punkt[] initPunkte={
+    		new Punkt(){{x=3;y=1;}},
+			new Punkt(){{x=5;y=2;}},
+			new Punkt(){{x=3;y=3;}},
+			new Punkt(){{x=2;y=4;}},
+			new Punkt(){{x=1;y=1;}} };
+    	Polygon p= new Polygon(){{punkte=initPunkte;}};
     	System.out.print(istEinfach(p)?"einfach":"ueberschlagen");
     	System.out.println(", A: "+flaeche(p));
     	
-    	Punkt[] punkte1={
-    			new Punkt(0,0),
-    			new Punkt(2,0),
-    			new Punkt(2.5,1),
-    			new Punkt(0.5,2)};
-    	Polygon p1= new Polygon(punkte1);
+    	final Punkt[] initPunkte1={
+    			new Punkt(){{x=0;y=0;}},
+    			new Punkt(){{x=2;y=0;}},
+    			new Punkt(){{x=2.5;y=1;}},
+    			new Punkt(){{x=0.5;y=2;}} };
+    	Polygon p1= new Polygon(){{punkte=initPunkte1;}};
     	System.out.print(istEinfach(p1)?"einfach":"ueberschlagen");
     	System.out.println(", A: "+flaeche(p1));
    }
