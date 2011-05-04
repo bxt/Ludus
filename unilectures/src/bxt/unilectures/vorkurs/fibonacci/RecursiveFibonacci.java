@@ -3,7 +3,7 @@ package bxt.unilectures.vorkurs.fibonacci;
 import java.util.Scanner;
 
 /**
- * Algorithm to calculate a fibunacci number recursively
+ * Algorithm to calculate a Fibunacci number recursively
  * @author bxt
  * @date 2011-04-28
  */
