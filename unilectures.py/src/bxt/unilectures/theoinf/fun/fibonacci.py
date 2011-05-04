@@ -4,7 +4,21 @@ Algorithm to calculate a fibunacci number recursively.
 @date 2011-05-03
 @author: Burny
 '''
-from test.test_decorators import memoize
+
+def memoize(func):
+    saved = {}
+    def call(*args):
+        try:
+            return saved[args]
+        except KeyError:
+            res = func(*args)
+            saved[args] = res
+            return res
+        except TypeError:
+            # Unhashable argument
+            return func(*args)
+    call.__name__ = func.__name__
+    return call
 
 @memoize
 def fib(n):
