@@ -28,7 +28,7 @@ def fib(n):
 
 def main():
     """Prints out fibonacci sequence. """
-    for i in range(15):
+    for i in range(int(input("Wie viele Fibonacci-Zahlen?"))):
         print( "Die %d-te Fibonacci-Zahl lautet: %d" % (i, fib(i)) )
 
 if __name__ == '__main__': 
