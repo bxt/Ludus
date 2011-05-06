@@ -1,5 +1,5 @@
 
-# WHILE-Programm zur Berechnung von x*2
+# WHILE-Programm zur Berechnung von x*2 
 def g(x):
     x=(x+x)
     return x
@@ -11,9 +11,6 @@ def f(x):
     else:
         if (x==0):
             result=1
-        else:
-            d=(x-1)
-            d=f(d)
-            d = g(d)
-            result=d
+        else: 
+            result=g(f((x-1)))
     return result
