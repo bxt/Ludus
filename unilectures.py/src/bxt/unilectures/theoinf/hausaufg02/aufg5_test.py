@@ -10,7 +10,7 @@ while(1):
     for x in range(1,n):
         a=ListAppendElement(a,x)
     
-    for x in range(1,n):
+    for x in range(1,ListGetLength(a)):
         if not (x==ListGetElement(a,x)):
             print("uarg! n x fx",n,x,ListGetElement(a,x))
     

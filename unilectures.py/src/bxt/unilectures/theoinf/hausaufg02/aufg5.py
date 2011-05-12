@@ -19,7 +19,7 @@ def prodZInner(i,y): # Multipliziert y mit i-ter Zweierpotenz
 def code(x): # Kodiert x
     c=0 # Speichert die kodierte Zahl
     i=binLength(x)
-    while(i>=0): # von vorne nach hinten druch Binärrepresentation
+    while(i>=0): # von vorne nach hinten druch Binaerrepresentation
         p=pow2(i)
         if(p<=x): # Bei einer Eins
             x=(x-p)
@@ -58,7 +58,7 @@ def ListGetLength(l):
     i=binLength(l)
     preOne=0 # Ob letztes Element eine 1 war
     even=1 # Bei jeder zweiten Stelle >0
-    while(l>0): # Vorne>Hinten druch Binärrepresentation
+    while(l>0): # Vorne>Hinten druch Binaerrepresentation
         p=pow2(i)
         if(p<=l): # Eine Eins
             l=(l-p)
@@ -66,7 +66,7 @@ def ListGetLength(l):
         else: # Eine Null
             # Trenner-Erkennung:
             if((preOne>0) and(even>0)):
-                len=(len+1) # Länge hochzählen
+                len=(len+1) # Laenge hochzaehlen
             preOne=0
         i=(i-1)
         # Schleifenvariablen aktualisieren
@@ -85,7 +85,7 @@ def ListGetElement(l,pos):
     preOne=0 # wie oben
     even=1
     thisOne=0 # >0 wenn aktuelles Element eine Eins
-    while(l>0): # Vorne>Hinten durch Binärrepresentation
+    while(l>0): # Vorne>Hinten durch Binaerrepresentation
         p=pow2(i)
         if(p<=l): # Eins
             l=(l-p)
@@ -122,10 +122,10 @@ def ListAppendElement(l,e):
     bl=binLength(e)
     if(e==0):
         bl=1
-    anzahlNullen=((bl+bl)+2) # Dopelte Stellenzahl + 2
-    l=prodZ(pow2(anzahlNullen),l) # Nullen für Code und Trenner anhängen
+    anzahlNullen=((bl+bl)+2) # Doppelte Stellenzahl + 2
+    l=prodZ(pow2(anzahlNullen),l) # Nullen fuer Code und Trenner anhaengen
     ce=code(e)
-    l=(l+((ce+ce)+(ce+ce))) # Code um 2 vorrücken und ans Ende schreiben
+    l=(l+((ce+ce)+(ce+ce))) # Code um 2 vorruecken und ans Ende schreiben
     l=(l+2) # Trenner ans Ende schreiben
     return l
 
