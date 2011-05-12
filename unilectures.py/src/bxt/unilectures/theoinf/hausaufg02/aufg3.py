@@ -11,6 +11,7 @@ def prodZ(x,y):
 
 # Berechnung von floor(x/2)
 def divtwo(x):
+    # return floor(x/2) # makes stuff 1000 times faster :(
     y=0
     d=2
     while (d<=x):
