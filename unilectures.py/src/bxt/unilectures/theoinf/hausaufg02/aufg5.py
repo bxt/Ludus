@@ -1,35 +1,32 @@
 
-def prodZ(x,y):
+def prodZ(x,y):    # Multipliziert zwei nat. Zahlen
     c=0
-    i=binLength(x)
-    while(x>0):
+    i=binLength(x) # Maximale Zweierpotenz
+    while(x>0):    # x wird beim multiplizieren reduziert
         p=pow2(i)
-        if(p<=x):
+        if(p<=x):  # In Zweierpotenzschritten multiplizieren
             x=(x-p)
             c=(c+prodZInner(i,y))
         i=(i-1)
     return c
 
-def prodZInner(i,y):
-    r=y
-    if(i>0):
-        r2=prodZInner((i-1),y)
-        r=(r2+r2)
-    return r
+def prodZInner(i,y): # Multipliziert y mit i-ter Zweierpotenz
+    for x in range(0,i):
+        y=(y+y)
+    return y
 
 
-def code(x):
-    c=0
+def code(x): # Kodiert x
+    c=0 # Speichert die kodierte Zahl
     i=binLength(x)
-    while(i>=0):
+    while(i>=0): # von vorne nach hinten druch Binärrepresentation
         p=pow2(i)
-        z=0
-        if(p<=x):
+        if(p<=x): # Bei einer Eins
             x=(x-p)
-            z=1
-            s=prodZ(p,p)
-            c=(c+prodZ(z,s)) # Eine Ziffer
-            c=(c+prodZ(z,(s+s))) # Zweite Ziffer
+            s=prodZ(p,p) # Stelle verdoppeln
+            c=(c+s) # Eine Ziffer setzen
+            c=(c+(s+s)) # Zweite Ziffer setzen
+        # Nullen werden implizit gesetzt
         i=(i-1)
     return c
 
@@ -41,7 +38,7 @@ def pow2(x):
         x=(x-1)
     return r
 
-
+# Zweierlogarithmus
 def binLength(x):
     pow=1
     c=0
@@ -53,23 +50,26 @@ def binLength(x):
 
 # Die Leere liste
 def ListCreate():
-    return 2 # Direkt nach dem Besipiel auf Folie 10
+    return 2 # Direkt nach dem Beispiel auf Folie 10
 
+# Anzahl der Elemente in der Liste
 def ListGetLength(l):
     len=0
     i=binLength(l)
-    preOne=0
-    even=1
-    while(l>0):
+    preOne=0 # Ob letztes Element eine 1 war
+    even=1 # Bei jeder zweiten Stelle >0
+    while(l>0): # Vorne>Hinten druch Binärrepresentation
         p=pow2(i)
-        if(p<=l):
+        if(p<=l): # Eine Eins
             l=(l-p)
             preOne=1
-        else:
+        else: # Eine Null
+            # Trenner-Erkennung:
             if((preOne>0) and(even>0)):
-                len=(len+1)
+                len=(len+1) # Länge hochzählen
             preOne=0
         i=(i-1)
+        # Schleifenvariablen aktualisieren
         if(even>0):
             even=0
         else:
@@ -77,35 +77,39 @@ def ListGetLength(l):
     return len
     
 
-# i-tes Listelement bei p>=1
+# i-tes Listenelement bei p>=1
 def ListGetElement(l,pos):
-    listpos=0
-    result=0
+    listpos=0 # Nummer des aktuellen Listeneintrags
+    result=0 # Gesuchte Nummer wird hier zusammengesetzt
     i=binLength(l)
-    preOne=0
+    preOne=0 # wie oben
     even=1
-    thisOne=0
-    while(l>0):
+    thisOne=0 # >0 wenn aktuelles Element eine Eins
+    while(l>0): # Vorne>Hinten durch Binärrepresentation
         p=pow2(i)
-        if(p<=l):
+        if(p<=l): # Eins
             l=(l-p)
             thisOne=1
-        else:
+        else: # Null
             thisOne=0
         if(thisOne>0): 
             preOne=1
-        else: 
+        else:
+            # Trenner-Erkennung
             if((preOne>0) and(even>0)):
                 listpos=(listpos+1)
             preOne=0
         if(listpos>pos):
-            l=0
+            l=0 # Schleife stoppen
         else:
             if(even>0):
+                # Wenn kein Trenner kam, verdoppeln
                 result=(result+result)
-        if(thisOne>0): 
+        if(thisOne>0):
+            # Bei einer Eins an zweiter Stelle addieren
             if((listpos==pos) and(even>0)):
-                result=(result+1) 
+                result=(result+1)
+        # Schleifenvariablen aktualisieren
         if(even>0):
             even=0
         else:
@@ -119,9 +123,9 @@ def ListAppendElement(l,e):
     if(e==0):
         bl=1
     anzahlNullen=((bl+bl)+2) # Dopelte Stellenzahl + 2
-    l=prodZ(pow2(anzahlNullen),l) # Nullen für code und Trenner anhängen
+    l=prodZ(pow2(anzahlNullen),l) # Nullen für Code und Trenner anhängen
     ce=code(e)
-    l=(l+((ce+ce)+(ce+ce))) # Code um 2 Vorrücken und ans Ende schrieben
+    l=(l+((ce+ce)+(ce+ce))) # Code um 2 vorrücken und ans Ende schreiben
     l=(l+2) # Trenner ans Ende schreiben
     return l
 
