@@ -66,7 +66,7 @@ def ListGetLength(l):
             l=(l-p)
             preOne=1
         else:
-            if(preOne and(even>0)):
+            if((preOne>0) and(even>0)):
                 len=(len+1)
             preOne=0
         i=(i-1)
@@ -95,7 +95,7 @@ def ListGetElement(l,pos):
         if(thisOne>0): 
             preOne=1
         else: 
-            if(preOne and(even>0)):
+            if((preOne>0) and(even>0)):
                 listpos=(listpos+1)
             preOne=0
         if(listpos>pos):
@@ -119,8 +119,28 @@ def ListAppendElement(l,e):
     if(e==0):
         bl=1
     anzahlNullen=((bl+bl)+2) # Dopelte Stellenzahl + 2
-    l=prodZ((pow2(anzahlNullen)),l) # Nullen für code und Trenner anhängen
+    l=prodZ(pow2(anzahlNullen),l) # Nullen für code und Trenner anhängen
     ce=code(e)
     l=(l+((ce+ce)+(ce+ce))) # Code um 2 Vorrücken und ans Ende schrieben
     l=(l+2) # Trenner ans Ende schreiben
     return l
+
+def main():
+    a=ListCreate()
+    a=ListAppendElement(a,0)
+    a=ListAppendElement(a,1)
+    a=ListAppendElement(a,2)
+    a=ListAppendElement(a,3)
+    a=ListAppendElement(a,4)
+    a=ListAppendElement(a,5)
+    a=ListAppendElement(a,6)
+    a=ListAppendElement(a,7)
+    a=ListAppendElement(a,8)
+    a=ListAppendElement(a,9)
+    print(ListGetElement(a,1))
+    print(ListGetElement(a,3))
+    print(ListGetElement(a,9))
+    return a
+
+
+

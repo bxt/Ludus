@@ -65,7 +65,7 @@ def ListGetLength(l):
     c=-1 # counter für 10er
     while(l>0):
         quater=divtwo(divtwo(l)) # Division durch 4
-        rest=(l-((quater+quater)+(quater+quater))) # % 4
+        rest=(l-((quater+quater)+(quater+quater))) # % 4
         if(rest == 2): # Rest == 2 <=> 10 am Ende
             c=(c+1) # Folglich diese 10 zählen
         l=quater # Für nächsten druchlauf
@@ -116,6 +116,6 @@ def main():
     #a=ListAppendElement(a,7)
     #a=ListAppendElement(a,8)
     #a=ListAppendElement(a,9)
-
     print(ListGetElement(a,2))
-    #print(a)
+    return a
+
