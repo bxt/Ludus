@@ -9,20 +9,6 @@ def prodZ(x,y):
         z = (z + y)
     return z
 
-
-# WHILE-Programm zur Ausgabe der Binärrepräsentation
-def bin(n):
-    if (n <= 0):
-        print(0)
-    else:
-        half=1337
-        while(half>0):
-            half=divtwo(n)
-            n=(n-(half+half))
-            print(n) # rest
-            n=half
-    return -1
-
 # Berechnung von floor(x/2)
 def divtwo(x):
     y=0
@@ -32,9 +18,9 @@ def divtwo(x):
         d=((y+y)+2)
     return y
 
-# Berechnung von floor(log2(e))+1
+# Berechnung von ~ floor(log2(e))+1
 # = Anzahl der Stellen in der Binärrepresentation
-def clog2(n):
+def binLength(n):
     x=0
     if (not (n <= 0)):
         half=1337
@@ -43,13 +29,15 @@ def clog2(n):
             n=(n-(half+half))
             n=half
             x=(x+1)
+    else:
+        x=1
     return x
 
 # 2^x
 def pow2(x):
     r=1
     while (x>0):
-        r=(r*2)
+        r=(r+r)
         x=(x-1)
     return r
 
@@ -76,7 +64,7 @@ def ListGetLength(l):
     c=-1 # counter für 10er
     while(l>0):
         quater=divtwo(divtwo(l)) # Division durch 4
-        rest=l-quater-quater-quater-quater; # % 4
+        rest=(l-((quater+quater)+(quater+quater))) # % 4
         if(rest == 2): # Rest == 2 <=> 10 am Ende
             c=(c+1) # Folglich diese 10 zählen
         l=quater # Für nächsten druchlauf
@@ -108,18 +96,25 @@ def ListGetElement(l,i):
 
 # Positives e rechts an Liste
 def ListAppendElement(l,e):
-    anzahlNullen=(prodZ(clog2(e),2)+2) # Dopelte Stellenzahl + 2
-    l=prodZ(l,(pow2(anzahlNullen))) # Nullen für code und Trenner anhängen
+    anzahlNullen=(prodZ(binLength(e),2)+2) # Dopelte Stellenzahl + 2
+    l=prodZ(l,pow2(anzahlNullen)) # Nullen für code und Trenner anhängen
     l=(l+prodZ(code(e),4)) # Code um 2 Vorrücken und ans Ende schrieben
     l=(l+2) # Trenner ans Ende schreiben
     return l
 
 
+def main():
+    a=ListCreate()
+    a=ListAppendElement(a,0)
+    a=ListAppendElement(a,1)
+    a=ListAppendElement(a,2)
+    #a=ListAppendElement(a,3)
+    #a=ListAppendElement(a,4)
+    #a=ListAppendElement(a,5)
+    #a=ListAppendElement(a,6)
+    #a=ListAppendElement(a,7)
+    #a=ListAppendElement(a,8)
+    #a=ListAppendElement(a,9)
 
-a=ListCreate()
-a=ListAppendElement(a,3)
-a=ListAppendElement(a,4)
-a=ListAppendElement(a,1)
-bin(a)
-
-print(ListGetElement(a,1))
+    print(ListGetElement(a,2))
+    #print(a)
