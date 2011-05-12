@@ -1,24 +1,24 @@
 
 from aufg5 import ListAppendElement,ListCreate,ListGetElement,ListGetLength
+from time import time
 
-a=ListCreate()
-a=ListAppendElement(a,0)
-a=ListAppendElement(a,1)
-a=ListAppendElement(a,2)
-a=ListAppendElement(a,3)
-a=ListAppendElement(a,4)
-a=ListAppendElement(a,5)
-a=ListAppendElement(a,6)
-a=ListAppendElement(a,7)
-a=ListAppendElement(a,8)
-a=ListAppendElement(a,9)
-a=ListAppendElement(a,27)
+n=1
+while(1):
+    start=time()
+    
+    a=ListCreate()
+    for x in range(1,n):
+        a=ListAppendElement(a,x)
+    
+    for x in range(1,n):
+        if not (x==ListGetElement(a,x)):
+            print("uarg! n x fx",n,x,ListGetElement(a,x))
+    
+    end=time()
+    #if(n%1000==0): 
+    print(n)
+    if(end-start>60): 
+        print("Reached 1 minute limit at ",n)
+        break
+    n=n+10
 
-#bin(a)
-#print(a)
-
-print(ListGetElement(a,9))
-
-#print(ListGetElement(a,1))
-
-#print(prodZ(546546546546546548,879874313213)) 
