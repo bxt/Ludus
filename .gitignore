@@ -1,6 +1,7 @@
 .metadata
 unilectures/bin
 __pycache__
+*.pyc
 ~
 ~
 ~
