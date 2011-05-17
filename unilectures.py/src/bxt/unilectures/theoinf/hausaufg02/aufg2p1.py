@@ -1,8 +1,3 @@
-'''
-Created on 09.05.2011
-
-@author: s226305
-'''
 def f6(x):
     y=0
     while (x>0):
