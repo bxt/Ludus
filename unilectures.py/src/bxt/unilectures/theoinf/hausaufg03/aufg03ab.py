@@ -6,7 +6,7 @@ def g(x,y):
 
 def codeZ(z): # Bijektion Z nach N
     n=(z+z) # 2*z
-    if(z<0): # für negative z
+    if(z<0): # fuer negative z
         n=((0-1)-n) # 0-1-2n
     return n
 
@@ -19,8 +19,8 @@ def codeZinv(n): # Bijektion N nach Z
         z=((0-z)-1)
     return z
 
-def fN(x,y): # Funktion über N
+def fN(x,y): # Funktion ueber N
     return codeZ(f(codeZinv(x),codeZinv(y)))
 
-def h(x,y): # Funktion über Z, deren Funktion über N die Funktion g ist
+def h(x,y): # Funktion ueber Z, deren Funktion ueber N die Funktion g ist
     return codeZinv(g(codeZ(x),codeZ(y)))

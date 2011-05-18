@@ -15,7 +15,7 @@
 8 R2 <- R1 - R0       // R2 auf max-min setzen (1. Fall)
 9 GOTO 11             // 
 10 R2 <- R0 - R1      // R2 auf max-min setzen (2. Fall)
-11 R0 <- R1           // Hier enthält R2 max-min (wieder beide Fälle)
-12 R1 <- R2           // 11,12 = 2x "Durchrutschen"
-13 IF R1 > 0 GOTO 5   // Noch nicht fertig, nochmal
+11 R0 <- R1           // Hier enthaelt R2 max-min (wieder beide Faelle)
+12 R1 <- R2           // Befehle 11 und 12 = 2x "Durchrutschen"
+13 IF R1 > 0 GOTO 5   // Solange nicht fertig nochmal
 14 STOP               // Fertig

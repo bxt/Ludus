@@ -1,4 +1,5 @@
-# Lese- und Schreibfunktion von Folie 77
+# Lese- und Schreibfunktionen von Folie 77
+
 def read(u,v,a):            # liefert den Inhalt von Ra
     i = 0
     while (i < len(u) and u[i] != a): # Index a suchen
@@ -6,7 +7,7 @@ def read(u,v,a):            # liefert den Inhalt von Ra
     if (i == len(u)):                 # Listen erweitern
         u += [a]
         v += [0]
-    return v[i]                       # Inhalt von Ra zurück
+    return v[i]                       # Inhalt von Ra zurueck
 
 def write(u,v,a,b):         # schreibt b in Ra
     i = 0
@@ -18,7 +19,7 @@ def write(u,v,a,b):         # schreibt b in Ra
     v[i] = b                          # schreibt b in Ra
 
 
-def phi(x1,x2):# Arität auf 2 vorgegeben
+def phi(x1,x2):# Aritaet 2 vorgegeben
     u = [0,1]
     v = [x1,x2]
     br = 0
@@ -59,18 +60,4 @@ def phi(x1,x2):# Arität auf 2 vorgegeben
             br = br + 1
     return v[0]
 
-print(phi(79846313,657684)) # 4934211917
-
-"""
-RAM-Programm:
-
-0 R3 <- RR2
-1 R3 <- R3 + R2
-2 R2 <- R2 + R1
-3 RR2 <- R3
-4 R0 <- R0 - R1
-5 IF R0 > 0 GOTO 0
-6 R0 <- RR2
-7 STOP
-
-"""
+# print(phi(79846313,657684)) # 4934211917
