@@ -7,7 +7,7 @@ def g(x,y):
 def codeZ(z): # Bijektion Z nach N
     n=(z+z) # 2*z
     if(z<0): # fuer negative z
-        n=((0-1)-n) # 0-1-2n
+        n=((0-1)-n) # 0-1-2z
     return n
 
 def codeZinv(n): # Bijektion N nach Z
