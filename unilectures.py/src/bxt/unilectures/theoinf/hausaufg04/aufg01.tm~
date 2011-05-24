@@ -1,0 +1,14 @@
+(z0,1)->(z0,1,R)     // nach rechts laufen
+(z0,2)->(z0,2,R)     // dabei nichts tun
+(z0,_)->(zDiv,_,L)   // am Ende
+
+(zDiv,1)->(zVor,_,L) // letzte Stelle löschen
+(zDiv,2)->(zUet,_,L) // Bei 2 am Ende Übertrag 1
+
+(zUet,1)->(zVor,2,L) // Übertrag losgeworden
+(zUet,2)->(zUet,1,L) // Übertrag weiterhin 1
+(zUet,_)->(z1,1,O)   // Alles voll mit 2ern, neue 1 links
+
+(zVor,1)->(zVor,1,L) // Nach ganz links laufen
+(zVor,2)->(zVor,2,L) // Dabei nichts tun
+(zVor,_)->(z1,_,R)   // Fertig
