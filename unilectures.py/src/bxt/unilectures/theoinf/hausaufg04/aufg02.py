@@ -1,42 +1,35 @@
 def DyadicRepresentation(x):
-    # liefert eine Liste mit den dyadischen Ziffern von x
+    # Liefert eine Liste mit den dyadischen Ziffern von x
     # z.B. DyadicRepresentation(20) == [1, 2, 1, 2]
-    dya=[];
+    dya=[];                # Starte mit leerem Wort
     while (x>0):
-        rem=x//2;
-        if(x%2==0):
-            rem=rem-1
-        dya=[(x-rem*2)]+dya;
-        x=rem;
+        newX=x//2;         # Division mit Rest
+        if(x%2==0):        # Kein Rest, somit eine 2
+            newX=newX-1    # Die 2 ist zu viel gezaehlt
+            dya=[2]+dya;
+        else:              # Eine 1
+            dya=[1]+dya;
+        x=newX;
     return dya;
 
-# 2^x
-def pow2(x):
-    p=1
-    while (x>0):
-        p=(p+p)
-        x=(x-1)
-    return p  
-
 def Number(l):
-    # liefert den Wert der durch die Liste l dargestellten dyadischen Zahl
+    # Liefert den Wert der durch die Liste l dargestellten dyadischen Zahl
     # z.B. Number([1, 2, 1, 2]) == 20
-    dez=0
-    for i in range(0,len(l)):
-        dez+=pow2(i)*l[len(l)-1-i];
+    dez=0                           # Baue hier natuerliche Zahl
+    p=1                             # Entsprechende Zwierpozenz
+    for i in range(0,len(l)):       # Benutze Summenformel
+        v=l[len(l)-1-i]             # Die 2 oder 1 an der Stelle
+        dez+=p*v;                   # Wert dieser Ziffer addieren
+        p=(p+p)                     # Naechste Zwierpozenz
     return dez;
 
 def main(x):
     z = 0                                 # Zustand z0
-    b1 = DyadicRepresentation(x) + [0]    # dya(x) auf Band 1 schreiben und 0=Leerzeichen anhaengen, wegen dya(0) = leeres Wort                              # 
+    b1 = DyadicRepresentation(x) + [0]    # dya(x)_ auf Band 1 schreiben
     b2 = [0]                              # Band 2 ist leer
     h1 = h2 = 0                           # beide Koepfe stehen auf Position 0
     while (z != 1):                       # solange Stoppzustand nicht erreicht
-        # hier die Befehle der TM simulieren
-        # nach Verlassen der While-Schleife testen,
-        # ob eine Konfiguration M(z1,w) vorliegt und
-        # ggf. nicht definierten Programmabbruch ausloeen
-        # Inhalt von Band 1 mittels Number() in eine Zahl y umwandeln
+        # Die Befehle der TM simulieren
         d=0 # Spart else-Verschachtelungen
         if(d==0 and z==0 and b1[h1]==1 and b2[h2]==0): # (z0,1,_)->(z0,_,1,R,L)
             b1[h1]=0 # auf Band 1 ein _ schreiben
@@ -93,31 +86,35 @@ def main(x):
             d=1
         if(d==0): # Sollte hier nicht auftreten
             print("Ueberfuehrungsfunktion ist nicht total")
-        # Wenn noetig _ an Baender anhaengen:
+        # Wenn noetig _ hinten an Baender anhaengen:
         while(h1>=len(b1)):
             b1+=[0]
         while(h2>=len(b2)):
             b2+=[0]
+        # Wenn noetig _ vorne an Baender anhaengen:
         while(h1<0):
             b1=[0]+b1
             h1=h1+1
         while(h2<0):
             b2=[0]+b2
             h2=h2+1
-    # Endzustand prüfen:
-    block=0
-    out=[]
+    # Nach Verlassen der While-Schleife testen,
+    # ob eine Konfiguration M(z1,w) vorliegt und
+    # ggf. nicht definierten Programmabbruch ausloesen
+    block=0 # Bei wievielter Zahl auf Band 1 wir sind
+    out=[] # Erste dyadische Zahl auf Band 1
     for x in range(0,len(b2)):
         if(b2[x]!=0): # Etwas anderes als Trenner in der Liste
-            b2=otherBandNotEmpty # Undefinierte Var.
+            b2=otherBandNotEmpty      # Undefinierte Variable
     for x in range(0,len(b1)):
-        if(b1[x]!=1 and b1[x]!=2): # Nicht in {1,2}, folglich _
-            if(block!=0):
-                block=(block+1)
+        if(b1[x]!=1 and b1[x]!=2):    # Nicht in {1,2}, folglich _
+            if(block!=0):             # Wenn wieder ein Zahl kommt
+                block=(block+1)       # ist es die naechste
         else: 
-            if(block>0):
-                b2=wrongArityReturned # Undefinierte Var.
-            out+=[b1[x]] # Ans Ergebnis hängen
+            if(block>0):              # Zu viele Zahlen auf Band 1
+                b2=wrongArityReturned # Undefinierte Variable
+            out+=[b1[x]]              # Ans Ergebnis haengen
+    # Inhalt von Band 1 mittels Number() in eine Zahl y umwandeln
     y=Number(out)
     return y
 

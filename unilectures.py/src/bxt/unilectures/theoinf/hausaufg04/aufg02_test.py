@@ -1,6 +1,5 @@
 from aufg02 import main,DyadicRepresentation
 
-
 # Relevante Script-Seiten: 120, 70
 
 print(main(0)==0)
@@ -22,4 +21,4 @@ def printDyadicPalindromes(till):
         if(main(x)==x):
             print(x,DyadicRepresentation(x))
 
-printDyadicPalindromes(200)
+#printDyadicPalindromes(200)
