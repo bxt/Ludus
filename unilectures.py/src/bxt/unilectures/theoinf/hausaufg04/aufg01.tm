@@ -4,6 +4,7 @@
 
 (zDiv,1)->(zVor,_,L) // letzte Stelle loeschen
 (zDiv,2)->(zUet,_,L) // Bei 2 am Ende Uebertrag 1
+(zDiv,_)->(z1,_,O) 
 
 (zUet,1)->(zVor,2,L) // Uebertrag losgeworden
 (zUet,2)->(zUet,1,L) // Uebertrag weiterhin 1
