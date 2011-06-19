@@ -44,7 +44,7 @@ def main():
     simpleCalculation()
     multiplicationTable()
     mess=11,
-    cuba=Message("Wooha!")
+    cuba=Message("Wooha "+("abc"[:2]+"x")[-2:]+"t!")
     mess, cuba=cuba, mess[0]
     mess.print()
     Message.print(*[mess])
