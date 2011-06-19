@@ -12,7 +12,7 @@ def ueberlappung(eingelesen, suchmuster): #  Laenge des max. Suffix von e.,
 
 def deaDefineSuche(Sigma,v): # DEA entsprechend Def. 3.2 und Bsp. 3.9
     Z = set() # Zustandsmenge, zunaechst leere Menge, dann:
-    for z in range(len(v)+1): # |v|+1 viele Zustände
+    for z in range(len(v)+1): # |v|+1 viele Zustaende
         Z=Z|{z} # Name jeweils die Anzahl der passenden eingelesenen Zeichen
     delta = {} # Ueberfuehrungsfunktion
     for i in range(len(v)): # Zustaende fuer jedes Zeichen des Suchmusters
@@ -24,7 +24,7 @@ def deaDefineSuche(Sigma,v): # DEA entsprechend Def. 3.2 und Bsp. 3.9
     A = [Sigma, Z, delta, 0, F] # Zum Tupel zusammensetzen
     return A # Feritg
 
-# Funktionen aus dem Lösungshinweis zur Aufgabe 3 des Übungsblatt 6:
+# Funktionen aus dem Loesungshinweis zur Aufgabe 3 des Uebungsblatt 6:
 def deaErweiterteUEF(delta, z, w): # erw. Ueberfuehrungsfunktion eines DEA
     for a in w:
         z = delta[z, a]
