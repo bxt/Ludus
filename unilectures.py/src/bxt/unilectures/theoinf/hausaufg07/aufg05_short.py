@@ -11,13 +11,22 @@ def deaErweiterteUEF(delta,z,w):
 def deaRun(A, w):
     return deaErweiterteUEF(*A[-3:-1]+[w]) in A[4]
 def schnelleSuche(v,w):
+    """Return if string v can be found in string w using a DEA.
+    
+    >>> schnelleSuche("abc","aaddababcaa")
+    True
+    >>> schnelleSuche("abc","aaddababaca")
+    False
+    >>> schnelleSuche("abcabd","aaadaddacdcadabcabcabdaac")
+    True
+    >>> schnelleSuche("","aaddababcaa")
+    True
+    >>> schnelleSuche("abc","")
+    False
+    """
     return deaRun(deaDefineSuche(set(v)|set(w),v),w)
 
 if __name__ == '__main__': # Tests:
-    for x in [("abc","aaddababcaa"),
-              ("abc","aaddababaca"),
-              ("abcabd","aaadaddacdcadabcabcabdaac"),
-              ("","aaddababcaa"),
-              ("abc","")  ]:
-        print(schnelleSuche(*x))
+    import doctest
+    doctest.testmod(verbose=True)
 
