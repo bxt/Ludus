@@ -21,7 +21,7 @@ def tupelize(prefix,oldset):         # Zustaende eindeutig zu machen, indem
 def neaKomplement(A):                # liefert NEA, der das Komplement von L(A) akzeptiert,
     [Sigma, Z, delta, z0, F] = A     # wobei A ein NEA entsprechend Definition 3.11 ist
     Adea=nea2dea(A)                  # Einen sprachaequivalenten DEA konstruieren
-    deltaDea=Adea[2]                 # Dessen Ueberführungsfunktion
+    deltaDea=Adea[2]                 # Dessen Ueberfuehrungsfunktion
     deltaNea={}                      # Neue NEA-Kompatibele Ueberff.
     for k,v in deltaDea.items():     # Aus der des DEAs gebaut
         deltaNea[k]={v}              # Jedoch mit Einermengen
