@@ -30,9 +30,9 @@ def deasAequivalent(A, B):   # prueft, ob DEAs A und B die gleiche Sprache akzep
     Sigma = ASigma & BSigma  # Annahme: ASigma = BSigma
     
     Z = AZ | BZ              # Annahme: AZ, BZ disjunkt
-    Adelta.update(Bdelta)
-    delta = Adelta
-    F = AF | BF
+    delta = Adelta.copy()    # Zunaechst Pfeile aus A    
+    delta.update(Bdelta)     # Plus Pfeile aus B
+    F = AF | BF              # Sind dann auch disjunkt
     
     C = [Sigma, Z, delta, Az0, F]
     return {Az0, Bz0} not in deaUnterscheidbareZustaende(C)
