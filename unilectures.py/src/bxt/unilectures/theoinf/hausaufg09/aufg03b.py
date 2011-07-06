@@ -5,7 +5,7 @@ def deaUnterscheidbareZustaende(A):
     # Bilde Liste aller Zweierkombinatinen von Zustaenden
     # Liste aus Tupeln, da Liste/Tupel besser iterierbar/extrahierbar als Menge/Menge
     # Mit i<=j bleiben die Tupel aequivalent zu Mengen
-    U = [(i,j) for i in range(1,max(Z)+1) for j in range(1,max(Z)+1) if i<=j]
+    U = [(i,j) for i in Z for j in Z if i<=j]
     # Bilde Menge (bzw. Liste) aller bisher markierter Kombinationen
     markiert = [{i,j} for i in range(1,max(Z)+1) for j in range(1,max(Z)+1) 
                 if i<=j and ((i in F) ==(not (j in F)))  ] # Vormarkierungsbedingung
