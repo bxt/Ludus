@@ -20,15 +20,15 @@ public class ConnectFour {
 	 */
 	public static boolean makeMove(char[][] field, char player, int column) {
 		// Gueltigkeitstest
-		if(column<0 || column >= field.length) return false; // out of bounds
-		if(field[column][field[column].length-1]!=' ') return false; // voll
+		if(column<0 || column >= field[0].length) return false; // aussen
+		if(field[field.length-1][column]!=' ') return false; // voll
 		
 		// Erste leere Zelle auswaehlen: 
 		int height=0;
-		while (field[column][height]!=' ') height++;
+		while (field[height][column]!=' ') height++;
 		
 		// Speilstein in Zelle setzen:
-		field[column][height]=player;
+		field[height][column]=player;
 		
 		return true;
 	}
@@ -39,17 +39,17 @@ public class ConnectFour {
 	 */
 	public static void printField(char[][] field) {
 		// Zeilen rückwärts, dann Spalten, ausgeben:
-		for(int zeile=field[0].length-1;zeile>=0;zeile--) {
+		for(int zeile=field.length-1;zeile>=0;zeile--) {
 			System.out.print('|');
-			for(int spalte=0;spalte<field.length;spalte++) {
-				System.out.print(field[spalte][zeile]);
+			for(int spalte=0;spalte<field[zeile].length;spalte++) {
+				System.out.print(field[zeile][spalte]);
 			}
 			System.out.println('|');
 		}
 		
 		// Spaltennamen zur orientierung:
 		System.out.print(' ');
-		for(int spalte=0;spalte<field.length;spalte++) {
+		for(int spalte=0;spalte<field[0].length;spalte++) {
 			System.out.print(spalte);
 		}
 		System.out.println(' ');
@@ -62,9 +62,10 @@ public class ConnectFour {
 	 */
 	public static boolean isFull(char[][] field) {
 		boolean returnValue=true;
-		for(int spalte=0;spalte<field.length;spalte++) {
+		int zeile=field.length-1; // obere zeile
+		for(int spalte=0;spalte<field[zeile].length;spalte++) {
 			returnValue = returnValue && // logisches und über alle Spalten
-				field[spalte][field[spalte].length-1]!=' '; // voll?
+				field[zeile][spalte]!=' '; // voll?
 		}
 		return returnValue;
 	}
@@ -90,10 +91,10 @@ public class ConnectFour {
 		int height= sc.nextInt();
 		
 		// Feld mit Leerzeichen initialisieren:
-		char[][] field = new char[width][height];
-		for(int spalte=0;spalte<field.length;spalte++) {
-			for(int zeile=0;zeile<field[spalte].length;zeile++) {
-				field[spalte][zeile]=' ';
+		char[][] field = new char[height][width];
+		for(int zeile=0;zeile<field.length;zeile++) {
+			for(int spalte=0;spalte<field[zeile].length;spalte++) {
+				field[zeile][spalte]=' ';
 			}
 		}
 		
