@@ -8,6 +8,8 @@ import java.util.Scanner;
  * @date 2011-10-18
  */
 public class ConnectFour {
+	public static int WINCNT = 4;
+	
 	/**
 	 * Spielzug ausgefuhen, das Spielgitter field aktualisieren. 
 	 * 
@@ -108,7 +110,121 @@ public class ConnectFour {
 				System.out.println("Spieler "+currentPayer+" Spalte eingeben:");
 				column= sc.nextInt();
 			} while (!makeMove(field, currentPayer, column));
+			
 			printField(field);
+			
+			// Gewinn-Kontrolle:
+			for(int i=0;i<players.length;i++) {
+				if(hasWon(field,players[i])) {
+					System.out.println("Gratuliere, Spieler "+players[i]+
+							" hat gewonnen!");
+					return; // Sofort Spielende
+				}
+			}
 		}
+		System.out.println("Unentschieden.");
+	}
+	
+	public static boolean hasWon(char[][] field, char player) {
+		int connectedCount = 0;
+		
+		// mit einer Zeile gewonnen?
+		for(int zeile=0;zeile<field.length;zeile++) {
+			connectedCount = 0;
+			for(int spalte=0;spalte<field[zeile].length;spalte++) {
+				if(field[zeile][spalte]==player) {
+					connectedCount++;
+				} else {
+					connectedCount = 0;
+				}
+				if(connectedCount==WINCNT) {
+					System.out.println("Zeile!");
+					return true;
+				}
+			}
+		}
+		
+		// mit einer Spalte gewonnen?
+		for(int spalte=0;spalte<field[0].length;spalte++) {
+			connectedCount = 0;
+			for(int zeile=0;zeile<field.length;zeile++) {
+				if(field[zeile][spalte]==player) {
+					connectedCount++;
+				} else {
+					connectedCount = 0;
+				}
+				if(connectedCount==WINCNT) {
+					System.out.println("Spalte!");
+					return true;
+				}
+			}
+		}
+		
+		// Feld zu klein fuer Diagonalen?
+		if(field[0].length < WINCNT || field[0].length < WINCNT) return false;
+		
+		// Mit einer NW-SO Diagonale gewonnen?
+		{
+			connectedCount = 0;
+			int intZeile=WINCNT-1,zeile=intZeile;
+			int intSpalte=0,spalte=intSpalte;
+			searching:while(true) {
+				if(field[zeile][spalte]==player) {
+					connectedCount++;
+				} else {
+					connectedCount = 0;
+				}
+				if(connectedCount==WINCNT) {
+					System.out.println("NW-SO Diag.!");
+					return true;
+				}
+				zeile--;
+				spalte++;
+				if(zeile<0 || spalte>field[0].length-1) {
+					intZeile++;
+					if(intZeile>field.length-1) {
+						intZeile=field.length-1;
+						intSpalte++;
+						if(intSpalte+WINCNT>field[0].length) break searching;
+					}
+					zeile=intZeile;
+					spalte=intSpalte;
+					connectedCount = 0;
+				}
+			}
+		}
+		
+		// Mit einer NO-SW Diagonale gewonnen?
+		{
+			connectedCount = 0;
+			int intZeile=WINCNT-1,zeile=intZeile;
+			int intSpalte=field[0].length-1,spalte=intSpalte;
+			searching:while(true) {
+				if(field[zeile][spalte]==player) {
+					connectedCount++;
+				} else {
+					connectedCount = 0;
+				}
+				if(connectedCount==WINCNT) {
+					System.out.println("NO-SW Diag.!");
+					return true;
+				}
+				zeile--;
+				spalte--;
+				if(zeile<0 || spalte<0) {
+					intZeile++;
+					if(intZeile>field.length-1) {
+						intZeile=field.length-1;
+						intSpalte--;
+						if(intSpalte-WINCNT<-1) break searching;
+					}
+					zeile=intZeile;
+					spalte=intSpalte;
+					connectedCount = 0;
+				}
+			}
+		}
+		
+		return false;
 	}
 }
