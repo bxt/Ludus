@@ -1,8 +1,6 @@
 package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
 public class MergeSort implements Sort {
-	
-	private int recDepth = 0;
 
 	@Override
 	public void sort(long[] a) {
@@ -12,11 +10,9 @@ public class MergeSort implements Sort {
 	private void mergeSort(long[] a, int von, int bis) {
 		if(von<bis) {
 			int mitte = (von+bis)/2;
-			recDepth++;
 			mergeSort(a, von, mitte);
 			mergeSort(a, mitte+1,bis);
 			merge(a,von,bis,mitte);
-			recDepth--;
 		}
 	}
 	
