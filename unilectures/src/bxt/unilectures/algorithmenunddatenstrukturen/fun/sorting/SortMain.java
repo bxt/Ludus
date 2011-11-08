@@ -9,7 +9,12 @@ public class SortMain {
 	 */
 	public static void main(String[] args) {
 		
-		Sort[] sortList={new InsertionSort(),new BubbleSort(),new MergeSort()};
+		Sort[] sortList={
+				new HeapSort(),
+				new InsertionSort(),
+				new BubbleSort(),
+				new MergeSort()
+				};
 		for (Sort sort : sortList) {
 			System.out.println(String.format(
 					"Sortiere mit %s:",sort.getClass().getSimpleName()));
