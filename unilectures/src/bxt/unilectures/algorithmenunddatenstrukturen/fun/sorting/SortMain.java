@@ -2,9 +2,14 @@ package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
 import java.util.Arrays;
 
+/**
+ * Main class to call some sorting algos
+ * @author Burny
+ */
 public class SortMain {
 
 	/**
+	 * Main method to call some sorting algos
 	 * @param args
 	 */
 	public static void main(String[] args) {
