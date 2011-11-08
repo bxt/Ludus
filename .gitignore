@@ -1,3 +1,15 @@
+# Temporary files
+*~
+*.swp
+
+# KDE
+.directory
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Other
 .metadata
 unilectures/bin
 __pycache__
