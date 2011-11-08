@@ -18,7 +18,8 @@ public class SortMain {
 				new HeapSort(),
 				new InsertionSort(),
 				new BubbleSort(),
-				new MergeSort()
+				new MergeSort(),
+				new SelectionSort()
 				};
 		for (Sort sort : sortList) {
 			System.out.println(String.format(
