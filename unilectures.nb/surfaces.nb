@@ -1,0 +1,360 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     13679,        351]
+NotebookOptionsPosition[     13128,        328]
+NotebookOutlinePosition[     13474,        343]
+CellTagsIndexPosition[     13431,        340]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["Some fun with 3D surface plotting", "Subtitle"]], \
+"Input",
+ CellChangeTimes->{{3.528999222484375*^9, 3.52899939234375*^9}, {
+   3.52899944346875*^9, 3.528999572046875*^9}, {3.52899976440625*^9, 
+   3.528999768296875*^9}, {3.528999821453125*^9, 3.528999851828125*^9}, {
+   3.5289999596875*^9, 3.5290000865625*^9}, {3.529000151921875*^9, 
+   3.5290002248125*^9}, {3.529000259046875*^9, 3.529000323578125*^9}, {
+   3.529000385734375*^9, 3.529000486109375*^9}, {3.5290005200625*^9, 
+   3.52900056625*^9}, 3.529000647*^9, {3.5290007431875*^9, 
+   3.52900074840625*^9}, {3.52900083228125*^9, 3.529000843453125*^9}, {
+   3.52900158925*^9, 3.52900160084375*^9}, {3.52978545203125*^9, 
+   3.529785497796875*^9}, {3.52978558084375*^9, 3.52978563278125*^9}},
+ FormatType->"TextForm"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ParametricPlot3D", "[", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             FractionBox["1", "2"], "v", " ", 
+             RowBox[{"Cos", "[", 
+              FractionBox["u", "2"], "]"}]}]}], ")"}], 
+          RowBox[{"Cos", "[", "u", "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             FractionBox["1", "2"], "v", " ", 
+             RowBox[{"Cos", "[", 
+              FractionBox["u", "2"], "]"}]}]}], ")"}], 
+          RowBox[{"Sin", "[", "u", "]"}]}], ",", 
+         RowBox[{
+          FractionBox["1", "2"], "v", " ", 
+          RowBox[{"Sin", "[", 
+           FractionBox["u", "2"], "]"}]}]}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             FractionBox["1", "2"], "v", " ", 
+             RowBox[{"Cos", "[", 
+              FractionBox["u", "2"], "]"}]}]}], ")"}], 
+          RowBox[{"Cos", "[", "u", "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             FractionBox["1", "2"], "v", " ", 
+             RowBox[{"Cos", "[", 
+              FractionBox["u", "z"], "]"}]}]}], ")"}], 
+          RowBox[{"Sin", "[", "u", "]"}]}], ",", 
+         RowBox[{"Abs", "[", 
+          RowBox[{
+           FractionBox["1", "2"], "v", " ", 
+           RowBox[{"Sin", "[", 
+            FractionBox["u", "k"], "]"}]}], "]"}]}], "}"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", "0", ",", 
+       RowBox[{"2", "\[Pi]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"v", ",", 
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", " ", 
+     RowBox[{"PlotStyle", "\[Rule]", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"Red", ",", 
+          RowBox[{"Opacity", "[", ".5", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", " ", 
+          RowBox[{"Opacity", "[", ".5", "]"}]}], "}"}]}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"z", ",", "1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"k", ",", "1", ",", "5"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.528999222484375*^9, 3.52899939234375*^9}, {
+   3.52899944346875*^9, 3.528999572046875*^9}, {3.52899976440625*^9, 
+   3.528999768296875*^9}, {3.528999821453125*^9, 3.528999851828125*^9}, {
+   3.5289999596875*^9, 3.5290000865625*^9}, {3.529000151921875*^9, 
+   3.5290002248125*^9}, {3.529000259046875*^9, 3.529000323578125*^9}, {
+   3.529000385734375*^9, 3.529000486109375*^9}, {3.5290005200625*^9, 
+   3.52900056625*^9}, 3.529000647*^9, {3.5290007431875*^9, 
+   3.52900074840625*^9}, {3.52900083228125*^9, 3.529000843453125*^9}, {
+   3.52900158925*^9, 3.52900160084375*^9}, {3.52978545203125*^9, 
+   3.52978546440625*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`k$$ = 2., $CellContext`z$$ = 2.35, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`z$$], 1, 5}, {
+      Hold[$CellContext`k$$], 1, 5}}, Typeset`size$$ = {360., {138., 143.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`z$7595$$ = 0, $CellContext`k$7596$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`k$$ = 1, $CellContext`z$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`z$$, $CellContext`z$7595$$, 0], 
+        Hold[$CellContext`k$$, $CellContext`k$7596$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      ParametricPlot3D[{{(1 + ((1/2) $CellContext`v) Cos[$CellContext`u/2]) 
+          Cos[$CellContext`u], (
+           1 + ((1/2) $CellContext`v) Cos[$CellContext`u/2]) 
+          Sin[$CellContext`u], ((1/2) $CellContext`v) 
+          Sin[$CellContext`u/2]}, {(
+           1 + ((1/2) $CellContext`v) Cos[$CellContext`u/2]) 
+          Cos[$CellContext`u], (
+           1 + ((1/2) $CellContext`v) Cos[$CellContext`u/$CellContext`z$$]) 
+          Sin[$CellContext`u], 
+          
+          Abs[((1/2) $CellContext`v) 
+           Sin[$CellContext`u/$CellContext`k$$]]}}, {$CellContext`u, 0, 2 
+         Pi}, {$CellContext`v, -1, 1}, PlotStyle -> {{Red, 
+           Opacity[0.5]}, {Blue, 
+           Opacity[0.5]}}], 
+      "Specifications" :> {{$CellContext`z$$, 1, 5}, {$CellContext`k$$, 1, 
+         5}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{407., {197., 202.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Input",
+ CellChangeTimes->{3.529000859265625*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"\[Pi]", ",", "20"}], "]"}]], "Input",
+ CellChangeTimes->{{3.528999862921875*^9, 3.52899990940625*^9}}],
+
+Cell[BoxData["3.1415926535897932384626433832795028842`20."], "Output",
+ CellChangeTimes->{{3.528999859765625*^9, 3.528999915359375*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ParametricPlot3D", "[", 
+     RowBox[{
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"4", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Sin", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"4", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Cos", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"4", "+", 
+           RowBox[{"Sin", "[", "v", "]"}]}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"3", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Sin", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"12", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Cos", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"4", "+", 
+           RowBox[{"Sin", "[", "v", "]"}]}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"8", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Cos", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"3", "+", 
+           RowBox[{"Sin", "[", "v", "]"}]}], ",", 
+          RowBox[{"4", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Sin", "[", "u", "]"}]}]}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"3", "+", 
+           RowBox[{"Sin", "[", "v", "]"}]}], ",", 
+          RowBox[{"8", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Cos", "[", "u", "]"}]}]}], ",", 
+          RowBox[{"4", "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "+", 
+              RowBox[{"Cos", "[", "v", "]"}]}], ")"}], " ", 
+            RowBox[{"Sin", "[", "u", "]"}]}]}]}], "}"}]}], 
+       "\[IndentingNewLine]", "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"u", ",", "0", ",", 
+        RowBox[{"2", " ", "Pi"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"v", ",", "0", ",", 
+        RowBox[{"2", " ", "Pi"}]}], "}"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Red", ",", "Orange", ",", "Green", ",", "Blue"}], "}"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", "0", ",", "9"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.529000807609375*^9, 3.529000807953125*^9}, {
+   3.529000880203125*^9, 3.5290009476875*^9}, {3.529000984671875*^9, 
+   3.5290010193125*^9}, {3.52900124678125*^9, 3.529001274765625*^9}, 
+   3.529001354640625*^9, {3.529001405328125*^9, 3.529001519875*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`k$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`k$$], 0, 9}}, Typeset`size$$ = {360., {165., 168.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`k$8740$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`k$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`k$$, $CellContext`k$8740$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      ParametricPlot3D[{{
+         4 + (3 + Cos[$CellContext`v]) Sin[$CellContext`u], 
+          4 + (3 + Cos[$CellContext`v]) Cos[$CellContext`u], 4 + 
+          Sin[$CellContext`v]}, {
+         3 + (3 + Cos[$CellContext`v]) Sin[$CellContext`u], 
+          12 + (3 + Cos[$CellContext`v]) Cos[$CellContext`u], 4 + 
+          Sin[$CellContext`v]}, {
+         8 + (3 + Cos[$CellContext`v]) Cos[$CellContext`u], 3 + 
+          Sin[$CellContext`v], 
+          4 + (3 + Cos[$CellContext`v]) Sin[$CellContext`u]}, {
+         3 + Sin[$CellContext`v], 
+          8 + (3 + Cos[$CellContext`v]) Cos[$CellContext`u], 
+          4 + (3 + Cos[$CellContext`v]) 
+           Sin[$CellContext`u]}}, {$CellContext`u, 0, 2 Pi}, {$CellContext`v, 
+         0, 2 Pi}, PlotStyle -> {Red, Orange, Green, Blue}], 
+      "Specifications" :> {{$CellContext`k$$, 0, 9}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{407., {209., 214.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.5290009079375*^9, 3.52900094840625*^9}, {
+   3.52900098846875*^9, 3.5290010200625*^9}, 3.529001276328125*^9, 
+   3.5290013551875*^9, 3.529001410109375*^9, 3.52900144071875*^9, {
+   3.529001473125*^9, 3.529001520359375*^9}}]
+}, Open  ]]
+},
+WindowSize->{1789, 1053},
+WindowMargins->{{20, Automatic}, {Automatic, 3}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (February 23, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 798, 12, 44, "Input"],
+Cell[1358, 34, 3171, 83, 211, "Input"],
+Cell[4532, 119, 2378, 49, 416, "Input"],
+Cell[CellGroupData[{
+Cell[6935, 172, 147, 3, 31, "Input"],
+Cell[7085, 177, 136, 1, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7258, 183, 3403, 91, 192, "Input"],
+Cell[10664, 276, 2448, 49, 440, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
