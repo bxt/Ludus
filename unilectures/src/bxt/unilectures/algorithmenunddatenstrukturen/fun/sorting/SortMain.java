@@ -15,6 +15,7 @@ public class SortMain {
 	public static void main(String[] args) {
 		
 		Sort[] sortList={
+				new QuickSort(),
 				new HeapSort(),
 				new InsertionSort(),
 				new BubbleSort(),
