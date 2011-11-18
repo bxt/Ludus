@@ -28,7 +28,7 @@ public class HeapSort implements Sort {
 	 * Will sort an array and print out intermediate heaps. 
 	 * @param args
 	 */
-	public static void main(final String... args) {
+	public static void mainSort(final String... args) {
 		
 		// Some stuff to sort:
 		final long[] a = {3,4,9,1,2,5,6,2,8,10,7,23,11,6,12};
@@ -56,6 +56,29 @@ public class HeapSort implements Sort {
 	}
 	
 	/**
+	 * Will print out greatest elements of a heap
+	 * @param args
+	 */
+	public static void mainPrintGreat(final String... args) {
+		Heap h2=new Heap(new long[]{9,8,7,6,5,4,3,2,1});
+		System.out.println(h2);
+		h2.printGreaterThan(0);
+	}
+	
+	/**
+	 * Will merge two heaps and print them
+	 * @param args
+	 */
+	public static void main(final String... args) {
+		Heap h1=Heap.getInstance(new long[]{3,10,5,11,12});
+		Heap h2=Heap.getInstance(new long[]{1,2,8,9});
+		System.out.println(h1);
+		System.out.println(h2);
+		Heap h=Heap.merge(h1,h2);
+		System.out.println(h);
+	}
+	
+	/**
 	 * A max-heap priority 1ueue working on long primitives. 
 	 * @author Bernhard Häussner
 	 */
@@ -73,6 +96,17 @@ public class HeapSort implements Sort {
 			this.s = a.length;
 		}
 		
+		public static Heap merge(Heap h1, Heap h2) {
+			long[] a=new long[h1.s+h2.s];
+			System.arraycopy(h1.a, 0, a, 0, h1.s);
+			System.arraycopy(h2.a, 0, a, h1.s, h2.s);
+			Heap heap = new Heap(a);
+			for(int i=a.length-1;i>=0;i--) {
+				heap.maxHeapify(i);
+			}
+			return heap;
+		}
+
 		/**
 		 * "Public Constructor" to generate OOP-safe instances. 
 		 * @param a Array to build heap from
@@ -98,6 +132,27 @@ public class HeapSort implements Sort {
 			swap(a,0,s);
 			if(s>0) maxHeapify(0);
 			return a[s];
+		}
+		
+		/**
+		 * Print all members lower then a number
+		 * @param z border
+		 */
+		public void printGreaterThan (long z) {
+			printGreaterThan(z,0);
+		}
+		
+		/**
+		 * Print all members lower then a number after an index
+		 * @param z border
+		 * @param i starting index
+		 */
+		private void printGreaterThan (long z, int i) {
+			if(i<s && a[i]>z) {
+				System.out.println(a[i]);
+				printGreaterThan (z, left(i));
+				printGreaterThan (z, right(i));
+			}
 		}
 		
 		/**
