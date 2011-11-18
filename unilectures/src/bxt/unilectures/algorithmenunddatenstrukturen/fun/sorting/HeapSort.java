@@ -3,6 +3,8 @@ package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
+import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUtils.*;
+
 /**
  * Heap sort Implementation
  * @author Bernhard Häussner
@@ -170,20 +172,7 @@ public class HeapSort implements Sort {
 				maxHeapify(largest);
 			}
 		}
-		
-		/**
-		 * Swap two positions in an array. 
-		 * @param a The array to operate on in-place
-		 * @param i Switch position 1
-		 * @param k Switch position 2
-		 */
-		private static void swap(final long[] a,final int i,final int k) {
-			if(i==k) return;
-			a[i]=a[i]^a[k];
-			a[k]=a[i]^a[k];
-			a[i]=a[i]^a[k];
-		}
-		
+				
 		/**
 		 * Get left child of an element. 
 		 * @param i Index of the parent element

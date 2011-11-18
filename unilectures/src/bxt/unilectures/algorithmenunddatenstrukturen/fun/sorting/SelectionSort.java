@@ -1,5 +1,7 @@
 package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
+import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUtils.*;
+
 /**
  * Selection sort implementation
  * @author Bernhard Häussner et al.
@@ -20,9 +22,7 @@ public class SelectionSort implements Sort {
 					min=k;
 				}
 			}
-			long tmp=a[i];
-			a[i]=a[min];
-			a[min]=tmp;
+			swap(a,min,i);
 		}
 	}
 	

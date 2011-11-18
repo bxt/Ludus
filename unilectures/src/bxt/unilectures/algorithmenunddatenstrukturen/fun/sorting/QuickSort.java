@@ -1,5 +1,7 @@
 package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
+import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUtils.*;
+
 /**
  * Quicksort
  * @author Bernhard Häussner
@@ -36,15 +38,11 @@ public class QuickSort implements Sort {
 		int i=von;
 		for(int j=von;j<bis;j++) {
 			if(a[j]<pivot) {
-				long tmp=a[i];
-				a[i]=a[j];
-				a[j]=tmp;
+				swap(a,i,j);
 				i++;
 			}
 		}
-		long tmp=a[i];
-		a[i]=a[bis];
-		a[bis]=tmp;
+		swap(a,i,bis);
 		return i;
 	}
 		

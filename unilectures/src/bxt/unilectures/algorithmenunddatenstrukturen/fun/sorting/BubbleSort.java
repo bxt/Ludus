@@ -1,5 +1,7 @@
 package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
+import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUtils.*;
+
 /**
  * Bubble sort implementation
  * @author Bernhard Häussner
@@ -19,9 +21,7 @@ public class BubbleSort implements Sort {
 			didSwitch  = false;
 			for (int j = 1; j < a.length; j++) {
 				if(a[j]<a[j-1]) {
-					long key=a[j];
-					a[j]=a[j-1];
-					a[j-1]=key;
+					swap(a,j,j-1);
 					didSwitch = true;
 				}
 			}
