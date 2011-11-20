@@ -2,8 +2,7 @@ package bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting;
 
 /**
  * Utility methods for handling a long[]
- * @author s226305
- *
+ * @author Bernhard H.
  */
 public abstract class ArrayUtils {
 	/**
