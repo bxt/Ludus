@@ -9,10 +9,9 @@ import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUti
 public class QuickSort implements Sort {
 
 	/**
-	 * Merge sort is divide and conquer sorting by sorting two halves of 
-	 * the unsorted list and then picking the smaller element from the 
-	 * two. <p>Unfortunately it is usually not working in-place, so it is
-	 * slightly awkwardly adapted here. 
+	 * Quicksort sort is divide and conquer sorting by recursively spilltin
+	 * in two halves and a pivot, where one part contains the elements
+	 * smaller than the pivot and the other part the larger. 
 	 */
 	@Override
 	public void sort(long[] a) {
@@ -33,6 +32,13 @@ public class QuickSort implements Sort {
 		}
 	}
 
+	/**
+	 * Rearranges the array elements around a pivot
+	 * @param a Complete array to take parts of
+	 * @param von Starting index
+	 * @param bis Last index (not length)
+	 * @return bis Pivot position afterwards
+	 */
 	private int partition(long[] a, int von, int bis) {
 		long pivot=a[bis];
 		int i=von;
