@@ -9,7 +9,7 @@ import static bxt.unilectures.algorithmenunddatenstrukturen.fun.sorting.ArrayUti
 public class QuickSort implements Sort {
 
 	/**
-	 * Quicksort sort is divide and conquer sorting by recursively spilltin
+	 * Quicksort sort is divide and conquer sorting by recursively spliting
 	 * in two halves and a pivot, where one part contains the elements
 	 * smaller than the pivot and the other part the larger. 
 	 */
