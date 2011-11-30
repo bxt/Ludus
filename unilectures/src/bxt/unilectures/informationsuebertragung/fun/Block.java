@@ -1,0 +1,58 @@
+package bxt.unilectures.informationsuebertragung.fun;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Create a Block code from a list of element occurrences
+ */
+public class Block extends CodeStrategySupport implements CodeStrategy {
+	
+	/**
+	 * This method yields it all together
+	 * @param input A list of inputs to extract probabilities from
+	 * @return A mapping from input elements to binary lists
+	 */
+	public <T> Map<T,List<Boolean>> getCodeTable(List<T> input) {
+		
+		Map<T,Integer> counts = count(input);
+		Set<T> countsKeys = counts.keySet();
+		
+		Map<T,List<Boolean>> codeTable = 
+				new HashMap<T,List<Boolean>>(countsKeys.size());
+		
+		int i=0;
+		for(T t: countsKeys) {
+			codeTable.put(t, buildBlockChiffre(i,countsKeys.size()));
+			i++;
+		}
+		
+		return codeTable;
+	}
+	
+	/**
+	 * Convert a index into its fixed-length binary representation
+	 * @param i A positive number
+	 * @param of Maximum number (defines number of leading zeros)
+	 * @return
+	 */
+	private static List<Boolean> buildBlockChiffre(int i,int of) {
+		List<Boolean> chiffre=new ArrayList<Boolean>();
+		int k=1;
+		while(k<=of)
+			k=k*2;
+		while(k>1) {
+			k=k/2;
+			if(i>=k) {
+				chiffre.add(Boolean.TRUE);
+				i-=k;
+			} else {
+				chiffre.add(Boolean.FALSE);
+			}
+		}
+		return chiffre;
+	}
+}
