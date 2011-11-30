@@ -3,6 +3,9 @@ package bxt.unilectures.fun.concurrent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Calculate the sums using a big number of threads
+ */
 public class SumsWorkers implements Runnable {
 	
 	private static final int THREAD_ANZ = 500;

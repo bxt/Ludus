@@ -1,5 +1,8 @@
 package bxt.unilectures.fun.concurrent;
 
+/**
+ * The actual piece of work to be completed 
+ */
 public final class SumRunnable implements Runnable {
 	public static final boolean SILENT=true;
 	
@@ -13,7 +16,7 @@ public final class SumRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		long sum = 0;
+		@SuppressWarnings("unused") long sum = 0;
 		for(long i=0;i<count_to;i++) {
 			sum += i;
 		}
