@@ -117,7 +117,7 @@ public class Code<T> {
 	 */
 	public static void main(String[] args) {
 				
-		Map<String,List<Boolean>> codeMap = new HashMap<>();
+		Map<String,List<Boolean>> codeMap = new HashMap<String,List<Boolean>>();
 		
 		{	List<Boolean> list=new ArrayList<Boolean>(3);
 			list.add(Boolean.FALSE);
