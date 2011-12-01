@@ -1,6 +1,8 @@
 package bxt.unilectures.fun.concurrent;
 
-
+/**
+ * Calculate the sums in current thread only
+ */
 public class SumsConsecutive implements Runnable {
 	
 	private static final int JOB_ANZ = 500;

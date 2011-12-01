@@ -81,7 +81,7 @@ public class HeapSort implements Sort {
 	}
 	
 	/**
-	 * A max-heap priority 1ueue working on long primitives. 
+	 * A max-heap priority Queue working on long primitives. 
 	 * @author Bernhard Häussner
 	 */
 	public static class Heap {
@@ -98,6 +98,12 @@ public class HeapSort implements Sort {
 			this.s = a.length;
 		}
 		
+		/**
+		 * Put Elemtents of two heaps into a new heap
+		 * @param h1 First heap
+		 * @param h2 Second heap
+		 * @return A Heap containing all the elments of h1 and h2
+		 */
 		public static Heap merge(Heap h1, Heap h2) {
 			long[] a=new long[h1.s+h2.s];
 			System.arraycopy(h1.a, 0, a, 0, h1.s);
@@ -125,7 +131,7 @@ public class HeapSort implements Sort {
 		}
 		
 		/**
-		 * Get and remove topmost element, preserve heap ordering. 
+		 * Get and remove topmost element, preserve heap property. 
 		 * @return The former greatest element
 		 */
 		public long popMaxvalue() {
@@ -137,7 +143,7 @@ public class HeapSort implements Sort {
 		}
 		
 		/**
-		 * Print all members lower then a number
+		 * Print all members lower than a number
 		 * @param z border
 		 */
 		public void printGreaterThan (long z) {

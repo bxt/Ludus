@@ -3,6 +3,9 @@ package bxt.unilectures.fun.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Calculate the sum using {@link Executors}
+ */
 public class SumsPooling implements Runnable {
 	
 	private static final int JOB_ANZ = 500;
