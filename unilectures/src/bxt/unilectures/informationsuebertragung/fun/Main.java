@@ -39,8 +39,9 @@ public class Main {
 		System.out.println("  Size: "+hytes.size()*4+" Bits");
 		
 		CodeStrategy[] codeStrategies = {
-				new Huffman(), 
-				new Block() };
+				new Huffman(),
+				new Block(),
+				new ShannonFano() };
 		
 		List<Hyte> restored = null;
 		for(CodeStrategy codeStrategy : codeStrategies) {
