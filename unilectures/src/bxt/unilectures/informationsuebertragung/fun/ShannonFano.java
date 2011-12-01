@@ -1,10 +1,10 @@
 package bxt.unilectures.informationsuebertragung.fun;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,23 +12,21 @@ import java.util.Set;
 /**
  * Create a Shannon-Fano code from a list of element occurrences
  */
-public class ShannonFano extends CodeStrategySupport implements CodeStrategy {
+public class ShannonFano implements CodeStrategy {
 	
-	public <T> Map<T,List<Boolean>> getCodeTable(List<T> input) {
+	public <T> Map<T,List<Boolean>> getCodeTable(Counts<T> counts) {
 		
-		Map<T,Integer> counts = count(input);
-		Set<T> countsKeys = counts.keySet();
-		
-		List<T> list = buildList(counts,countsKeys);
-		Map<T,List<Boolean>> codeTable = buildEmptyCodeTable(counts,countsKeys);
+		List<T> list = buildList(counts);
+		Map<T,List<Boolean>> codeTable = buildEmptyCodeTable(counts);
 		
 		populateCodeTable(codeTable,list,counts);
 		
 		return codeTable;
 	}
 	
-	private static <T> List<T> buildList(
-			final Map<T,Integer> counts, Set<T> countsKeys) {
+	private static <T> List<T> buildList(final Counts<T> counts) {
+		
+		Set<T> countsKeys = counts.getElements();
 		
 		List<T> codepoints = 
 				new ArrayList<T>(countsKeys.size());
@@ -37,7 +35,7 @@ public class ShannonFano extends CodeStrategySupport implements CodeStrategy {
 		
 		Collections.sort(codepoints, new Comparator<T>() {
 			@Override public int compare(T o1, T o2) {
-				return - counts.get(o1).compareTo(counts.get(o2));
+				return - counts.getCount(o1).compareTo(counts.getCount(o2));
 			}
 		});
 		
@@ -45,7 +43,9 @@ public class ShannonFano extends CodeStrategySupport implements CodeStrategy {
 	}
 	
 	private static <T> Map<T,List<Boolean>> buildEmptyCodeTable(
-			Map<T,Integer> counts, Set<T> countsKeys) {
+			Counts<T> counts) {
+		
+		Set<T> countsKeys = counts.getElements();
 		
 		Map<T,List<Boolean>> codeTable = 
 				new HashMap<T,List<Boolean>>(countsKeys.size());
@@ -56,20 +56,20 @@ public class ShannonFano extends CodeStrategySupport implements CodeStrategy {
 	}
 	
 	private static <T> void populateCodeTable(Map<T,List<Boolean>> codeTable, 
-			List<T> list, Map<T,Integer> counts) {
+			List<T> list, Counts<T> counts) {
 		
 		if(list.size()<=1) return;
 		
 		int sum = 0;
 		int fullSum = 0;
 		for(T t : list)
-			fullSum+=counts.get(t);
+			fullSum+=counts.getCount(t);
 		
 		float bestdiff=5;
 		int i=0;
 		out: while(i<list.size()) {
 			float prediff=bestdiff;
-			sum+=counts.get(list.get(i));
+			sum+=counts.getCount(list.get(i));
 			bestdiff = Math.abs((float)sum/fullSum-0.5F);
 			if(prediff<bestdiff) break out;
 			i++;
@@ -87,16 +87,20 @@ public class ShannonFano extends CodeStrategySupport implements CodeStrategy {
 	}
 	
 	public static void main(String[] args) {
-		List<Character> list=Arrays.asList(new Character[]
-				{'a','a','a','a','b','b','b','c','c','d','e','e','e'});
-		List<Character> listUq=Arrays.asList(new Character[]
-				{'a','b','c','d','e'});
+		Map<Character,Integer> countsMap=new LinkedHashMap<Character, Integer>();
+		countsMap.put('a', 4);
+		countsMap.put('b', 3);
+		countsMap.put('c', 2);
+		countsMap.put('d', 1);
+		countsMap.put('e', 3);
+		Counts<Character> counts=new Counts<Character>(countsMap);
 		
-		Map<Character,List<Boolean>> table=new ShannonFano().getCodeTable(list);
+		Map<Character,List<Boolean>> table=
+				new ShannonFano().getCodeTable(counts);
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("Code table:\n");
-		for(Character c : listUq) {
+		for(Character c : countsMap.keySet()) {
 			sb.append(" "+c+" -> ");
 			for(Boolean b : table.get(c)) 
 				sb.append(b==Boolean.FALSE?'0':'1');

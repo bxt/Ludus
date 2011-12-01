@@ -9,17 +9,16 @@ import java.util.Set;
 /**
  * Create a Block code from a list of element occurrences
  */
-public class Block extends CodeStrategySupport implements CodeStrategy {
+public class Block implements CodeStrategy {
 	
 	/**
 	 * This method yields it all together
 	 * @param input A list of inputs to extract probabilities from
 	 * @return A mapping from input elements to binary lists
 	 */
-	public <T> Map<T,List<Boolean>> getCodeTable(List<T> input) {
+	public <T> Map<T,List<Boolean>> getCodeTable(Counts<T> counts) {
 		
-		Map<T,Integer> counts = count(input);
-		Set<T> countsKeys = counts.keySet();
+		Set<T> countsKeys = counts.getElements();
 		
 		Map<T,List<Boolean>> codeTable = 
 				new HashMap<T,List<Boolean>>(countsKeys.size());

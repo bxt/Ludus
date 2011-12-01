@@ -38,6 +38,8 @@ public class Main {
 		System.out.println("Chunked into Hytes:"+hytes);
 		System.out.println("  Size: "+hytes.size()*4+" Bits");
 		
+		Counts<Hyte> counts = new Counts<Hyte>(hytes);
+		
 		CodeStrategy[] codeStrategies = {
 				new Huffman(),
 				new Block(),
@@ -48,7 +50,7 @@ public class Main {
 		
 			System.out.println(String.format("Creating code table with %s...",
 					codeStrategy.getClass().getSimpleName()));
-			Map<Hyte,List<Boolean>> codeTable = codeStrategy.getCodeTable(hytes);
+			Map<Hyte,List<Boolean>> codeTable = codeStrategy.getCodeTable(counts);
 			System.out.print(codeTableToString(codeTable));
 			
 			Code<Hyte> code = new Code<Hyte>(codeTable);
