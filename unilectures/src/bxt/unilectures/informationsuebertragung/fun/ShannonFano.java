@@ -14,6 +14,10 @@ import java.util.Set;
  */
 public class ShannonFano implements CodeStrategy {
 	
+	/**
+	 * Call methods to build the list, create an empty code table, and
+	 * then start recursively populating the code table
+	 */
 	public <T> Map<T,List<Boolean>> getCodeTable(Counts<T> counts) {
 		
 		List<T> list = buildList(counts);
@@ -24,24 +28,35 @@ public class ShannonFano implements CodeStrategy {
 		return codeTable;
 	}
 	
+	/**
+	 * Sort our input probability list descending
+	 * @param counts Element counts
+	 * @return Elements sorted by probability
+	 */
 	private static <T> List<T> buildList(final Counts<T> counts) {
 		
 		Set<T> countsKeys = counts.getElements();
 		
-		List<T> codepoints = 
+		List<T> list = 
 				new ArrayList<T>(countsKeys.size());
 		for(T t : countsKeys)
-			codepoints.add(t);
+			list.add(t);
 		
-		Collections.sort(codepoints, new Comparator<T>() {
+		Collections.sort(list, new Comparator<T>() {
 			@Override public int compare(T o1, T o2) {
 				return - counts.getCount(o1).compareTo(counts.getCount(o2));
 			}
 		});
 		
-		return codepoints;
+		return list;
 	}
 	
+	/**
+	 * Build an empty code table, i.e. zero length bit vector for
+	 * each element 
+	 * @param counts Element counts
+	 * @return The empty bit vector code table
+	 */
 	private static <T> Map<T,List<Boolean>> buildEmptyCodeTable(
 			Counts<T> counts) {
 		
@@ -55,6 +70,15 @@ public class ShannonFano implements CodeStrategy {
 		return codeTable;
 	}
 	
+	/**
+	 * Recursively populate the code table. 
+	 * <p>Split in two parts with (mostly) equal probabilities. For one part 
+	 * add zeros for the other ones to the bit vectors. Then split those parts
+	 * again until they contain only one element. 
+	 * @param codeTable The code table filled so far (in place)
+	 * @param list Part of the list to process
+	 * @param counts Element counts
+	 */
 	private static <T> void populateCodeTable(Map<T,List<Boolean>> codeTable, 
 			List<T> list, Counts<T> counts) {
 		
@@ -86,6 +110,10 @@ public class ShannonFano implements CodeStrategy {
 		populateCodeTable(codeTable, list.subList(i, list.size()), counts);
 	}
 	
+	/**
+	 * Tests building a code table
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Map<Character,Integer> countsMap=new LinkedHashMap<Character, Integer>();
 		countsMap.put('a', 4);
