@@ -1,15 +1,18 @@
 package bxt.unilectures.informationsuebertragung.fun;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import bxt.unilectures.informationsuebertragung.fun.Counts.Unit;
 
-public class Main {
+public class Main implements Stage<byte[],Tuple<Code<Hyte>,List<Boolean>>> {
+	
+	private static Charset charset = Charset.forName("UTF-8");
 
 	/**
-	 * Will run the Huffman compresson
+	 * Will run the Huffman compression
 	 * <p>
 	 * Will produce informative output while performing the following steps:
 	 * <ul>
@@ -17,17 +20,15 @@ public class Main {
 	 * <li> Count probabilities and dump some facts about them
 	 * <li> Calculate a code table from probabilities
 	 * <li> Show some facts about the code table
-	 * <li> Endoce the hytes to a compressed binary
-	 * <li> Display comression ratio
-	 * <li> Dedoce the compressed binary to hytes again 
-	 * <li> Convert hytes to bytes and utf-8 string
+	 * <li> Encode the hytes to a compressed binary
+	 * <li> Display compression ratio
+	 * <li> Decode the compressed binary to hytes again 
+	 * <li> Convert hytes to bytes and UTF-8 string
 	 * <li> Hope everything stays the same :)
 	 * </ul>
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		Charset charset = Charset.forName("UTF-8");
 		
 		byte[] input = {0x42, 0x65, 0x72, 0x6E, 0x68, 0x61, 0x72, 
 				0x64, 0x20, 0x48, (byte)0xC3, (byte)0xA4, 0x75, 
@@ -37,6 +38,23 @@ public class Main {
 		// another testing value:
 		byte[] input="aaaaaaltaaaaaaaaaaaaaaaaah!".getBytes(charset);
 		*/
+		
+		Main me = new Main();
+		
+		if(Arrays.equals(input,me.tock(me.tick(input)))) {
+			System.out.println("Worked!");
+		} else {
+			System.out.println("Broken!");
+		}
+		
+	}
+	
+	
+/* (non-Javadoc)
+	 * @see bxt.unilectures.informationsuebertragung.fun.Stage#tick(byte[])
+	 */
+	@Override
+	public Tuple<Code<Hyte>,List<Boolean>> tick (byte[] input) {
 		
 		String textInput = new String(input,charset);
 		System.out.println("Data interpreted as UTF-8 text: "+textInput);
@@ -79,7 +97,8 @@ public class Main {
 				new Block(),
 				new ShannonFano() };
 		
-		List<Hyte> restored = null;
+		Code<Hyte> code=null;
+		List<Boolean> compressed=null;
 		for(CodeStrategy codeStrategy : codeStrategies) {
 		
 			System.out.println(String.format("Creating code table with %s...",
@@ -97,20 +116,33 @@ public class Main {
 			System.out.printf("    %.3f %%\n", 
 					counts.getCompressionRatio(codeTable,Unit.BITS));
 			
-			Code<Hyte> code = new Code<Hyte>(codeTable);
+			code = new Code<Hyte>(codeTable);
 			
-			List<Boolean> compressed = code.encode(hytes);
+			compressed = code.encode(hytes);
 			System.out.println("Compressed: "+booleanListToString(compressed));
 			System.out.print("  Size: "+compressed.size()+" Bits");
 			System.out.printf(" (%.3f %%)\n",
 					(float)compressed.size()/(input.length*8));
 			
-			restored = code.decode(compressed);
+			@SuppressWarnings("unused")
+			List<Hyte> restoredDummy = code.decode(compressed);
 		
 			System.out.print("\n\n");
 			
 		}
+		return new Tuple<Code<Hyte>, List<Boolean>>(code, compressed);
+	}
+	
+	/* (non-Javadoc)
+	 * @see bxt.unilectures.informationsuebertragung.fun.Stage#tock(bxt.unilectures.informationsuebertragung.fun.Tuple)
+	 */
+	@Override
+	public byte[] tock (Tuple<Code<Hyte>,List<Boolean>> input) {
 		
+		Code<Hyte> code=input.getA();
+		List<Boolean> compressed=input.getB();
+		
+		List<Hyte> restored = code.decode(compressed);
 		
 		System.out.println("Restored: "+restored);
 		System.out.println("  Size: "+restored.size()*4+" Bits");
@@ -119,8 +151,10 @@ public class Main {
 		
 		String textOutput = new String(output,charset);
 		System.out.println("Restored data as UTF-8 text: "+textOutput);
-		System.out.println("  Size: "+input.length*8+" bits");
+		System.out.println("  Size: "+output.length*8+" bits");
 		System.out.println();
+		
+		return output;
 		
 	}
 	
