@@ -12,17 +12,16 @@ import bxt.unilectures.informationsuebertragung.fun.Heap.Ordering;
 /**
  * Create a Huffman code from a list of element occurrences
  */
-public class Huffman extends CodeStrategySupport implements CodeStrategy {
+public class Huffman implements CodeStrategy {
 	
 	/**
 	 * This method yields it all together
 	 * @param input A list of inputs to extract probabilities from
 	 * @return A mapping from input elements to binary lists
 	 */
-	public <T> Map<T,List<Boolean>> getCodeTable(List<T> input) {
+	public <T> Map<T,List<Boolean>> getCodeTable(Counts<T> counts) {
 		
-		Map<T,Integer> counts = count(input);
-		Set<T> countsKeys = counts.keySet();
+		Set<T> countsKeys = counts.getElements();
 		Heap<Codepoint<T>> heap = buildCodepointHeap(counts,countsKeys);
 		rearrangeHeap(heap);
 		
@@ -41,11 +40,11 @@ public class Huffman extends CodeStrategySupport implements CodeStrategy {
 	 * @return Heap with the elementes wrapped in {@link Codepoint}s
 	 */
 	private static <T> Heap<Codepoint<T>> buildCodepointHeap(
-			Map<T,Integer> counts, Set<T> countsKeys) {
+			Counts<T> counts, Set<T> countsKeys) {
 		Collection<Codepoint<T>> codepoints = 
 				new ArrayList<Codepoint<T>>(countsKeys.size());
 		for(T t : countsKeys)
-			codepoints.add(new Codepoint<T>(t,counts.get(t)));
+			codepoints.add(new Codepoint<T>(t,counts.getCount(t)));
 		
 		Heap<Codepoint<T>> heap = 
 				new Heap<Codepoint<T>>(codepoints,Ordering.MIN);

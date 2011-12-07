@@ -140,10 +140,10 @@ public class Heap<T extends Comparable<T>> {
 	private void reHeapify(final int i) {
 		final int l=i*2+1, r=i*2+2, s=a.size();
 		int largest;
-		if(l<s && a.get(l).compareTo(a.get(i))==ordering.compareSign ) 
+		if(l<s && (a.get(l).compareTo(a.get(i))*ordering.compareSign)>0 ) 
 			largest=l;
 		else largest=i;
-		if(r<s && a.get(r).compareTo(a.get(largest))==ordering.compareSign )
+		if(r<s && (a.get(r).compareTo(a.get(largest))*ordering.compareSign)>0 )
 			largest=r;
 		if(largest!=i) {
 			T tmp=a.get(i);
