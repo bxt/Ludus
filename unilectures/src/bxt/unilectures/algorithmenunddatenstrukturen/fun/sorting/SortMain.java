@@ -20,7 +20,8 @@ public class SortMain {
 				new InsertionSort(),
 				new BubbleSort(),
 				new MergeSort(),
-				new SelectionSort()
+				new SelectionSort(),
+				new CombinedQuickSort(3)
 				};
 		for (Sort sort : sortList) {
 			System.out.println(String.format(
