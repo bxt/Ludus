@@ -1,0 +1,132 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      4697,        122]
+NotebookOptionsPosition[      4376,        106]
+NotebookOutlinePosition[      4716,        121]
+CellTagsIndexPosition[      4673,        118]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"ContourPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Abs", "[", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "+", "I"}], ")"}], 
+      RowBox[{"(", 
+       RowBox[{"x", "+", 
+        RowBox[{"I", " ", "y"}]}], ")"}]}], "]"}], "\[Equal]", "2"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"y", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5306149519583693`*^9, 3.530615069240534*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[GraphicsComplexBox[CompressedData["
+1:eJxdlm1MlWUYx8/40tYapb2olNVxLHPWHHZytYRLN1sRNVejD62Npi1dU+TE
+ZPYJN4Iip2SMaWvrJNiHNGmNHGrqLubCqesVMKYQBvIWcpbA4axFaXKu6/c4
+HzbGOM957vu6r+t3////6PqyV97KikQiR2/8zv5ddd+h8ewNo9r9bt7jFdlT
++l1pT2tpz7D2bl+489maKX26+fAd1TVDOjRaubZ4ZEprWu7ZcubHAX2ksD63
+sD6lif3Nh7sqBvRg7fdPNn6Z0j25sw8GtOO14a54S0qXbo0P7vi9X19vrJy5
+90xKV8/LX7buzT7Nj75/7Nu103q5NbOhRhO7+ms/mtbT/au+ad3Ure88ddeh
+5MVpjf1amdOVPK/1WT91rZ6c1k8z63doUUlBaujRtBY3xb7O7/tZe4/e+fz4
+mrQujF1sr9vWrmeL3o7vq0hrU+b7p/RgXufGyaq0jpUs7T1Srjr3enHT1g/T
+GnmsrSy9vE7XJ2fO3vb5jf8zP20nfnhm+4bEvrSOL8k8F5432/tyt79fZesL
+6//zRGZ/Yf8VVp9Q3w6rX6j/YTufcL5jdn4p9/N3Wn9kkfcnZv2TAu/fg9Zf
+KfH+1ln/pdP7/4nNR77y+VTb/IT5xWy+MuLzbbH5S5/Pf6XxIRecj76Z2Bd/
+fjYmDZl9JnVXZP6JpgVXpKwwUZXz0KR2Z+q9IgPb8haf+29CjwwlW5KNSSmf
+17bp/pwJ/ff67M9fkpXp81XdYp+L2vf0D3tPLtk6utnWlb22j+62fWXM6tDz
+VpescY6dW4HjQTuXFDjHi+zcssc5PmB9kf3OsXMrcOx9Fe+zrrS+y0vOsXMr
+cBy3uUmHc+xzlahz/ILNXeC4x7iQzc6xcyPXjCM9YFwJHM8x7iTnDePYuZRf
+jFN1bgWOg+eLjWPnXvwewK3A8Tnf/zfn2LmVl53jF71+OG7w893uHPu9Fb/H
+cCtw7PdeXAdknfd3jnPs3Aocu66I64wwvwbneNjn6zol1R3vbSz6YErg+EJm
+3ykpP1629+9lI+I6J657Ak+jznWp8/axc+0cC1zHndfjzvUK41h23sq1wHnE
+/4+EPs8Kvcc6rMs+ieUPjJ2sTcpzs8fOvVnH5cHsV09dmwjqpG7Owbk4J+cO
+3e+gb/SRvtLnkJ4Ec2JuzJG5hvQq4AAu4ARu4Oi07J67YMlNzuAODuEypLcB
+x3AN53Af0vPgnvCce8S94p5x77iH3EvuKfeWe9zu9Udv9atAB9CFkN8FOoKu
+oDPoTshPA51Ct9Ax5oXOoXshPw90Et1ER+EFnUV30WF0GZ1Gt9FxuEbn0X18
+AG7xCXwDH8FX8Bl8Bx+CW3wK38LH8DV8Dt/DB+EYn8Q38VF8FZ+FY3wYX8an
+8W3nNvB1fB7fJweQC8gJcEyOIFeQM8gd5JCQnge5hRxDrmF9OGZ/chH1kZuc
+2yBXcT5yFzmMXEZOg2NyHLmOnEfuIwfCMTmR3Mj8yJXkTHInORSOyankVvjp
+dY5dB9V1US85f3Dsuqqusxri1/t8NfjL53yP91iHddmHfamDuqgznLf/B5a6
+Tn0=
+   "], {{}, {}, 
+    TagBox[
+     TooltipBox[
+      {Hue[0.67, 0.6, 0.6], 
+       LineBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+         19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+        36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 
+        53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 
+        70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 
+        87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 
+        103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 
+        117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 
+        131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 
+        145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 
+        159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 
+        173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184}]},
+      RowBox[{
+        RowBox[{
+          SqrtBox["2"], " ", 
+          RowBox[{"Abs", "[", 
+            RowBox[{"x", "+", 
+              RowBox[{"\[ImaginaryI]", " ", "y"}]}], "]"}]}], "\[Equal]", 
+        "2"}]],
+     Annotation[#, 
+      2^Rational[1, 2] Abs[$CellContext`x + Complex[0, 1] $CellContext`y] == 
+      2, "Tooltip"]& ]}],
+  AspectRatio->1,
+  Frame->True,
+  PlotRange->{{-2, 2}, {-2, 2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.530614980267827*^9, 3.530615073943654*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 829},
+WindowMargins->{{Automatic, 177}, {-105, Automatic}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (February 23, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 548, 17, 30, InheritFromParent],
+Cell[1130, 41, 3230, 62, 373, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

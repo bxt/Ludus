@@ -1,0 +1,251 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      9390,        242]
+NotebookOptionsPosition[      8676,        212]
+NotebookOutlinePosition[      9013,        227]
+CellTagsIndexPosition[      8970,        224]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  UnderoverscriptBox["\[Sum]", 
+   RowBox[{"i", "=", "1"}], "\[Infinity]"], 
+  FractionBox["n", 
+   SuperscriptBox["E", "n"]]}]], "Input",
+ CellChangeTimes->{{3.530616805041534*^9, 3.530616829888995*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Sum", "::", "div"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Sum does not converge. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Sum/div\\\", ButtonNote -> \
+\\\"Sum::div\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.530616838803225*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  UnderoverscriptBox["\[Sum]", 
+   RowBox[{"i", "=", "1"}], "\[Infinity]"], 
+  RowBox[{
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{"-", "n"}]], " ", "n"}]}]], "Output",
+ CellChangeTimes->{3.530616838804886*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"N", "[", "E", "]"}]}]], "Input",
+ CellChangeTimes->{{3.530616831319017*^9, 3.530616834503326*^9}}],
+
+Cell[BoxData["2.718281828459045`"], "Output",
+ CellChangeTimes->{3.530616835242343*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      FractionBox[
+       SuperscriptBox["E", 
+        RowBox[{"n", "+", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"-", "1"}], ")"}], "n"]}]], 
+       SuperscriptBox["E", "n"]], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "1", ",", "50"}], "}"}]}], "]"}], "}"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"ListPlot", "[", "%", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.530620173804923*^9, 3.53062019702496*^9}, {
+  3.530620284220837*^9, 3.530620377391549*^9}, {3.530620437549356*^9, 
+  3.5306204678690767`*^9}, {3.5306205039766893`*^9, 3.530620504204815*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]", ",", 
+    FractionBox["1", "\[ExponentialE]"], ",", "\[ExponentialE]"}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.530620322710545*^9, 3.53062033481866*^9}, {
+   3.530620368856977*^9, 3.530620378288233*^9}, 3.530620438189206*^9, 
+   3.53062047008904*^9, 3.5306205049319*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {Hue[0.67, 0.6, 0.6], PointBox[CompressedData["
+1:eJxdyTsKwlAUhOGLIIiVRQqLFCoiIkFi1Bgf8Z68Y2uhvWBh5RbssyiX4TJ0
+CSoRIf+B4TDzdU/X/bmmlHI++f7yXtp7Wu6heOjfIJejUTTvdSlrQ6reghvw
+NtyEd+A9eB8+gA/hI7gFH8Nt+ATuwKfwGXwOd+ELuAdfwlfwNXwD9+FbuIZL
+1W8CD+ABPISH8AgewWN4DE/gCTyFp/AMnsFzeA7f/f0NUfuyFQ==
+     "]]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  PlotRange->{{0., 50.}, {0., 2.718281828459045}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.530620322710545*^9, 3.53062033481866*^9}, {
+   3.530620368856977*^9, 3.530620378288233*^9}, 3.530620438189206*^9, 
+   3.53062047008904*^9, 3.530620504933425*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"Plot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"E", "^", "n"}], ",", "n"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "1", ",", "2"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.530624803459367*^9, 3.5306248038476963`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwVjHs01HkYhw3GMIQZBhO/lVBsF2xpF53e19SZdNHGuhRlJd3bJotq6eJa
+alraUm25nSIWIW2kkuspCY1WEqdiy5CaGIxhhpnv2j8+5/nj85zHJkzgu0tT
+Q0PDe3b/c/nhGLqGhhQGIk9fZNbSMY82meVJk4JC+vej2jo6ml6KXJGoKYXY
+q66M6AY6jlcc3KNDl8J+R6T3PaHj3emQZgOmFDyHHmfdb6Wj85nVv3NNpUBa
+q3i/9NBxUbYBZ5nD7C/JFoxN0HF+a7bd7s1SqH0d/TV8iQ62ME8kpxVI4YO/
+6ExcgQ4qjPrdx6akcGVd8IaPlgw0EaeuqvYahTqxu9LzAgM/ZY4nrssZhSOl
+mjmmLF3kWf5LGUtH4YaRRUyzUBcDj6corq0dA+5hB9YZEz3cWhJpK8wag4+0
+Z8a3MvSwL2/wRsXXMbDuOvV6BcXE+ac4YblrxuGydrBx5m0mDlm3Hnl+eRzk
+DpUCdNXHzAtPu7eIx+H1uBf97WN9ZPbHnCzykMF3vQG5Vv4GqFLdP+p6Xgbs
+7o4b9mIDLFaW3k38KAP/iCrbhKQ5yG8a8nBzmwAHiSBmg50h7goq4TqcnYDD
+onR+cLUhYvu3bj29E6A7MLD6drgR5hi4lDxxlsOXwby+BE1jfLhoNCwqRQ53
+CsNjXIKNsX7uxO5z7+Wg5mqmzbtnjN7t8bXdSyfh3rCio0WXhel7n22VJE9C
+88IHcSd2szC06arXD12TcHuxq35zLQst5EXJXxZMQYGnMsqYy0Yh45h22Ikp
+iBQV+A3GsjGxt62L9WIKlllGpzJ72Pj99XeSJHsFwKBNoBPPBLvsXDb/HKuA
+O52htKwiE5yJnqMb2aKAQK1XbpqGpvi2MJe2fr4S3lUoo7SPm6JnXsOPQZFK
+uJb68J/OflO8eMhe8rJBCfe6VvNzvDmYbcl7bsCdBr8oP0F+PQed0gZn4vZN
+w5HyhPM2zmYYK+ZHVNVNw4d0W8fQIjPcqOnk7siegUq7BYyBb8yRORLkQwub
+AV6nOHPvJXNMrMGizKoZuL63pmiHqQXG+5UFRuip4KYoY2JlmgW6t3Xx9Xao
+QKTrWGFrzsVezpok3fsq0Hp8tudADhf17N3MPBlqKD3aWLXQZi4Om30aWhmi
+hi/DuayHd+biFpE1+9cyNfipGmKFbpZYFpiRYkjUUNMYoO/fYIn1De14yJ+A
+56pA1dOtVrhFlurNyCcwkfKHLe2zFT59wXMWFBDwjd2YKZRY4fJCObvrLwJ9
+YudNZiNWaBQS8ia/mEC7x7nti2WzftOSnfxyArdK9BcFq63QNaP1WHI1AS+X
+8uRGNoVsHjNPq4OAyKNnW60HhXFWNacPvCJQ6pOi7bOKwmF5xL6OTgJzYmgD
+H5DC5uLupblvCOz8aV8Agz/rcwof8N4TUBzL+uq7mcKRT2tF8UMEbgr1lbJw
+Crc1TpcPfSbwaEUbnttD4fOssnQfCYGEg8X11vspzPc1D7IZIdAmfhmxQUBh
+SPVAf52MQLxDwPlbv1HYeuV6k4OcgA4I81Yep9A9YlPRhUkCfk30yY6TFHIW
+VApClQR2FPau10qiMEFjv++zaQLevHUbM05TKO2hXJ1VBLa3GKQsOzvbr3hp
+/qeaAH+Xk7pFONtPS1YSQsDFpbI0PJXC/wDKSEcU
+     "]]}, 
+   {Hue[0.9060679774997897, 0.6, 0.6], LineBox[CompressedData["
+1:eJxFxXssFHAAB/A7Jdyu1OVIMiNMWZxFdacVlx21FFbDrV26RqlG1/UwUnSu
+lMJKL881N3KmG5uomdByHuc1tcOKWsTV5e1wnKv+6Pf947OPozA+LNqEQqEE
+//Vv74uJphTK5P7/y6jzBf5UbPVIvEtigmeqL5xZY4qrlgStdBpm3TnwwNYK
+uxfSmTvdsJOq0DkmBLfTkqVZpXjRcpgzvYA3jmTuqwuaIo/lz0gOFmGu3Tf7
+9ZM4/Hr64vPAaXJkhXhrRgH+Kht9Uf0bO91kCosDZsgaB9XVtsc4P7u5P2IE
+04YTb8h9Z8kGQ801n/u4XP+qSvId85QaXzZ7jhzNr7B1u4v9urezB4ZwEd2r
+4gNLR37rPiW8nI4bN8/F3BvEwd2p7/o95sk5Z1sitVIcpXwatEeNN+nk0l+u
+C+QMs4TVwmQsGepQb+jEu3O/aNNcFslqZ6+Qk0l4+cpac3E7/lxWTD3kpCf7
+y5qO8sX4YZyLtqcJF9px2+i2S2TPrNHllFicNMIT1TbgwyaenG2MZTJtgh9K
+FWJJvZ88vxanHlOEiywMZE6HmmdxCg8xA9LMa7CFC9va32yFPG49ptkrwBFd
+DoxLCqwIz0tfZ8SNTd1+cceN5IjZzGCzEtzcyWXFl2LvMh1D/RJbCgR9JeW4
+WbnjNK8S++SpEqR1mMGlyVb14pQt9bfPf8TjOlFs7yfcWt7vUdyHU5hlb7iD
+eGIssCtVg0+8X6rU/MRtBYqcUC0uCbPhO05gQd2P4YZZrHqSq3TTYY7oiDx7
+HjNdX8dH6fEtyrmwliU8OWDvwzJgQXWPzbMVrMqS6o1G/AcbNZBB
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{1., 1.},
+  PlotRange->{{1, 2}, {1.0000000204081632`, 7.389055948133589}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.530624804643983*^9}]
+}, Open  ]]
+},
+WindowSize->{740, 829},
+WindowMargins->{{142, Automatic}, {Automatic, 4}},
+FrontEndVersion->"8.0 for Linux x86 (64-bit) (February 23, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 228, 6, 55, "Input"],
+Cell[810, 30, 387, 9, 24, "Message"],
+Cell[1200, 41, 241, 7, 56, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1478, 53, 156, 3, 50, "Input"],
+Cell[1637, 58, 87, 1, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1761, 64, 707, 19, 93, "Input"],
+Cell[2471, 85, 2037, 32, 83, "Output"],
+Cell[4511, 119, 768, 18, 242, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5316, 142, 324, 9, 50, "Input"],
+Cell[5643, 153, 3017, 56, 247, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
