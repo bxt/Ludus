@@ -66,12 +66,14 @@ public class Blockcode {
 	 * Wikipedia</a>
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void mainBCH(String[] args) {
+		System.out.println(">> BCH(15, 7, 5) CODE");
 		
-		// our 
 		Blockcode code=fromPolynomial(MatrixZ2.fromString("111010001"),7);
 		System.out.println("The generator Matrix:");
 		System.out.println(code.generator);
+		System.out.println("The checker Matrix:");
+		System.out.println(code.checker);
 		
 		System.out.println("Build and check a codeword:");
 		MatrixZ2 codeword = code.getCodeword(MatrixZ2.fromString("1001011"));
@@ -99,8 +101,61 @@ public class Blockcode {
 		int hd2=hammingDistance(codevector2, codeword.toBitvector());
 		System.out.println(code.checkCodeword(fakeCodeword)+", hd "+hd2);
 		System.out.println(fakeCodeword);
-		System.out.println("HD:"+hd2);
 		
 	}
 	
+	/**
+	 * Construct a parity generator / parity checker using some matrix generator, 
+	 * then generate the parity for an even and an odd input, and finally
+	 * check the parity for one and two erroneous bits.
+	 * @param args
+	 */
+	public static void mainPGPC(String[] args) {
+		System.out.println(">> PGPC CODE");
+		
+		MatrixZ2 ones=MatrixZ2.zero(6, 1);
+		ones.inc();
+		Blockcode code=fromGenerator(
+				MatrixZ2.catColumns(MatrixZ2.unit(6), ones));
+		System.out.println("The generator Matrix:");
+		System.out.println(code.generator);
+		System.out.println("The checker Matrix:");
+		System.out.println(code.checker);
+		
+		System.out.println("Build and check odd codeword:");
+		MatrixZ2 codeword = code.getCodeword(MatrixZ2.fromString("100101"));
+		System.out.println(code.checkCodeword(codeword)+":");
+		System.out.println(codeword);
+		
+		System.out.println("Build and check even codeword:");
+		codeword = code.getCodeword(MatrixZ2.fromString("110110"));
+		System.out.println(code.checkCodeword(codeword)+":");
+		System.out.println(codeword);
+		
+		System.out.println("Now change 1 bit of the codeword:");
+		List<Boolean> codevector=codeword.toBitvector();
+		codevector.set(3, !codevector.get(3));
+		MatrixZ2 badCodeword = 
+				MatrixZ2.transpose(MatrixZ2.fromVector(codevector));
+		int hd1=hammingDistance(codevector, codeword.toBitvector());
+		System.out.println(code.checkCodeword(badCodeword)+", hd "+hd1);
+		System.out.println(badCodeword);
+		
+		System.out.println("Now change 2 bits of the codeword:");
+		List<Boolean> codevector2=codeword.toBitvector();
+		codevector2.set(3, !codevector2.get(3));
+		codevector2.set(4, !codevector2.get(4));
+		MatrixZ2 fakeCodeword = 
+				MatrixZ2.transpose(MatrixZ2.fromVector(codevector2));
+		int hd2=hammingDistance(codevector2, codeword.toBitvector());
+		System.out.println(
+				code.checkCodeword(fakeCodeword)+", hd "+hd2+" %2="+hd2%2);
+		System.out.println(fakeCodeword);
+		
+	}
+	
+	public static void main(String[] args) {
+		mainBCH(null);
+		mainPGPC(null);
+	}
 }
