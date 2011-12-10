@@ -1,4 +1,4 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.entropy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import bxt.unilectures.informationsuebertragung.fun.Heap.Ordering;
+import bxt.unilectures.informationsuebertragung.fun.entropy.Heap.Ordering;
 
 /**
  * Create a Huffman code from a list of element occurrences

@@ -1,4 +1,4 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.staging;
 
 public interface Stage<T,S> {
 

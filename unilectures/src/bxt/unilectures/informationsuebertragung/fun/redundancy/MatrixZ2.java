@@ -1,4 +1,4 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.redundancy;
 
 import java.util.ArrayList;
 import java.util.Arrays;

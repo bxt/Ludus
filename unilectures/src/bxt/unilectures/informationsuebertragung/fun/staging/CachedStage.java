@@ -1,4 +1,5 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.staging;
+
 
 public class CachedStage<A,B,C> implements Stage<A,B> {
 	

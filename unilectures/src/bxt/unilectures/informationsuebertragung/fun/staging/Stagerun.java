@@ -1,7 +1,12 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.staging;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import bxt.unilectures.informationsuebertragung.fun.entropy.Code;
+import bxt.unilectures.informationsuebertragung.fun.entropy.Hyte;
+import bxt.unilectures.informationsuebertragung.fun.entropy.Entropy;
+import bxt.unilectures.informationsuebertragung.fun.redundancy.Blockify;
 
 public class Stagerun {
 
@@ -13,7 +18,7 @@ public class Stagerun {
 		Stage<byte[],List<List<Boolean>>> stage = 
 				new CombinedStage<byte[],List<Boolean>,List<List<Boolean>>>(
 						new CachedStage<byte[], List<Boolean>, Code<Hyte>>(
-								new Main())
+								new Entropy())
 								, new Blockify());
 		
 		try {
