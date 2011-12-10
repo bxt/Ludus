@@ -152,6 +152,37 @@ public class MatrixZ2 {
 		}
 	}
 	
+	public void gaussJordan() {
+		boolean[][] a=this.entries;
+		
+		int row=0,col=0;
+		while (row<this.rows()&&col<this.columns()) {
+			
+			int row1=row;
+			while(row1<this.rows() && !a[row1][col]) row1++;
+			if(!(row1<this.rows())) {
+				col++;
+				continue;
+			}
+			swapRows(row1, row);
+			
+			for(int i=0;i<this.rows();i++) {
+				if(i!=row && a[i][col]) {
+					for(int j=col;j<this.columns();j++) {
+						a[i][j]=a[i][j]!=a[row][j];
+					}
+				}
+			}
+			
+			row++;col++;
+		}
+	}
+	
+	private void swapRows(int a, int b) {
+		boolean[] tmp=this.entries[a];
+		this.entries[a]=this.entries[b];
+		this.entries[b]=tmp;
+	}
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -186,6 +217,11 @@ public class MatrixZ2 {
 		List<Boolean> v = Arrays.asList(new Boolean[]{false,true});
 		MatrixZ2 d = MatrixZ2.fromVector(v);
 		System.out.println(MatrixZ2.add(b, d));
-			}
+		
+		MatrixZ2 i= MatrixZ2.fromString("1111 0100 1101");
+		System.out.println(i);
+		i.gaussJordan();
+		System.out.println(i);
+	}
 
 }
