@@ -6,7 +6,9 @@ import java.util.List;
 import bxt.unilectures.informationsuebertragung.fun.entropy.Code;
 import bxt.unilectures.informationsuebertragung.fun.entropy.Hyte;
 import bxt.unilectures.informationsuebertragung.fun.entropy.Entropy;
+import bxt.unilectures.informationsuebertragung.fun.redundancy.Blockcode;
 import bxt.unilectures.informationsuebertragung.fun.redundancy.Blockify;
+import bxt.unilectures.informationsuebertragung.fun.redundancy.Redundancy;
 
 public class Stagerun {
 
@@ -18,8 +20,13 @@ public class Stagerun {
 		Stage<byte[],List<List<Boolean>>> stage = 
 				new CombinedStage<byte[],List<Boolean>,List<List<Boolean>>>(
 						new CachedStage<byte[], List<Boolean>, Code<Hyte>>(
-								new Entropy())
-								, new Blockify());
+								new Entropy()) // READABILITY!? ///_.
+								, new CombinedStage<List<Boolean>,
+								List<List<Boolean>>,List<List<Boolean>>>(
+										new Blockify(7),
+										new CachedStage<List<List<Boolean>>,
+										List<List<Boolean>>,Blockcode>(
+												new Redundancy())));
 		
 		try {
 			stage.tock(stage.tick("Hallo Welt!".getBytes("UTF-8")));

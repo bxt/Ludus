@@ -24,6 +24,11 @@ public class Blockcode {
 		return syndorme.equals(MatrixZ2.zero(syndorme.rows(),1));
 	}
 	
+	public MatrixZ2 revealCodeword(MatrixZ2 input) {
+		return MatrixZ2.transpose(MatrixZ2.fromVector(
+				input.toBitvector().subList(0, generator.rows())));
+	}
+	
 	public static Blockcode fromGenerator(MatrixZ2 generator) {
 		generator.gaussJordan();
 		int n=generator.columns();
