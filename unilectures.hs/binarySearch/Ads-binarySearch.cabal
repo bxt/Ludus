@@ -1,0 +1,15 @@
+Name:           Ads-binarySearch
+Homepage:       http://github.com/bxt/Ludus
+Version:        0.9.1
+Author:         Bernhard Häussner
+Synopsis:       Binary search tree implementation as in ADS-WS-1112
+Build-Type:     Simple
+Cabal-Version:  >= 1.2
+
+Executable ads-binarySearch
+  Main-Is:         Main.hs
+  Build-Depends:   base >= 4
+  Other-Modules:   Tree
+
+
+
