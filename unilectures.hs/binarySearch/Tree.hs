@@ -4,16 +4,17 @@ import Data.List (intercalate)
 
 data Tree a = Nil | Node a (Tree a) (Tree a) (Tree a) deriving (Read, Eq)
 
--- insert x Nil = Node x Nil Nil
--- insert x (Node a left right)
+value Nil = Nothing
+value (Node a _ _ _) = Just a
 
-value (Node a _ _ _) = a
+left Nil = Nothing
+left (Node _ left _ _) = Just left
 
-left (Node _ left _ _) = left
+right Nil = Nothing
+right (Node _ _ right _) = Just right
 
-right (Node _ _ right _) = right
-
-parent (Node _ _ _ parent) = parent
+parent Nil = Nothing
+parent (Node _ _ _ parent) = Just parent
 
 -- "InorderTreeWalk"
 asList Nil = []
