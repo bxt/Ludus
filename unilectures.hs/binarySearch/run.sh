@@ -3,6 +3,9 @@
 echo "HLint output:"
 hlint .
 
+echo "QuickTest"
+runhaskell Test.hs
+
 echo "Configuring for local"
 cabal configure --user
 echo "Compiling"
