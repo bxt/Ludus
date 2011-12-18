@@ -40,7 +40,7 @@ parent (Node _ _ _ parent) = Nil
 -- | Create a tree from a list of values, 
 --   search time depends on insertion order
 fromList :: (Ord a) => [a] -> Tree a
-fromList xs = foldr insert Nil xs
+fromList = foldr insert Nil
 -- >>> fromList [3,1,2]
 --    <2>   
 -- <1>   <3>
@@ -51,7 +51,7 @@ fromList xs = foldr insert Nil xs
 --   similar to InorderTreeWalk
 asList :: Tree a -> [a]
 asList Nil = []
-asList (Node a left right _) = (asList left)++[a]++(asList right)
+asList (Node a left right _) = asList left ++ [a] ++ asList right
 
 -- * Traversing
 
@@ -109,18 +109,20 @@ insert x n@(Node _ _ _ parent)  = innerInsert n parent
 instance (Show a) => Show (Tree a) where
   show x = intercalate "\n" $ fst $ toString x
     where
-      toString :: (Show t) => Tree t -> ([[Char]], Int)
+      toString :: (Show t) => Tree t -> ([String], Int)
       toString Nil = ([],0)
       toString (Node value left right _) = (strings,count)
-        where strings = ((spaces lC)++me++(spaces rC)) : zipWithPad (\x y -> x ++ (spaces meC) ++ y ) left' right'
+        where strings = myLine : childLines
               count = lC+rC+meC
               (left',lC)  = toString left
               (right',rC) = toString right
+              myLine = spaces lC ++ me ++ spaces rC
+              childLines = zipWithPad (\x y -> x ++ spaces meC ++ y ) left' right'
               me = "<"++show value++">"
-              meC = (length me)
-              spaces n = take n $ repeat ' '
+              meC = length me
+              spaces n = replicate n ' '
               zipWithPad f [] [] = []
-              zipWithPad f xs ys = (f (nxt xs) (nxt ys)) : zipWithPad f (rest xs) (rest ys)
+              zipWithPad f xs ys = f (nxt xs) (nxt ys) : zipWithPad f (rest xs) (rest ys)
               nxt [] = ""
               nxt xs = head xs
               rest [] = []

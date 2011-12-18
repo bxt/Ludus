@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "HLint output:"
+hlint .
+
 echo "Configuring for local"
 cabal configure --user
 echo "Compiling"
