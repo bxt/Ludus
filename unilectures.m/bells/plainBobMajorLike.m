@@ -29,5 +29,7 @@ end
 n=8
 belltones = reshape ([ plainBobExtend(n) ; [1:n] ]',[],1);
 
+save plainPobMajorLike.mat belltones
+
 wavwrite(bells(belltones,abtastrate)',abtastrate,"plainBobMajorLike.wav")
 # v = bells([1 2 3 4 1 2 3 4 2 1 4 3 1 2 3 4],abtastrate)
