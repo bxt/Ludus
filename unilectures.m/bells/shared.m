@@ -13,7 +13,7 @@ end
 function bells = bells(bellpermut,abtastrate)
 
   # Frequenzen:
-  f=[ 440.00 493.88 523.25 587.33 659.26 698.46 783.99 ];
+  f=[ 440.00 493.88 523.25 587.33 659.26 698.46 783.99 880.00 ];
   
   
   flist = f(bellpermut);
