@@ -1,10 +1,13 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.redundancy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import bxt.unilectures.informationsuebertragung.fun.entropy.CodeStrategy;
+import bxt.unilectures.informationsuebertragung.fun.entropy.Counts;
 
 /**
  * Create a Block code from a list of element occurrences

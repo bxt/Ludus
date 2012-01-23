@@ -1,4 +1,4 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.entropy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

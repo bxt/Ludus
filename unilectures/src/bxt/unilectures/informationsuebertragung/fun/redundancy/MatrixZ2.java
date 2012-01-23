@@ -1,5 +1,6 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.redundancy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,6 +153,91 @@ public class MatrixZ2 {
 		}
 	}
 	
+	public void gaussJordan() {
+		boolean[][] a=this.entries;
+		
+		int row=0,col=0;
+		while (row<this.rows()&&col<this.columns()) {
+			
+			int row1=row;
+			while(row1<this.rows() && !a[row1][col]) row1++;
+			if(!(row1<this.rows())) {
+				col++;
+				continue;
+			}
+			swapRows(row1, row);
+			
+			for(int i=0;i<this.rows();i++) {
+				if(i!=row && a[i][col]) {
+					for(int j=col;j<this.columns();j++) {
+						a[i][j]=a[i][j]!=a[row][j];
+					}
+				}
+			}
+			
+			row++;col++;
+		}
+	}
+	
+	private void swapRows(int a, int b) {
+		boolean[] tmp=this.entries[a];
+		this.entries[a]=this.entries[b];
+		this.entries[b]=tmp;
+	}
+	
+	public MatrixZ2 grepColumn(int col) {
+		boolean[][] entries=new boolean[this.rows()][1];
+		for(int i=0;i<this.rows();i++) {
+				entries[i][0]=this.entries[i][col];
+		}
+		return new MatrixZ2(entries);
+	}
+	
+	public MatrixZ2 grepRow(int row) {
+		boolean[][] entries=new boolean[1][this.columns()];
+		for(int i=0;i<this.columns();i++) {
+				entries[0][i]=this.entries[row][i];
+		}
+		return new MatrixZ2(entries);
+	}
+	
+	public MatrixZ2 grepColumns(int from, int to) {
+		boolean[][] entries=new boolean[this.rows()][to-from];
+		for(int col=from;col<to;col++) {
+			for(int i=0;i<this.rows();i++) {
+					entries[i][col-from]=this.entries[i][col];
+			}
+		}
+		return new MatrixZ2(entries);
+	}
+	
+	public MatrixZ2 grepRows(int from, int to) {
+		boolean[][] entries=new boolean[to-from][this.columns()];
+		for(int row=from;row<to;row++) {
+			for(int i=0;i<this.columns();i++) {
+					entries[row-from][i]=this.entries[row][i];
+			}
+		}
+		return new MatrixZ2(entries);
+	}
+	
+	public List<Boolean> toBitvector() {
+		if(this.rows()==1) {
+			List<Boolean> vector=new ArrayList<Boolean>(this.columns());
+			for(int i=0;i<this.columns();i++)
+			{
+				vector.add(this.entries[0][i]);
+			}
+			return vector;
+		}
+		if(this.columns()==1) {
+			List<Boolean> vector=new ArrayList<Boolean>(this.rows());
+			for(int i=0;i<this.rows();i++)
+				vector.add(this.entries[i][0]);
+			return vector;
+		}
+		return null;
+	}
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -164,6 +250,18 @@ public class MatrixZ2 {
 			sb.append('\n');
 		}
 		return sb.toString();
+	}
+	
+	public boolean equals(MatrixZ2 other) {
+		if(!(other.columns()==this.columns())) return false;
+		if(!(other.rows()==this.rows())) return false;		
+		for(int i=0;i<this.rows();i++) {
+			for(int k=0;k<this.columns();k++) {
+				if(!this.entries[i][k]==other.entries[i][k])
+					return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -186,6 +284,14 @@ public class MatrixZ2 {
 		List<Boolean> v = Arrays.asList(new Boolean[]{false,true});
 		MatrixZ2 d = MatrixZ2.fromVector(v);
 		System.out.println(MatrixZ2.add(b, d));
-			}
+		
+		MatrixZ2 i= MatrixZ2.fromString("1111 0100 1101");
+		System.out.println(i);
+		i.gaussJordan();
+		System.out.println(i);
+		
+		System.out.println(i.grepColumn(1));
+		System.out.println(i.grepRow(2));
+	}
 
 }

@@ -14,6 +14,8 @@ Desktop.ini
 unilectures/bin
 __pycache__
 *.pyc
+*.o
+*.hi
 ~
 ~
 ~

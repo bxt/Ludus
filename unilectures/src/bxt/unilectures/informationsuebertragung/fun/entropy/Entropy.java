@@ -1,13 +1,16 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.entropy;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import bxt.unilectures.informationsuebertragung.fun.Counts.Unit;
+import bxt.unilectures.informationsuebertragung.fun.entropy.Counts.Unit;
+import bxt.unilectures.informationsuebertragung.fun.redundancy.Block;
+import bxt.unilectures.informationsuebertragung.fun.staging.Stage;
+import bxt.unilectures.informationsuebertragung.fun.staging.Tuple;
 
-public class Main implements Stage<byte[],Tuple<Code<Hyte>,List<Boolean>>> {
+public class Entropy implements Stage<byte[],Tuple<Code<Hyte>,List<Boolean>>> {
 	
 	private static Charset charset = Charset.forName("UTF-8");
 
@@ -39,7 +42,7 @@ public class Main implements Stage<byte[],Tuple<Code<Hyte>,List<Boolean>>> {
 		byte[] input="aaaaaaltaaaaaaaaaaaaaaaaah!".getBytes(charset);
 		*/
 		
-		Main me = new Main();
+		Entropy me = new Entropy();
 		
 		if(Arrays.equals(input,me.tock(me.tick(input)))) {
 			System.out.println("Worked!");

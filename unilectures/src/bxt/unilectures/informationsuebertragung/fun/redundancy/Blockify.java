@@ -1,8 +1,10 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.redundancy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import bxt.unilectures.informationsuebertragung.fun.staging.Stage;
 
 public class Blockify implements Stage<List<Boolean>,List<List<Boolean>>> {
 

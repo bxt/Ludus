@@ -1,4 +1,4 @@
-package bxt.unilectures.informationsuebertragung.fun;
+package bxt.unilectures.informationsuebertragung.fun.staging;
 
 public class CombinedStage<A,B,C> implements Stage<A,C> {
 	
