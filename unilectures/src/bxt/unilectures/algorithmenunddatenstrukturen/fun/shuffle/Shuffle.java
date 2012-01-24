@@ -12,8 +12,6 @@ public class Shuffle {
 		System.out.println(Arrays.toString(a));
 		shuffle(a);
 		System.out.println(Arrays.toString(a));
-		unshuffle(a);
-		System.out.println(Arrays.toString(a));
 
 	}
 	
