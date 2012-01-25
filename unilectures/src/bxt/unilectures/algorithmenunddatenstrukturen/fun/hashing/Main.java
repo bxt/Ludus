@@ -1,8 +1,16 @@
 package bxt.unilectures.algorithmenunddatenstrukturen.fun.hashing;
 
+/**
+ * A Tester for our hash map
+ * <p>Will add and remove items and print the hash maps state
+ * plus the keys tried while probing. 
+ * @author Burny
+ * @date 2011-01-24
+ */
 public class Main {
 
 	/**
+	 * The main() method to run a testing sequence
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -13,7 +21,7 @@ public class Main {
 		Hashing hasher = new MultiplicationHashing();
 		Probing prober = new DoubleProbing(new MultiplicationHashing(1.1f));
 		
-		HashMap<String> hashMap = new HashMap<>(5, hasher, prober);
+		HashMap<String> hashMap = new HashMap<>(5, hasher, prober, true);
 		
 		hashMap.put(3, "Hallo ");
 		System.out.println(hashMap);
