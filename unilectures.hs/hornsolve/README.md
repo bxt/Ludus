@@ -3,7 +3,7 @@
 
 The example clauses used here are:
 
-    (1 ? A ? B) ? (A ? C ? E) ? (A ? C ? D) ? (B ? C ? E) ? (E -> 0)
+    (1 → A ∨ B) ∧ (A → C ∨ E) ∧ (A ∧ C → D) ∧ (B → C ∨ E) ∧ (E → 0)
 
 The resolution tree is:
 
