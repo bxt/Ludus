@@ -108,7 +108,7 @@ public class ConnectFour {
 			}
 		}
 		
-		char[] players={'X','O'};
+		char[] players={'●','○'};
 		for(int zugnummer=0;!isFull(field);zugnummer++) {
 			// Speieler abwechselnd auswaehlen:
 			char currentPayer=players[zugnummer%players.length];
