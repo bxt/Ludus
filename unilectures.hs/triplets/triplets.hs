@@ -2,7 +2,7 @@
 
 import Data.Char
 import System.Environment (getArgs)
-import Data.Function (on)
+import Control.Monad (liftM2)
 -- import System.IO.UTF8 (interact)
 
 instance Monad (Either String) where  
@@ -15,7 +15,11 @@ instance Monad (Either String) where
 data Code a b = Code {encode :: ([a] -> [b]), decode :: ([b] -> [a])}
 
 emptyC = Code id id
+
+beforeC :: Code a b -> Code b c -> Code a c
 beforeC (Code e1 d1) (Code e2 d2) = Code (e2.e1) (d1.d2)
+
+flipC :: Code a b -> Code b a
 flipC (Code e d) = (Code d e)
 
 data Trit = A | B | C deriving Show
@@ -83,9 +87,17 @@ rnmC = Code (map encode) (map decode)
     decode 'n' = B
     decode 'm' = C
 
+showC :: (Show a, Read a) => Code a Char
+showC = Code show read
+
+numsC :: Code Char Int
+numsC = Code (map ord) (map chr)
 
 tripletC :: Code Char Trit
-tripletC = Code ((=<<) (encodeOne.ord)) decode
+tripletC = numsC `beforeC` tripletNumC
+
+tripletNumC :: Code Int Trit
+tripletNumC = Code ((=<<) (encodeOne)) decode
   where
     encodeOne :: Int -> [Trit]
     encodeOne x
@@ -100,10 +112,10 @@ tripletC = Code ((=<<) (encodeOne.ord)) decode
         padTo n xs = if diff > 0 then pad diff xs else xs
           where diff = n - length xs
                 pad n xs = iterate (A:) xs !! n
-    decode :: [Trit] -> String
-    decode [] = ""
-    decode (A:b:c:d:e:f:g:xs) = ( chr.untritify.unpad $ (b:c:d:e:f:g:[]) ) : decode xs
-    decode (B:b:c:d:e:f:g:h:i:j:k:l:m:n:o:xs) = ( chr.untritify.unpad $ (b:c:d:e:f:g:h:i:j:k:l:m:n:o:[])  ) : decode xs
+    decode :: [Trit] -> [Int]
+    decode [] = []
+    decode (A:b:c:d:e:f:g:xs) = ( untritify.unpad $ (b:c:d:e:f:g:[]) ) : decode xs
+    decode (B:b:c:d:e:f:g:h:i:j:k:l:m:n:o:xs) = ( untritify.unpad $ (b:c:d:e:f:g:h:i:j:k:l:m:n:o:[])  ) : decode xs
     
     untritify = untritify' 0
       where untritify' n [] = n
