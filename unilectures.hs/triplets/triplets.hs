@@ -128,14 +128,14 @@ tripletNumC = Code ((=<<) (encodeOne)) decode
 
 
 
-getDigitCode :: String -> Maybe (Code Trit Char)
-getDigitCode "wavy" = Just wavyC
-getDigitCode "vV" = Just vVC
-getDigitCode "slash" = Just slashC
-getDigitCode "hash" = Just hashC
-getDigitCode "dP" = Just dPC
-getDigitCode "rnm" = Just rnmC
-getDigitCode _ = Nothing
+getDigitCode :: String -> Either String (Code Trit Char)
+getDigitCode "wavy" = return wavyC
+getDigitCode "vV" = return vVC
+getDigitCode "slash" = return slashC
+getDigitCode "hash" = return hashC
+getDigitCode "dP" = return dPC
+getDigitCode "rnm" = return rnmC
+getDigitCode x = fail $ "Invalid code name: "++x
 
 
 data Opts = Opts {mode :: (Code Char Char) -> String -> String, code :: Code Trit Char, inCode :: Code Char Trit}
@@ -151,12 +151,8 @@ getOpts' :: [String] -> Opts -> Either String Opts
 getOpts' [] r = return r
 getOpts' ("-d":xs)  (Opts _ o2 o3) = getOpts' xs $ Opts decode o2 o3
 getOpts' ("+d":xs)  (Opts _ o2 o3) = getOpts' xs $ Opts encode o2 o3
-getOpts' ("-e":x:xs)(Opts o1 _ o3) = case getDigitCode x of
-  Nothing -> fail $ "Invalid digit code: "++x
-  Just f  -> getOpts' xs $ Opts o1 f o3
-getOpts' ("-r":x:xs)(Opts o1 o2 _) = case getDigitCode x of
-  Nothing -> fail $ "Invalid input digit code: "++x
-  Just f  -> getOpts' xs $ Opts o1 o2 (flipC f)
+getOpts' ("-e":x:xs)(Opts o1 _ o3) = do f <- getDigitCode x; getOpts' xs $ Opts o1 f o3
+getOpts' ("-r":x:xs)(Opts o1 o2 _) = do f <- getDigitCode x; getOpts' xs $ Opts o1 o2 (flipC f)
 getOpts'  (x:_) _ = fail $ "Unknown option: "++x
 
 
