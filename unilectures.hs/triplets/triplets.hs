@@ -149,10 +149,10 @@ getOpts io = do
 
 getOpts' :: [String] -> Opts -> Either String Opts
 getOpts' [] r = return r
-getOpts' ("-d":xs)  (Opts _ o2 o3) = getOpts' xs $ Opts decode o2 o3
-getOpts' ("+d":xs)  (Opts _ o2 o3) = getOpts' xs $ Opts encode o2 o3
-getOpts' ("-e":x:xs)(Opts o1 _ o3) = do f <- getDigitCode x; getOpts' xs $ Opts o1 f o3
-getOpts' ("-r":x:xs)(Opts o1 o2 _) = do f <- getDigitCode x; getOpts' xs $ Opts o1 o2 (flipC f)
+getOpts' ("-d":xs)  o = getOpts' xs $ o {mode = decode}
+getOpts' ("+d":xs)  o = getOpts' xs $ o {mode = encode}
+getOpts' ("-e":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {code = f}
+getOpts' ("-r":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {inCode = (flipC f)}
 getOpts'  (x:_) _ = fail $ "Unknown option: "++x
 
 
