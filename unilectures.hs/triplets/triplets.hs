@@ -1,8 +1,7 @@
-{-# OPTIONS -XFlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 import Data.Char
 import System.Environment (getArgs)
-import Control.Monad (liftM2)
 -- import System.IO.UTF8 (interact)
 
 instance Monad (Either String) where  
@@ -12,7 +11,9 @@ instance Monad (Either String) where
     fail = Left
 
 
-data Code a b = Code {encode :: ([a] -> [b]), decode :: ([b] -> [a])}
+data Code a b = Code { encode :: [a] -> [b]
+                     , decode :: [b] -> [a]
+                     }
 
 emptyC = Code id id
 
@@ -20,12 +21,12 @@ beforeC :: Code a b -> Code b c -> Code a c
 beforeC (Code e1 d1) (Code e2 d2) = Code (e2.e1) (d1.d2)
 
 flipC :: Code a b -> Code b a
-flipC (Code e d) = (Code d e)
+flipC (Code e d) = Code d e
 
 data Trit = A | B | C deriving Show
 
 wavyC :: Code Trit Char
-wavyC = Code ((=<<) encode) (map decode)
+wavyC = Code (encode =<<) (map decode)
   where 
     encode A = "-"
     encode B = "+"
@@ -35,7 +36,7 @@ wavyC = Code ((=<<) encode) (map decode)
     decode '~' = C
 
 vVC :: Code Trit Char
-vVC = Code ((=<<) encode) decode
+vVC = Code (encode =<<) decode
   where 
     encode A = "v"
     encode B = "V"
@@ -97,7 +98,7 @@ tripletC :: Code Char Trit
 tripletC = numsC `beforeC` tripletNumC
 
 tripletNumC :: Code Int Trit
-tripletNumC = Code ((=<<) (encodeOne)) decode
+tripletNumC = Code (encodeOne =<<) decode
   where
     encodeOne :: Int -> [Trit]
     encodeOne x
@@ -109,17 +110,16 @@ tripletNumC = Code ((=<<) (encodeOne)) decode
         tritify 1 = [B]
         tritify 2 = [C]
         tritify a = tritify (a `div` 3) ++ tritify (a `mod` 3)
-        padTo n xs = if diff > 0 then pad diff xs else xs
+        padTo n xs = if diff > 0 then pad xs diff else xs
           where diff = n - length xs
-                pad n xs = iterate (A:) xs !! n
+                pad = (!!) . iterate (A:)
     decode :: [Trit] -> [Int]
     decode [] = []
-    decode (A:b:c:d:e:f:g:xs) = ( untritify.unpad $ (b:c:d:e:f:g:[]) ) : decode xs
-    decode (B:b:c:d:e:f:g:h:i:j:k:l:m:n:o:xs) = ( untritify.unpad $ (b:c:d:e:f:g:h:i:j:k:l:m:n:o:[])  ) : decode xs
+    decode (A:b:c:d:e:f:g:xs) = ( untritify.unpad $ [b, c, d, e, f, g] ) : decode xs
+    decode (B:b:c:d:e:f:g:h:i:j:k:l:m:n:o:xs) = ( untritify.unpad $ [b, c, d, e, f, g, h, i, j, k, l, m, n, o]  ) : decode xs
     
-    untritify = untritify' 0
-      where untritify' n [] = n
-            untritify' n (x:xs) = untritify' (n*3+untritifyOne x) xs
+    untritify = foldl (\n x -> n*3 + untritifyOne x) 0
+        where
             untritifyOne A = 0
             untritifyOne B = 1
             untritifyOne C = 2
@@ -138,7 +138,10 @@ getDigitCode "rnm" = return rnmC
 getDigitCode x = fail $ "Invalid code name: "++x
 
 
-data Opts = Opts {mode :: (Code Char Char) -> String -> String, code :: Code Trit Char, inCode :: Code Char Trit}
+data Opts = Opts { mode :: Code Char Char -> String -> String
+                 , code :: Code Trit Char
+                 , inCode :: Code Char Trit
+                 }
 
 getOpts :: (Opts -> IO ()) -> IO ()
 getOpts io = do
@@ -152,10 +155,9 @@ getOpts' [] r = return r
 getOpts' ("-d":xs)  o = getOpts' xs $ o {mode = decode}
 getOpts' ("+d":xs)  o = getOpts' xs $ o {mode = encode}
 getOpts' ("-e":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {code = f}
-getOpts' ("-r":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {inCode = (flipC f)}
+getOpts' ("-r":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {inCode = flipC f}
 getOpts'  (x:_) _ = fail $ "Unknown option: "++x
 
 
-main = do
-  getOpts (\(Opts mode code inCode) -> interact $ mode (inCode `beforeC` code))
+main = getOpts ( \(Opts mode code inCode) -> interact $ mode (inCode `beforeC` code) )
 
