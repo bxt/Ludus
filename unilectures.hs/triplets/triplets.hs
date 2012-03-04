@@ -143,21 +143,21 @@ data Opts = Opts { mode :: Code Char Char -> String -> String
                  , inCode :: Code Char Trit
                  }
 
-getOpts :: (Opts -> IO ()) -> IO ()
-getOpts io = do
+withOpts :: (Opts -> IO ()) -> IO ()
+withOpts io = do
   args <- getArgs
-  case getOpts' args (Opts encode wavyC tripletC) of
+  case getOpts args (Opts encode wavyC tripletC) of
     Left e     -> putStrLn $ "Error: "++e
     Right opts -> io opts
 
-getOpts' :: [String] -> Opts -> Either String Opts
-getOpts' [] r = return r
-getOpts' ("-d":xs)  o = getOpts' xs $ o {mode = decode}
-getOpts' ("+d":xs)  o = getOpts' xs $ o {mode = encode}
-getOpts' ("-e":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {code = f}
-getOpts' ("-r":x:xs)o = do f <- getDigitCode x; getOpts' xs $ o {inCode = flipC f}
-getOpts'  (x:_) _ = fail $ "Unknown option: "++x
+getOpts :: [String] -> Opts -> Either String Opts
+getOpts [] r = return r
+getOpts ("-d":xs)  o = getOpts xs $ o {mode = decode}
+getOpts ("+d":xs)  o = getOpts xs $ o {mode = encode}
+getOpts ("-e":x:xs)o = do f <- getDigitCode x; getOpts xs $ o {code = f}
+getOpts ("-r":x:xs)o = do f <- getDigitCode x; getOpts xs $ o {inCode = flipC f}
+getOpts  (x:_) _ = fail $ "Unknown option: "++x
 
 
-main = getOpts ( \(Opts mode code inCode) -> interact $ mode (inCode `beforeC` code) )
+main = withOpts $ \(Opts mode code inCode) -> interact $ mode (inCode `beforeC` code)
 
