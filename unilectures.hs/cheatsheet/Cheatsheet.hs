@@ -330,7 +330,9 @@ tacos = applysam (++) ("Ta"++) ('o':)  "c" "s"
 -- Meta
 -- ----
 
--- This file was written by [Bernhard Häussner](http://bernhardhaeussner.de) and
+-- This file was written by [Bernhard Häussner](http://bernhardhaeussner.de),
+-- you can find and fork the [source at github](https://github.com/bxt/Ludus/tree/master/unilectures.hs/cheatsheet)
+-- and here's the [annotated source code view](http://bxt.github.com/Ludus/haskell-cheatsheet/)
 -- processed by [docco](http://jashkenas.github.com/docco/). 
 
 
