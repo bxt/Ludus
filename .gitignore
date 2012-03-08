@@ -16,14 +16,6 @@ __pycache__
 *.pyc
 *.o
 *.hi
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
 
+# gh-pages wc
+gh-pages
