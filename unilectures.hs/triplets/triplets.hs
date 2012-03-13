@@ -116,7 +116,7 @@ tripletNumC = Code (encodeOne =<<) decode
     decode :: [Trit] -> [Int]
     decode [] = []
     decode (A:b:c:d:e:f:g:xs) = ( untritify.unpad $ [b, c, d, e, f, g] ) : decode xs
-    decode (B:b:c:d:e:f:g:h:i:j:k:l:m:n:o:xs) = ( untritify.unpad $ [b, c, d, e, f, g, h, i, j, k, l, m, n, o]  ) : decode xs
+    decode (B:b:c:d:e:f:g: h:i:j:k:l:m:n: xs) = ( untritify.unpad $ [b, c, d, e, f, g, h, i, j, k, l, m, n]  ) : decode xs
     
     untritify = foldl (\n x -> n*3 + untritifyOne x) 0
         where
