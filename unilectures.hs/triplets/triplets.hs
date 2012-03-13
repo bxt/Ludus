@@ -15,10 +15,13 @@ data Code a b = Code { encode :: [a] -> [b]
                      , decode :: [b] -> [a]
                      }
 
-emptyC = Code id id
+-- instance Category Code where
 
-beforeC :: Code a b -> Code b c -> Code a c
-beforeC (Code e1 d1) (Code e2 d2) = Code (e2.e1) (d1.d2)
+idC = Code id id
+
+(<<<) :: Code a b -> Code b c -> Code a c
+(Code e1 d1) <<< (Code e2 d2) = Code (e2.e1) (d1.d2)
+
 
 flipC :: Code a b -> Code b a
 flipC (Code e d) = Code d e
@@ -95,7 +98,7 @@ numsC :: Code Char Int
 numsC = Code (map ord) (map chr)
 
 tripletC :: Code Char Trit
-tripletC = numsC `beforeC` tripletNumC
+tripletC = numsC <<< tripletNumC
 
 tripletNumC :: Code Int Trit
 tripletNumC = Code (encodeOne =<<) decode
@@ -159,5 +162,5 @@ getOpts ("-r":x:xs)o = do f <- getDigitCode x; getOpts xs $ o {inCode = flipC f}
 getOpts  (x:_) _ = fail $ "Unknown option: "++x
 
 
-main = withOpts $ \(Opts mode code inCode) -> interact $ mode (inCode `beforeC` code)
+main = withOpts $ \(Opts mode code inCode) -> interact $ mode (inCode <<< code)
 
