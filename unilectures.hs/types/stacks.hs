@@ -11,7 +11,7 @@ check _ _ = False
 
 
 
-check2 xs = Just ((),0) == runStateT (foldM_ f ' ' xs) 0
+check2 xs = maybe False ((==0).snd) $ runStateT (foldM_ f ' ' xs) 0
   where
     f :: Char -> Char -> StateT Int Maybe Char
     f c '(' = do
