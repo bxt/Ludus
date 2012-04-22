@@ -12,6 +12,7 @@ Desktop.ini
 # Other
 .metadata
 unilectures/bin
+unilectures.processing/bin
 __pycache__
 *.pyc
 *.o
