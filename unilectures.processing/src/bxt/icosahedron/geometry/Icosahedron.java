@@ -16,72 +16,34 @@ public class Icosahedron {
 		float sizeBig = size * phi;
 		float sizeSqrt = size * (float) Math.sqrt(phi);
 		
-		//float[] vertexData = new float[]{};
-		
-		vertices = new Vertex[]{
-				new Vertex("00",new PVector[]{
-						new PVector( sizeBig, 0, size),
-						new PVector( 0, 0, size),
-						new PVector( sizeSqrt, 0, sizeSqrt),
-						},positionSwitch),
-				new Vertex("01",new PVector[]{
-						new PVector(-sizeBig, 0, size),
-						new PVector(-size/2, 0, size*3),
-						new PVector(-sizeSqrt, 0, sizeSqrt),
-						},positionSwitch),
-				new Vertex("02",new PVector[]{
-						new PVector(-sizeBig, 0,-size),
-						new PVector(-size/2, 0,-size*3),
-						new PVector(-sizeSqrt, 0,-sizeSqrt),
-						},positionSwitch),
-				new Vertex("03",new PVector[]{
-						new PVector( sizeBig, 0,-size),
-						new PVector( 0, 0,-size),
-						new PVector( sizeSqrt, 0,-sizeSqrt),
-						},positionSwitch),
-				
-				new Vertex("04",new PVector[]{
-						new PVector( size, sizeBig, 0),
-						new PVector( 0, size, 0),
-						new PVector( sizeSqrt, sizeSqrt, 0),
-						},positionSwitch),
-				new Vertex("05",new PVector[]{
-						new PVector( size,-sizeBig, 0),
-						new PVector( 0,-size, 0),
-						new PVector( sizeSqrt,-sizeSqrt, 0),
-						},positionSwitch),
-				new Vertex("06",new PVector[]{
-						new PVector(-size,-sizeBig, 0),
-						new PVector(-size/2,-sizeBig-size, 0),
-						new PVector(-sizeSqrt,-sizeSqrt, 0),
-						},positionSwitch),
-				new Vertex("07",new PVector[]{
-						new PVector(-size, sizeBig, 0),
-						new PVector(-size/2, sizeBig+size, 0),
-						new PVector(-sizeSqrt, sizeSqrt, 0),
-						},positionSwitch),
-				
-				new Vertex("08",new PVector[]{
-						new PVector( 0, size, sizeBig),
-						new PVector(-size/4, size, size),
-						new PVector( 0, sizeSqrt, sizeSqrt),
-						},positionSwitch),
-				new Vertex("09",new PVector[]{
-						new PVector( 0, size,-sizeBig),
-						new PVector(-size/4, size,-size),
-						new PVector( 0, sizeSqrt,-sizeSqrt),
-						},positionSwitch),
-				new Vertex("10",new PVector[]{
-						new PVector( 0,-size,-sizeBig),
-						new PVector(-size/4,-size,-size),
-						new PVector( 0,-sizeSqrt,-sizeSqrt),
-						},positionSwitch),
-				new Vertex("11",new PVector[]{
-						new PVector( 0,-size, sizeBig),
-						new PVector(-size/4,-size, size),
-						new PVector( 0,-sizeSqrt, sizeSqrt),
-						},positionSwitch),
+		// coords icosahedron | plane | cuboctahedron
+		float[] vertexData = new float[]{
+		   sizeBig, 0, size,    0     ,     0, size,     sizeSqrt, 0, sizeSqrt,
+		  -sizeBig, 0, size,   -size/2,     0, size*3,  -sizeSqrt, 0, sizeSqrt,
+		  -sizeBig, 0,-size,   -size/2,     0,-size*3,  -sizeSqrt, 0,-sizeSqrt,
+		   sizeBig, 0,-size,    0     ,     0,-size,     sizeSqrt, 0,-sizeSqrt,
+		   size, sizeBig, 0,    0     , size,  0,        sizeSqrt, sizeSqrt, 0,
+		   size,-sizeBig, 0,    0     ,-size,  0,        sizeSqrt,-sizeSqrt, 0,
+		  -size,-sizeBig, 0,   -size/2,-sizeBig-size,0, -sizeSqrt,-sizeSqrt, 0,
+		  -size, sizeBig, 0,   -size/2, sizeBig+size,0, -sizeSqrt, sizeSqrt, 0,
+		   0, size, sizeBig,   -size/4, size,  size,     0, sizeSqrt, sizeSqrt,
+		   0, size,-sizeBig,   -size/4, size, -size,     0, sizeSqrt,-sizeSqrt,
+		   0,-size,-sizeBig,   -size/4,-size, -size,     0,-sizeSqrt,-sizeSqrt,
+		   0,-size, sizeBig,   -size/4,-size,  size,     0,-sizeSqrt, sizeSqrt,
 		};
+		
+		float[] vd = vertexData;
+		vertices = new Vertex[12];
+		for(int i = 0; i < vertices.length; i++) {
+			int k = i*9;
+			vertices[i] = new Vertex(
+					String.format("%02d",i),
+					new PVector[]{
+						new PVector(vd[k+0],vd[k+1],vd[k+2]),
+						//new PVector(vd[k+3],vd[k+4],vd[k+5]),
+						new PVector(vd[k+6],vd[k+7],vd[k+8]),
+					},positionSwitch);
+		}
 		
 		// zeile: vertex, spalten 0,1 und 2,3, von/nach vtxs
 		edges = new int[]{
