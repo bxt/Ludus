@@ -1,4 +1,5 @@
 package bxt.icosahedron.processing;
+import bxt.icosahedron.geometry.PositionSwitch;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -10,6 +11,8 @@ public class IcosahedronSketch extends PApplet {
 	private PFont font;
 	
 	private Drawable[] drawables;
+	
+	PositionSwitch positionSwitch;
 	
 	public static void main(String args[]) {
 		PApplet.main(new String[]{
@@ -24,8 +27,10 @@ public class IcosahedronSketch extends PApplet {
 		font = loadFont("BitstreamVeraSans-Roman-48.vlw");
 		textFont(font);
 		
+		positionSwitch = new PositionSwitch();
+		
 		drawables = new Drawable[]{
-				new IcosahedronRenderer(100, this),
+				new IcosahedronRenderer(100, positionSwitch, this),
 				new RotationCamera(this),
 				new FpsPrinter(this),
 		};
@@ -36,9 +41,18 @@ public class IcosahedronSketch extends PApplet {
 		background(10);
 		lights();
 		
+		positionSwitch.step();
+		
 		for (Drawable drawable : drawables) {
 			drawable.draw();
 		}
 		
 	}
+	
+	public void mouseClicked() {
+		if(mouseButton == LEFT) {
+			positionSwitch.nextPosition();
+		}
+	}
+	
 }

@@ -10,26 +10,77 @@ public class Icosahedron {
 	protected int[] edges;
 	protected int[] roundtrip;
 
-	public Icosahedron(float size) {
+	public Icosahedron(float size, PositionSwitch positionSwitch) {
 		
 		float phi = (float) (1.0+Math.sqrt(5)) / 2.0f;
 		float sizeBig = size * phi;
+		float sizeSqrt = size * (float) Math.sqrt(phi);
+		
+		//float[] vertexData = new float[]{};
 		
 		vertices = new Vertex[]{
-				new Vertex("00",new PVector( sizeBig, 0, size)),
-				new Vertex("01",new PVector(-sizeBig, 0, size)),
-				new Vertex("02",new PVector(-sizeBig, 0,-size)),
-				new Vertex("03",new PVector( sizeBig, 0,-size)),
+				new Vertex("00",new PVector[]{
+						new PVector( sizeBig, 0, size),
+						new PVector( 0, 0, size),
+						new PVector( sizeSqrt, 0, sizeSqrt),
+						},positionSwitch),
+				new Vertex("01",new PVector[]{
+						new PVector(-sizeBig, 0, size),
+						new PVector(-size/2, 0, size*3),
+						new PVector(-sizeSqrt, 0, sizeSqrt),
+						},positionSwitch),
+				new Vertex("02",new PVector[]{
+						new PVector(-sizeBig, 0,-size),
+						new PVector(-size/2, 0,-size*3),
+						new PVector(-sizeSqrt, 0,-sizeSqrt),
+						},positionSwitch),
+				new Vertex("03",new PVector[]{
+						new PVector( sizeBig, 0,-size),
+						new PVector( 0, 0,-size),
+						new PVector( sizeSqrt, 0,-sizeSqrt),
+						},positionSwitch),
 				
-				new Vertex("04",new PVector( size, sizeBig, 0)),
-				new Vertex("05",new PVector( size,-sizeBig, 0)),
-				new Vertex("06",new PVector(-size,-sizeBig, 0)),
-				new Vertex("07",new PVector(-size, sizeBig, 0)),
+				new Vertex("04",new PVector[]{
+						new PVector( size, sizeBig, 0),
+						new PVector( 0, size, 0),
+						new PVector( sizeSqrt, sizeSqrt, 0),
+						},positionSwitch),
+				new Vertex("05",new PVector[]{
+						new PVector( size,-sizeBig, 0),
+						new PVector( 0,-size, 0),
+						new PVector( sizeSqrt,-sizeSqrt, 0),
+						},positionSwitch),
+				new Vertex("06",new PVector[]{
+						new PVector(-size,-sizeBig, 0),
+						new PVector(-size/2,-sizeBig-size, 0),
+						new PVector(-sizeSqrt,-sizeSqrt, 0),
+						},positionSwitch),
+				new Vertex("07",new PVector[]{
+						new PVector(-size, sizeBig, 0),
+						new PVector(-size/2, sizeBig+size, 0),
+						new PVector(-sizeSqrt, sizeSqrt, 0),
+						},positionSwitch),
 				
-				new Vertex("08",new PVector( 0, size, sizeBig)),
-				new Vertex("09",new PVector( 0, size,-sizeBig)),
-				new Vertex("10",new PVector( 0,-size,-sizeBig)),
-				new Vertex("11",new PVector( 0,-size, sizeBig)),
+				new Vertex("08",new PVector[]{
+						new PVector( 0, size, sizeBig),
+						new PVector(-size/4, size, size),
+						new PVector( 0, sizeSqrt, sizeSqrt),
+						},positionSwitch),
+				new Vertex("09",new PVector[]{
+						new PVector( 0, size,-sizeBig),
+						new PVector(-size/4, size,-size),
+						new PVector( 0, sizeSqrt,-sizeSqrt),
+						},positionSwitch),
+				new Vertex("10",new PVector[]{
+						new PVector( 0,-size,-sizeBig),
+						new PVector(-size/4,-size,-size),
+						new PVector( 0,-sizeSqrt,-sizeSqrt),
+						},positionSwitch),
+				new Vertex("11",new PVector[]{
+						new PVector( 0,-size, sizeBig),
+						new PVector(-size/4,-size, size),
+						new PVector( 0,-sizeSqrt, sizeSqrt),
+						},positionSwitch),
 		};
 		
 		// zeile: vertex, spalten 0,1 und 2,3, von/nach vtxs

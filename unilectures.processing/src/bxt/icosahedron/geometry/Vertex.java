@@ -5,17 +5,20 @@ import processing.core.PVector;
 public class Vertex {
 	
 	private String name;
-	private PVector position;
+	private PVector[] positions;
+	private PositionSwitch positionSwitch;
 	
-	public Vertex(String name, PVector position) {
+	public Vertex(String name, PVector[] positions, PositionSwitch positionSwitch) {
 		this.name = name;
-		this.position = position;
+		this.positions = positions;
+		this.positionSwitch = positionSwitch;
 	}
 	public String getName() {
 		return name;
 	}
 	public PVector getPosition() {
-		return position;
+		return positionSwitch.getPosition(positions);
 	}
+	
 	
 }

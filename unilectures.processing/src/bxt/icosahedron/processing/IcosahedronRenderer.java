@@ -2,6 +2,7 @@ package bxt.icosahedron.processing;
 
 
 import bxt.icosahedron.geometry.Icosahedron;
+import bxt.icosahedron.geometry.PositionSwitch;
 import bxt.icosahedron.geometry.Vertex;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -19,8 +20,10 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 	
 	private PApplet p;
 	
-	public IcosahedronRenderer(float size, PApplet p) {
-		super(size);
+	public IcosahedronRenderer(float size, 
+			PositionSwitch positionSwitch, PApplet p) {
+		
+		super(size, positionSwitch);
 		this.p = p;
 		
 		C_VERTEX_X = p.color(255, 0, 0, 170);
