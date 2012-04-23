@@ -9,6 +9,7 @@ public class FpsPrinter extends FpsCounter implements Drawable {
 	
 	private int every = 40;
 	private final NumberFormat format = new DecimalFormat("###.#");
+	private String previousOutput = null;
 	
 	private PApplet p;
 	
@@ -26,7 +27,11 @@ public class FpsPrinter extends FpsCounter implements Drawable {
 	@Override
 	public void draw() {
 		if(p.frameCount % every == 0) {
-			PApplet.println(format.format(getAvgFps(p.frameCount)) + " fps");
+			String output = format.format(getAvgFps(p.frameCount)) + " fps";
+			if(!output.equals(previousOutput)) {
+				PApplet.println(output);
+				previousOutput = output;
+			}
 		}
 	}
 
