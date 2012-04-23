@@ -30,6 +30,7 @@ public class IcosahedronSketch extends PApplet {
 		positionSwitch = new PositionSwitch();
 		
 		drawables = new Drawable[]{
+				positionSwitch,
 				new IcosahedronRenderer(100, positionSwitch, this),
 				new RotationCamera(this),
 				new FpsPrinter(this),
@@ -40,8 +41,6 @@ public class IcosahedronSketch extends PApplet {
 	public void draw() {
 		background(10);
 		lights();
-		
-		positionSwitch.step();
 		
 		for (Drawable drawable : drawables) {
 			drawable.draw();

@@ -1,8 +1,9 @@
 package bxt.icosahedron.geometry;
 
+import bxt.icosahedron.processing.Drawable;
 import processing.core.PVector;
 
-public class PositionSwitch {
+public class PositionSwitch implements Drawable {
 	
 	private int position = 0;
 	private float fade = 1.0f;
@@ -39,5 +40,10 @@ public class PositionSwitch {
 		if(!(fade < 1.0f)) {
 			fade = 1.0f;
 		}
+	}
+
+	@Override
+	public void draw() {
+		step();
 	}
 }
