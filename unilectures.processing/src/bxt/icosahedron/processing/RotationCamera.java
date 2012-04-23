@@ -20,12 +20,12 @@ public class RotationCamera implements Drawable {
 	@Override
 	public void draw() {
 		
-		float winkelPlane = (p.mouseX/(float)p.width ) * PApplet.TWO_PI;
-		float winkelUp    = (p.mouseY/(float)p.height) * PApplet.PI;
-		float xpos = PApplet.cos(winkelPlane) * PApplet.sin(winkelUp);
-		float ypos = PApplet.sin(winkelPlane) * PApplet.sin(winkelUp);
+		float anglePlane = (p.mouseX/(float)p.width ) * PApplet.TWO_PI;
+		float angleUp    = (p.mouseY/(float)p.height) * PApplet.PI;
+		float xpos = PApplet.cos(anglePlane) * PApplet.sin(angleUp);
+		float ypos = PApplet.sin(anglePlane) * PApplet.sin(angleUp);
 		
-		float zpos = PApplet.cos(winkelUp);
+		float zpos = PApplet.cos(angleUp);
 		
 		p.camera(xpos*radius, zpos*radius, ypos*radius, // eyeX, eyeY, eyeZ
 				0f, 50f, 0f, // centerX, centerY, centerZ
