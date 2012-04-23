@@ -7,6 +7,9 @@ import bxt.icosahedron.geometry.Vertex;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+/**
+ * Renders the extended {@link Icosahedron} into a processing pane. 
+ */
 public class IcosahedronRenderer extends Icosahedron implements Drawable {
 	
 	private int C_VERTEX_X;
@@ -24,6 +27,12 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 	
 	private PApplet p;
 	
+	/**
+	 * Create a new renderer and its underlying {@link Icosahedron}. 
+	 * @param size Scale factor for coords. 
+	 * @param positionSwitch Provides vertex position animation. 
+	 * @param p Processing object. 
+	 */
 	public IcosahedronRenderer(float size, 
 			PositionSwitch positionSwitch, PApplet p) {
 		
@@ -50,6 +59,9 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 		
 	}
 	
+	/**
+	 * Draw a little cross and the name for each vertex. 
+	 */
 	private void drawVertices() {
 		
 		for(Vertex v : vertices) {
@@ -81,6 +93,9 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 		
 	}
 	
+	/**
+	 * Draw the three golden rects. 
+	 */
 	private void drawGoldenRects() {
 		p.stroke(C_RECT_STROKE);
 		p.fill(C_RECT_FILL);
@@ -112,6 +127,9 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 		}
 	}
 	
+	/**
+	 * Draw the animated line following the roundtrip. 
+	 */
 	private void drawRoundtrip() {
 		
 		int progress =   (p.frameCount / FRAPES_PER_EDGE) % roundtrip.length;

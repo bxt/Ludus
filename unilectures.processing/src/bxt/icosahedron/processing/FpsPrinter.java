@@ -5,6 +5,9 @@ import java.text.NumberFormat;
 
 import processing.core.PApplet;
 
+/**
+ * Prints the average fps. 
+ */
 public class FpsPrinter extends FpsCounter implements Drawable {
 	
 	private int every = 40;
@@ -13,11 +16,20 @@ public class FpsPrinter extends FpsCounter implements Drawable {
 	
 	private PApplet p;
 	
+	/**
+	 * @see #FpsPrinter(int, PApplet)
+	 * @param p Processing object. 
+	 */
 	public FpsPrinter(PApplet p) {
 		super();
 		this.p = p;
 	}
 	
+	/**
+	 * Construct new instance. 
+	 * @param every How often to print fps at most.  
+	 * @param p Processing object. 
+	 */
 	public FpsPrinter(int every, PApplet p) {
 		super();
 		this.every = every;

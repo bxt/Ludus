@@ -3,7 +3,9 @@ import bxt.icosahedron.geometry.PositionSwitch;
 import processing.core.PApplet;
 import processing.core.PFont;
 
-
+/**
+ * The main sketch class, called when executing the application. 
+ */
 public class IcosahedronSketch extends PApplet {
 
 	private static final long serialVersionUID = 1L;
@@ -16,6 +18,11 @@ public class IcosahedronSketch extends PApplet {
 	
 	private final static int SCALE = 100;
 	
+	/**
+	 * Main-method for direct invocation, mostly dispatches to 
+	 * {@link PApplet#main(String[])}. 
+	 * @param args
+	 */
 	public static void main(String args[]) {
 		PApplet.main(new String[]{
 				"--present",IcosahedronSketch.class.getCanonicalName()});

@@ -2,11 +2,20 @@ package bxt.icosahedron.processing;
 
 import processing.core.PApplet;
 
+/**
+ * Rotate the camera around the origin, facing the origin,
+ * controlled by mouse movement. 
+ */
 public class RotationCamera implements Drawable {
 	
 	private PApplet p;
 	private float radius;
 	
+	/**
+	 * Construct a new Camera. 
+	 * @param radius Camera's distance to the origin. 
+	 * @param p Processing object. 
+	 */
 	public RotationCamera(float radius, PApplet p) {
 		this.radius = radius;
 		this.p = p;

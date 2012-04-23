@@ -3,6 +3,9 @@ package bxt.icosahedron.geometry;
 import bxt.icosahedron.processing.Drawable;
 import processing.core.PVector;
 
+/**
+ * Animates between positions. 
+ */
 public class PositionSwitch implements Drawable {
 	
 	private int position = 0;

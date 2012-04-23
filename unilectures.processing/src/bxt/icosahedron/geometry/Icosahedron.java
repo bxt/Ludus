@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 import processing.core.PVector;
 
+/**
+ * Data of an icosahedron. 
+ * <p>
+ * Contains vertices and edges, calculates a roundtrip through all edges, 
+ * travels through the edges by some special logic. 
+ */
 public class Icosahedron {
 
 	protected Vertex[] vertices;
