@@ -18,6 +18,10 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 	private int C_EDGE;
 	private int C_INACTIVE_EDGE;
 	
+	private static final float TEXT_SCALE = 0.3f;
+	private static final int TEXT_PAD = 10;
+	private static final int FRAPES_PER_EDGE = 20;
+	
 	private PApplet p;
 	
 	public IcosahedronRenderer(float size, 
@@ -64,15 +68,14 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 			
 		}
 		
-		float textScale = 0.3f;
 		p.fill(C_VERTEX_TEXT);
 		p.pushMatrix();
-		p.scale(textScale);
+		p.scale(TEXT_SCALE);
 		for(Vertex v : vertices) {
 			p.text(v.getName(),
-					(v.getPosition().x + 10) / textScale,
-					(v.getPosition().y - 10) / textScale,
-					v.getPosition().z / textScale);			
+					(v.getPosition().x + TEXT_PAD) / TEXT_SCALE,
+					(v.getPosition().y - TEXT_PAD) / TEXT_SCALE,
+					v.getPosition().z / TEXT_SCALE);			
 		}
 		p.popMatrix();
 		
@@ -111,9 +114,8 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 	
 	private void drawRoundtrip() {
 		
-		int framesPerEdge = 20;
-		int progress =   (p.frameCount / framesPerEdge) % roundtrip.length;
-		int edgeProcess = p.frameCount % framesPerEdge;
+		int progress =   (p.frameCount / FRAPES_PER_EDGE) % roundtrip.length;
+		int edgeProcess = p.frameCount % FRAPES_PER_EDGE;
 		
 		p.stroke(C_EDGE);
 		for(int i = 0; i < progress; i++) {
@@ -123,7 +125,7 @@ public class IcosahedronRenderer extends Icosahedron implements Drawable {
 				
 		drawRoundtripEdge(vertices[roundtrip[progress]], 
 				vertices[roundtrip[(progress+1) % roundtrip.length]], 
-				(float)edgeProcess / framesPerEdge);
+				(float)edgeProcess / FRAPES_PER_EDGE);
 		
 		p.stroke(C_INACTIVE_EDGE);
 		for(int i = progress + 1; i < roundtrip.length; i++) {

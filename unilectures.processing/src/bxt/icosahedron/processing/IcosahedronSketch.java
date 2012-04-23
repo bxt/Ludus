@@ -14,6 +14,8 @@ public class IcosahedronSketch extends PApplet {
 	
 	PositionSwitch positionSwitch;
 	
+	private final static int SCALE = 100;
+	
 	public static void main(String args[]) {
 		PApplet.main(new String[]{
 				"--present",IcosahedronSketch.class.getCanonicalName()});
@@ -31,8 +33,8 @@ public class IcosahedronSketch extends PApplet {
 		
 		drawables = new Drawable[]{
 				positionSwitch,
-				new IcosahedronRenderer(100, positionSwitch, this),
-				new RotationCamera(this),
+				new IcosahedronRenderer(SCALE, positionSwitch, this),
+				new RotationCamera(SCALE * 6.0f, this),
 				new FpsPrinter(this),
 		};
 		

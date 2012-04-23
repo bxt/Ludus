@@ -8,8 +8,12 @@ public class PositionSwitch implements Drawable {
 	private int position = 0;
 	private float fade = 1.0f;
 	
+	private final static float STEP_MIN = 0.0f;
+	private final static float STEP_MAX = 1.0f;
+	private final static float STEP_SIZE = 0.05f;
+	
 	public PVector getPosition(PVector[] positions) {
-		if(fade < 1.0f) {
+		if(fade < STEP_MAX) {
 			
 			PVector old = positions[(position+positions.length-1) % positions.length];
 			PVector nev = positions[ position % positions.length];
@@ -25,20 +29,18 @@ public class PositionSwitch implements Drawable {
 	}
 	
 	public void nextPosition() {
-		if(!(fade < 1.0f)) {
+		if(!(fade < STEP_MAX)) {
 			position++;
-			fade = 0.0f;
-		} else {
-			System.out.println("ig!");
+			fade = STEP_MIN;
 		}
 	}
 	
 	public void step() {
 		if(fade < 1.0f) {
-			fade += 0.05;
+			fade += STEP_SIZE;
 		}
-		if(!(fade < 1.0f)) {
-			fade = 1.0f;
+		if(!(fade < STEP_MAX)) {
+			fade = STEP_MAX;
 		}
 	}
 

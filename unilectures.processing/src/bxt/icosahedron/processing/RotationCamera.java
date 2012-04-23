@@ -5,12 +5,7 @@ import processing.core.PApplet;
 public class RotationCamera implements Drawable {
 	
 	private PApplet p;
-	
-	private float radius = 600f;
-	
-	public RotationCamera(PApplet p) {
-		this.p = p;
-	}
+	private float radius;
 	
 	public RotationCamera(float radius, PApplet p) {
 		this.radius = radius;
@@ -28,7 +23,7 @@ public class RotationCamera implements Drawable {
 		float zpos = PApplet.cos(winkelUp);
 		
 		p.camera(xpos*radius, zpos*radius, ypos*radius, // eyeX, eyeY, eyeZ
-				0f, 50f, 0f, // centerX, centerY, centerZ
+				0f, 0f, 0f, // centerX, centerY, centerZ (origin)
 				0f, 1f, 0f); // upX, upY, upZ
 		
 	}
