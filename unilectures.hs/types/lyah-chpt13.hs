@@ -1,5 +1,9 @@
+import Data.Ratio
 
 import Data.Monoid
+
+-- "Writer? I hardly know her!"
+-- ----------------------------
 
 isBigGang x = (x > 9, "Gruppenstaerke mit 9 verglichen. ")
 
@@ -44,7 +48,8 @@ multWithLog = do
 
 
 
-
+-- "Using do notation with Writer"
+-- -------------------------------
 
 gcd' a b 
   | b == 0 = do
@@ -108,8 +113,47 @@ finalCountDownLog'' = mapM_ putStrLn . fromDiffList . snd . runWriter . finalCou
 
 
 
+-- "Making monads"
+-- ---------------
 
+newtype Prob a = Prob {getProb :: [(a,Rational)]} deriving Show
 
+instance Functor Prob where
+  fmap f (Prob xs) = Prob $ map (\(x,p) -> (f x,p)) xs
 
+flatten :: Prob (Prob a) -> Prob a
+flatten = Prob . concat . map multAll . getProb
+  where multAll (Prob xs,p) = map (\(x,r) -> (x,p*r)) xs
+
+instance Monad Prob where
+  return x = Prob [(x,1%1)]
+  m >>= f = flatten (fmap f m)
+  fail _ = Prob []
+
+data Münze = Kopf | Zahl deriving (Show, Eq)
+
+münze :: Prob Münze
+münze = Prob [(Kopf,1%2),(Zahl,1%2)]
+
+gezinkteMünze :: Prob Münze
+gezinkteMünze = Prob [(Kopf,1%10),(Zahl,9%10)]
+
+dreiWürfe :: Prob Bool
+dreiWürfe = do
+  a <- münze
+  b <- münze
+  c <- gezinkteMünze
+  return $ all (==Zahl) [a,b,c]
+
+dreiWürfe' = do
+  a <- münze
+  b <- münze
+  c <- gezinkteMünze
+  return $ (==2) $ length $ filter (==Zahl) [a,b,c]
+
+gewinnchancen = foldl sum' (0%1,0%1) . getProb
+ where
+   sum' (pt,pf) (False,pf') = (pt,pf+pf')
+   sum' (pt,pf) (True ,pt') = (pt+pt',pf)
 
 
