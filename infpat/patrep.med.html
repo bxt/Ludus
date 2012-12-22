@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<style>
+
+body, #a {background: url('pat-a-med.PNG')}
+#a {position:absolute;top:0;left:0;right:0;bottom:0;}
+#xy {position:absolute;bottom:20px;background:rgba(255,255,255,0.5);}
+
+</style>
+
+<div id=a></div>
+
+<div id=xy><span id=x>0</span> / <span id=y>0</span></div>
+
+<script>
+
+var w = 35;
+var h = 20;
+
+var i = 0;
+
+document.getElementById('a').onclick = function(){
+  i++;
+  var x = i%w;
+  var y = Math.floor(i/w)%h;
+  document.getElementById('x').firstChild.nodeValue = x;
+  document.getElementById('y').firstChild.nodeValue = y;
+  document.getElementById('a').style.backgroundPosition = x*8+'px '+y*8+'px';
+  function rh() {return Math.round(Math.random()*256).toString(16)}
+  document.body.style.backgroundColor = '#'+rh()+rh()+rh();
+}
+
+</script>
