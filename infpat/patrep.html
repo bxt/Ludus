@@ -19,13 +19,15 @@ var h = 20;
 
 var i = 0;
 
-document.getElementById('a').onclick = function(){
+function id(x) { return document.getElementById(x); }
+
+id('a').onclick = function(){
   i++;
   var x = i%w;
   var y = Math.floor(i/w)%h;
-  document.getElementById('x').firstChild.nodeValue = x;
-  document.getElementById('y').firstChild.nodeValue = y;
-  document.getElementById('a').style.backgroundPosition = x+'px '+y+'px';
+  id('x').firstChild.nodeValue = x;
+  id('y').firstChild.nodeValue = y;
+  id('a').style.backgroundPosition = x+'px '+y+'px';
   function rh() {return Math.round(Math.random()*256).toString(16)}
   document.body.style.backgroundColor = '#'+rh()+rh()+rh();
 }
