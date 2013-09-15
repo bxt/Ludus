@@ -4,9 +4,9 @@
 int main()
 {
 	   std::cout << "Square and Multiply" << std::endl;
-	   int base = 2;
-	   int exponent = 5;
-	   int modulus = 2247;
+	   int b = 2;
+	   int exp = 1234;
+	   int mod = 2237;
 
 	   int res = 1;
 	   while (exp > 0) {
