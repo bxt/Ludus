@@ -9,13 +9,10 @@ int main()
 	   int modulus = 2247;
 
 	   int res = 1;
-	   while (exponent != 0) {
-	   	while(exponent % 2 == 0) {
-			exponent = exponent/2;
-			res = (res * res) % modulus;
-		}
-		exponent = exponent - 1;
-		res = (res * base) % modulus;
+	   while (exp > 0) {
+		   if((exp % 2) != 0) res = (res*b) % mod;
+		   b = (b*b) % mod;
+		   exp = exp/2;
 	   }
 	   std::cout << res << std::endl;
 }
