@@ -1,0 +1,191 @@
+\documentclass[a5paper,16pt,oneside,landscape]{scrartcl}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{default}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usepackage[german]{fancyref}
+\usepackage{float}
+\usepackage{wrapfig}
+\hyphenation{Ver-bund-wahr-schein-lich-keits-ver-tei-lung}
+
+\usepackage[hscale=0.9,vscale=0.9,landscape]{geometry}
+
+\title{Vergleich Probabilistischer Graphischer Modelle}
+\author{Bernhard Häussner}
+\date{18. Juni 2013}
+
+\begin{document}
+ 
+ %\fontsize{20pt}{22pt}\selectfont
+ 
+\section{Einführung}
+
+
+  \subsection*{Probabilistische graphische Modelle (PGM)}
+  \begin{itemize}
+    \item Interdisziplinär: Computer Vision, medizinische Entscheidungsfindung...
+    \item Beginn in Expertensystemen
+    \item Heute im Rahmen des Web 2.0
+    \item Aus Profildaten in sozialen Netzwerken, Nutzungsprofile in Onlineshops...
+    \item ...Produktempfehlungen, Spamfilter
+  \end{itemize}
+
+
+
+  \subsection*{Definition probabilistisches graphisches Modell}
+  \begin{itemize}
+    \item Datenstruktur für eine gemeinsame Wahrscheinlichkeitsverteilung
+    \item $P(X_1, X_2, ... X_n)$ über viele Zufallsvariablen $X_1,X_2,\dots,X_n$ 
+    \item n meistens zwischen 5-100
+    \item Grad an Unsicherheit 
+    \item Graphen mit Wahrscheinlichkeitsverteilungen
+  \end{itemize}
+
+
+
+  \subsection*{Warum probabilistische graphische Modelle?}
+  \begin{itemize}
+    \item $P(X_1, ..., X_n)$ hat exponentiell viele Werte
+    \item Für jede mögliche Belegung der Variablen einen
+    \item z.B. $30$ binäre Zufallsvariablen $\rightarrow$ $2^{30} \approx 10^9 $ Werte
+    \item Benötigter Speicherplatz sehr groß
+    \item Einzelne Wahrscheinlichkeiten sehr klein
+  \end{itemize}
+
+
+
+
+  \subsection*{Workflow bei probabilistischen graphischen Modellen}
+  \begin{itemize}
+    \item Automatisches Lernen aus Stichproben 
+    \item Mit Modell Beschaffenheit der Testobjekte analysieren
+    \item Oder: direkt von Domainexperten erstellt werden. 
+    \item Dann Schließen mit Inferenzalgorithmen
+    \item Wahrscheinlichkeitsverteilungen für Zielvariablen
+  \end{itemize}
+
+
+\section{Naive Bayesmodelle}
+
+
+  \subsection*{Beschreibung naiver Bayesmodelle}
+  \begin{itemize}
+    \item Konstruktion einer unbeobachtbaren Zufallsvariable $C$
+    \item Zustände von $C$ heißen Klasse oder Komponente
+    \item Annahme: In Abhängigkeit von $C$ alle Zufallsvariablen unabhängig
+    \item Einfaches baumförmiges bayessches Netz mit $C$ als Wurzel
+    \item Faktorisierung der Wahrscheinlichkeitsverteilung: 
+\[ P(C,X_1,X_2,\dots,X_n) = P(C) \prod_{i=1}^n P(X_i|C) \]
+  \end{itemize}
+
+
+\section{Probabilistische Entscheidungsgraphen}
+
+
+  \subsection*{Beschreibung probabilistischer Entscheidungsgraphen (1)}
+  \begin{itemize}
+    \item Nicht auf Unabhängigkeiten zwischen Zufallsvariablen basiert
+    \item Zwei kaskadierende Graphen
+    \item Wald mit Knoten für Zufallsvariablen $P(X_1,X_2,\dots,X_n)$ und baumförmigen Abhängigkeiten
+    \item Verbundwahrscheinlichkeit je eines Baumes unabhängig
+    \item Zweiter Graph mit Wahrscheinlichkeiten
+  \end{itemize}
+
+
+
+  \subsection*{Beschreibung probabilistischer Entscheidungsgraphen (2)}
+  \begin{itemize}
+    \item Knotenmengen $V_i$ für jede Zufallsvariable $X_i$
+    \item Für jeden möglichen Wert von $X_i$ genau eine Kante
+    \item Zu einem Knoten aus $V_l$ (Nachfolger $X_l$ von $X_i$ im Wald)
+    \item Jeder Knoten $v_{i,k} \in V_i$ annotiert mit Wahrscheinlichkeitsverteilung $P_{i,k}(X_i)$
+    \item Verbundwahrscheinlichkeitsverteilung in Abhängigkeit der durch Variablenbelegung erreichten Knoten: 
+\[P(x_1,x_2,\dots,x_n) = \prod_{i=1}^n P_{i,k}(x_i) \]
+  \end{itemize}
+
+
+
+  \subsection*{Charakterisierung probabilistischer Entscheidungsgraphen}
+  \begin{itemize}
+    \item Teilt die Verbundwahrscheinlichkeit sehr übersichtlich auf
+    \item Partitionen des Zustandsraums der Zufallsvariablen
+    \item Schließen in linearer Zeit
+    \item Unabhängigkeiten in bayesschen Netzen, die nicht mit probabilistischen Entscheidungsgraphen repräsentiert werden können
+    \item Inkompatibel mit bayesschen Netzen
+  \end{itemize}
+
+
+
+\section{Vergleich der PGMs}
+
+
+  \subsection*{Vergleich am Expertensystem}
+  \begin{itemize}
+    \item Welche der drei Methoden ist die beste?
+    \item Expertensysteme für medizinische Diagnosen in zwei Versionen
+    \item Frühere Version, mit naiven Bayesmodellen, 47/53 Fälle richtig
+    \item Spätere Version,mit bayesschen Netzwerken, 50/53 Fälle richtig
+    \item naive Bayesmodelle schlechter?
+  \end{itemize}
+
+
+
+  \subsection*{Vergleich mit vielen Daten}
+  \begin{itemize}
+    \item 50 Datensätze aus dem UCI Machine Learning Repository
+    \item NB teils genauer, teils an­nä­hernd gleich genau
+    \item Inferenz deutlich schneller
+    \item NB sehr leicht zu implementieren ($2500$ LOC)
+    \item naive Bayesmodelle besser?
+  \end{itemize}
+
+
+
+  \subsection*{Vergleich mit probabilistischen Entscheidungsgraphen}
+  \begin{itemize}
+    \item Was ist mit probabilistischen Entscheidungsgraphen?
+    \item $\rightarrow$ Nielsen und Jaeger, 2006
+    \item Vergleich mit 5 festen Lern- und Vergleichsdatensätzen
+    \item Genauigkeit mit logarithmierter Likelihood-Funktion gemessen
+    \item Vergleich mit Größe des Modells $\rightarrow$ Effizienz
+  \end{itemize}
+
+
+
+  \subsection*{Systematik des Vergleich}
+  \begin{itemize}
+    \item Automatisches Lernen mit Lerndaten
+    \item Vergleich mit (anderen) Vergleichsdaten
+    \item Gleiche Daten für alle drei Methoden
+    \item Auftragen in Diagrammen mit SL-Kurven
+  \end{itemize}
+
+
+
+  \subsection*{Empirische Studie}
+  \begin{itemize}
+    \item Empirische Messung der Inferenz-Effizienz
+    \item Generieren zufälliger Inferenz-Anfragen
+    \item Zufällig ausgewählte Menge von Zufallsvariablen
+    \item Zufällige Belegungen
+    \item Zeit messen
+  \end{itemize}
+
+
+
+  \subsection*{Zusammenfassung}
+  \begin{itemize}
+    \item Keine Methode prinzipiell schlechter
+    \item NB und PDG teils schneller
+    \item NB und PDG leichter zu implementieren
+    \item BN in jedem Fall akzeptable Genauigkeit
+    \item $\rightarrow$ Für Anwendung im Bereich des Web 2.0 alle in Erwägung ziehen!
+  \end{itemize}
+
+
+
+\end{document}
