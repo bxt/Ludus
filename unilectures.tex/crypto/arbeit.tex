@@ -37,7 +37,7 @@
   \textsc{\Large Institut für Informatik}\\[5cm]
   Seminararbeit\\[0.3cm]
   {\Large \textbf{\sffamily Seminar Kryptographie}}\\[0.3cm]
-  Dozent: PD Dr. Christian Glaßer\\[2cm]
+  Dozent: Prof. Dr. Christian Glaßer\\[2cm]
   {\LARGE \textbf{\sffamily Digitale Signaturen}}\\[0.5cm]
   Wintersemester 2012/2013 \\[6cm]
   Eingereicht am 18. Februar 2013\\[0.3cm]
@@ -60,7 +60,7 @@
 
 Seit rund 35 Jahren werden digitale Signaturverfahren vermehrt entwickelt und weiterentwickelt. Aus dieser Forschungsgeschichte sollen hier einige der wichtigsten Resultate zusammengefasst werden. 
 
-Zunächst bemühe ich mich um eine genaue Definition von digitale Signaturverfahren, wobei ein geringerer Umfang verwendet wird, da hier nicht alle Feinheiten und Details einiger spezieller Verfahren berücksichtigt werden müssen. 
+Zunächst bemühe ich mich um eine genaue Definition von digitalen Signaturverfahren, wobei ein geringerer Umfang verwendet wird, da hier nicht alle Feinheiten und Details einiger spezieller Verfahren berücksichtigt werden müssen. 
 
 Daraufhin werden einige der wichtigsten digitalen Signaturverfahren anhand ihrer Berechnungsvorschrifen vorgestellt, ihre Effizienz beschrieben, sowie ihre Sicherheit begründet. 
 
@@ -68,7 +68,7 @@ Die beiden Verfahren RSA und Elgamal gehören zwar zu den älteren, werden aber 
 
 Das dritte vorgestellte Verfahren ist das Lamport-Diffie-Einmal-Signaturverfahren, an dem einige ungewöhnlichere Eigenschaften einiger digitaler Signaturverfahren exemplarisch nachvollzogen werden können. 
 
-Die Darstellung der Verfahren orientiert sich dabei an \cite{buchmann2010einfa1}, zu jedem Verfahren findet sich eine Beschreibung der Schritte Schlüsselerzeugung, Signaturerstellung und Verifikation, eine Erklärung, wie das Verfahren effizient berechnet werden kann und eine Untersuchung der Sicherheit des Verfahrens.
+Die Darstellung der Verfahren orientiert sich dabei an \cite{buchmann2010einfa1}, zu jedem Verfahren findet sich eine Beschreibung der Schritte Schlüsselerzeugung, Signaturerstellung und Verifikation, eine Erklärung, wie das Verfahren effizient berechnet werden kann, und eine Untersuchung der Sicherheit des Verfahrens.
 
 Nach dem Studium dieser drei Beispiele sollte sich ein grundlegendes Verständnis der wichtigsten Mechanismen gebildet haben, denn aufgrund der Fülle von Signaturverfahren können hier bei weitem nicht alle behandelt werden. 
 
@@ -82,7 +82,7 @@ Anders als bei Unterschriften auf Papier basieren diese Vorgänge bei digitalen 
 
 \section{Definition digitales Signaturverfahren}
 
-Ein digitales Signaturverfahren besteht (nach \cite{Itkis04forwardsecurity, Goldwasser95adigital}) aus einem Schlüsselerzeugungsalgorithmus, der randomisiert einen privaten Schlüssel $d$ und einen dazu passenden öffentlichen Schlüssel $e$ generiert, außerdem aus einem möglicherweise randomisierte Signaturalgorithmus $S_d$, der aus einer Nachricht $m$ eine Signatur $s$ berechnet und aus einem Verifikationsalgorithmus, der bei Eingabe des öffentlichen Schlüssels $e$, der Nachricht $m$ und der Signatur $s$ ausgibt, ob die Signatur gültig ist oder nicht. 
+Ein digitales Signaturverfahren besteht (nach \cite{Itkis04forwardsecurity, Goldwasser95adigital}) aus einem Schlüsselerzeugungsalgorithmus, der randomisiert einen privaten Schlüssel $d$ und einen dazu passenden öffentlichen Schlüssel $e$ generiert, außerdem aus einem möglicherweise randomisiertem Signaturalgorithmus $S_d$, der aus einer Nachricht $m$ eine Signatur $s$ berechnet, und aus einem Verifikationsalgorithmus, der bei Eingabe des öffentlichen Schlüssels $e$, der Nachricht $m$ und der Signatur $s$ ausgibt, ob die Signatur gültig ist oder nicht. 
 
 Einige Signaturverfahren sind parametrisiert mit einem Sicherheitsparameter $k \in \mathbb{N}$, der vom Benutzer zu Begin gewählt wird und die Längen der Signaturen, signierbaren Nachrichten, Laufzeiten etc. bestimmt. Des weiteren kann eine Grenze für die Anzahl der erstellbaren Signaturen existieren. 
 
@@ -90,7 +90,8 @@ Alice erstellt also die Signaturen mit einem privaten Signaturschlüssel $d$, de
 
 \section{Anwendungen digitaler Signaturverfahren}
 
-Die Anwendungen solcher digitaler Signaturen sind vielfach. Ein Beispiel ist die Authentifizierung von Servern bei der Secure Shell (SSH), beschrieben in \cite{barrett2005ssh}. Diese Authentifizierung verhindert, dass sich der Client statt zu seinem Server zu einem Angreifer verbindet. Zu Beginn der Sitzung wird von Server und Client gemeinsam eine zufällige Sitzungskennung festgesetzt. Im Verlauf des Verbindungsvorgang wird der Server dazu aufgefordert, seinen öffentlichen Schlüssel und die dazugehörige Signatur der Sitzungskennung zu senden. Der Client hält eine Liste von öffentlichen Schlüsseln seiner Server vor. Er vergleicht nun den empfangenen Schlüssel mit dem Eintrag des Servers in der Liste und prüft die Gültigkeit der Signatur. Ist sie gültig kann er sicher sein, direkt mit dem Server verbunden zu sein. Würde sich ein Angreifer zwischen Client und Server stellen, also einen Man-in-the-middle-Angriff durchführen, und Verbindungen mit beiden herstellen, hätten diese beiden Verbindungen unterschiedliche Sitzungskennungen, da weder Client noch Server die Sitzungskennung vollständig bestimmen können. Somit könnte der Angreifer die gültige Signatur nicht erstellen, da nur der Server den passenden privaten Schlüssel kennt. 
+Die Anwendungen solcher digitaler Signaturen sind vielfach. Ein Beispiel ist die Authentifizierung von Servern bei der Secure Shell (SSH), beschrieben in \cite{barrett2005ssh}. Diese Authentifizierung verhindert, dass sich der Client statt zu seinem Server zu einem Angreifer verbindet. Zu Beginn der Sitzung wird von Server und Client gemeinsam eine zufällige Sitzungskennung festgesetzt. Im Verlauf des Verbindungsvorgang wird der Server dazu aufgefordert, seinen öffentlichen Schlüssel und seine Signatur der Sitzungskennung zu senden. Der Client hält eine Liste von öffentlichen Schlüsseln seiner Server vor. Er vergleicht nun den empfangenen Schlüssel mit dem Eintrag des Servers in der Liste und prüft die Gültigkeit der Signatur. Ist sie gültig kann er sicher sein, direkt mit dem Server verbunden zu sein. Würde sich ein Angreifer zwischen Client und Server stellen, also einen Man-in-the-middle-Angriff durchführen, und Verbindungen mit beiden herstellen, hätten diese beiden Verbindungen 
+unterschiedliche Sitzungskennungen, da weder Client noch Server die Sitzungskennung vollständig bestimmen können. Somit könnte der Angreifer die gültige Signatur nicht erstellen, da nur der Server den passenden privaten Schlüssel kennt. 
 
 
 
@@ -104,7 +105,7 @@ Damit später Angriffe auf Signaturverfahren an anschaulichen Beispielen erklär
 
 \paragraph{Schlüsselerzeugung und Vorbereitungen}
 
-Alice wählt/setzt ebenso wie für die Verschlüsselung die beiden Primzahlen $p, q$ aus denen sich der Modul $n = pq$ berechnet. Daraus berechnet sich der öffentliche Schlüssel $e$ mit $1 < e < (p-1)(q-1)$, $\gcd(e,(p-1)(q-1)) = 1$ und der private Schlüssel $d$ mit $1 < d < (p-1)(q-1)$ und $de = 1$ mod $(p-1)(q-1)$. 
+Alice wählt/setzt ebenso wie für die Verschlüsselung die beiden Primzahlen $p, q$ aus denen sich der Modul $n = pq$ berechnet. Daraus berechnet sich der öffentliche Schlüssel $e$ mit $1 < e < (p-1)(q-1)$, $\gcd(e,(p-1)(q-1)) = 1$ und der private Schlüssel $d$ mit $1 < d < (p-1)(q-1)$ und $de = 1$ mod $(p-1)(q-1)$. Die Zahlen $p$ und $q$ können nach der Schlüsselerzeugung verworfen werden. 
 
 \paragraph{Signatur-Erstellung}
 
@@ -114,9 +115,9 @@ Alice erstellt die Signatur $s$ der Nachricht $m \in \{0,1,\dots,n-1\}$ mit dem 
 
 \paragraph{Verifikation}
 
-Bob verifiziert die Signatur $s$ mit dem öffentlichem Schlüssel $(n,e)$ und vergleicht die so erhaltene Nachricht $m$ mit der gesendeten:
+Bob verifiziert die Signatur $s$ mit dem öffentlichem Schlüssel $(n,e)$ und vergleicht die so erhaltene Nachricht $m'$ mit der gesendeten:
 
-\[ m = s^e \mod n \]
+\[ m' = s^e \mod n \]
 
 \paragraph{Beispiel}
 
@@ -128,13 +129,14 @@ Bob verifiziert die Signatur $s = 89$ mit $e=3$ indem er $m' = 89^3 = 111$ mod $
 
 \paragraph{Effizienz}
 
-Signatur-Erstellung und Verifikation benötigen jeweils eine Exponentiation mod $d$, welche mit Suqare \& Multiply\footnote{Pseudocode zum Suqare-\&-Multiply-Algorithmus findet sich auf S. 129 von \cite{beutelspacher2010moderne} mit weiteren hier angesprochenen Algorithmen} effizient berechnet werden können. Die Primzahlen $p$ und $q$ werden zufällig gewählt und können mit Primzahltests getestet werden. Die Inversen mod $(p-1)(q-1)$ können mit dem erweiterten Euklidischen Algorithmus effizient berechnet werden. 
+Signatur-Erstellung und Verifikation benötigen jeweils eine Exponentiation mod $d$, welche mit Suqare \& Multiply\footnote{Pseudocode zum Suqare-\&-Multiply-Algorithmus findet sich auf S. 129 von \cite{beutelspacher2010moderne} mit weiteren hier angesprochenen Algorithmen.} effizient berechnet werden können. Die Primzahlen $p$ und $q$ werden zufällig gewählt und können mit Primzahltests getestet werden. Die Inversen mod $(p-1)(q-1)$ können mit dem erweiterten Euklidischen Algorithmus effizient berechnet werden. 
 
 \section{Sicherheit}
 
 Die Sicherheit der RSA-Signatur basiert auf der Sicherheit des RSA-Verschlüsselungs-Verfahrens. 
 
-Für die Verschlüsselung $E$ und die Entschlüsselung $D$ des RSA-Verschlüsselungs-Verfahrens gilt $E_e(D_d(m)) = (m^d)^e = m^{de} = m = m^{ed} = D_d(E_e(m))$. Also kann für das Signieren die Verschlüsselung und für das Verifizieren die Entschlüsselung verwendet werden, $S_d = D_d$ und $V_e = E_e$. Wäre es möglich $S_d(m)$ ohne Kenntnis des privaten Schlüssels $d$ zu berechnen, wäre es ebenso möglich $D_d(m)$ zu berechnen, man könnte also Nachrichten entschlüsseln, was unter der Voraussetzung, dass das RSA-Verschlüsselungsverfahren sicher ist, nicht möglich ist. Somit ist es nicht möglich $S_d(m)$ ohne Kenntnis von $d$ zu berechnen. Analog ist es nicht möglich $d$ aus Signaturen oder $e$ zu berechnen. Trozdem ist das RSA-Signaturverfahren in seiner Grundform nicht ganz sicher, da sich aus zwei gültigen Signaturen $s_1 = {m_1}^d$, $s_2 = {m_2}^d$ mod $n$ eine dritte gültige Signatur bilden lässt, da $s_1 s_2 = {m_1}^d {m_2}^d = (m_1 m_2)^d$ mod $n$ eine gültige Signatur für $m_1 m_2$ ist. Dies wird im nächsten Kapitel näher beschrieben. 
+Für die Verschlüsselung $E$ und die Entschlüsselung $D$ des RSA-Verschlüsselungs-Verfahrens gilt $E_e(D_d(m)) = (m^d)^e = m^{de} = m = m^{ed} = D_d(E_e(m))$. Also kann für das Signieren die Verschlüsselung und für das Verifizieren die Entschlüsselung verwendet werden, $S_d = D_d$ und $V_e = E_e$. Wäre es möglich $S_d(m)$ ohne Kenntnis des privaten Schlüssels $d$ zu berechnen, wäre es ebenso möglich $D_d(m)$ zu berechnen, man könnte also Nachrichten entschlüsseln, was unter der Voraussetzung, dass das RSA-Verschlüsselungsverfahren sicher ist, nicht möglich ist. Somit ist es nicht möglich $S_d(m)$ ohne Kenntnis von $d$ zu berechnen. Analog ist es nicht möglich $d$ aus Signaturen oder $e$ zu berechnen. Trozdem ist das RSA-Signaturverfahren in seiner Grundform nicht ganz sicher, da sich aus zwei gültigen Signaturen $s_1 = {m_1}^d$, $s_2 = {m_2}^d$ mod $n$ eine dritte gültige Signatur bilden lässt, da $s_1 s_2 = {m_1}^d {m_2}^d = (m_1 m_2)^d$ mod $n$ eine gültige Signatur für $m_1 m_2$ ist. Dies wird im nächsten 
+Kapitel näher beschrieben. 
 
 
 
@@ -147,11 +149,12 @@ Das Axiom für ein sicheres Signaturverfahren war, dass es praktisch unmöglich 
 
 \section{Berechnen des privaten Schlüssels}
 
-Zunächst muss es praktisch unmöglich sein, aus dem öffentlichen Schlüssel den privaten Schlüssel zu berechnen. Am Beispiel RSA bedeutet dies, dass das Finden des Inversen $e^-1 = d$ mod $(p-1)(q-1)$, wobei $(p-1)(q-1)$ soweit bekannt nur durch Faktorisierung von $n$ bestimmt werden kann, was bisher nicht effizient möglich ist. 
+Zunächst muss es praktisch unmöglich sein, aus dem öffentlichen Schlüssel den privaten Schlüssel zu berechnen. Am Beispiel RSA ist dies das Finden des Inversen $e^{-1} = d$ mod $(p-1)(q-1)$, wobei $(p-1)(q-1)$ soweit bekannt nur durch Faktorisierung von $n$ bestimmt werden kann, was bisher nicht effizient möglich ist. 
 
 \section{No-Message-Attack}
 
-Bei der No-Message-Attack wird versucht, aus dem öffentlichen Schlüssel $e$ eine Nachricht $m$ und eine dafür gültige Signatur $s$ zu berechnen. Wird RSA wie oben beschrieben verwendet, kann eine beliebige Signatur $s$ gewählt werden, die Nachricht berechnet sich dann als $m = s^e$ mod $n$, somit ist ein solches Paar gefunden. Man behilft sich in diesem Fall durch Verwendung einer kollisionsresistenten Hashfunktion $h$, sodass die Signaturerstellung zu $s = h(m)^d$ mod $n$ und die Verifikation zu $h(m) = s^e$ mod $n$ geändert wird. Somit ist nach Wahl eines beliebigen $s$ aus dem Wert $s^e$ mod $n$, ein Hashwert, die dazugehörige Nachricht praktisch nicht berechnet werden. Gleichzeitig können bei Verwendung einer geeigneten Hashfunktion beliebig lange Nachrichten signiert werden. Statt einer Hashfunktion kann z.B. auch eine Padding-Funktion vereinbart werden, wenn z.B. die Selbstkonkatenation der Nachricht $m \circ m$ signiert wird, ist es ausreichend unwahrscheinlich, dass der Wert $m = s^e$ mod $n$ eine wohlgeformte Nachricht darstellt. 
+Bei der No-Message-Attack wird versucht, aus dem öffentlichen Schlüssel $e$ eine Nachricht $m$ und eine dafür gültige Signatur $s$ zu berechnen. Wird RSA wie oben beschrieben verwendet, kann eine beliebige Signatur $s$ gewählt werden, die Nachricht berechnet sich dann als $m = s^e$ mod $n$, somit ist ein solches Paar gefunden. Man behilft sich in diesem Fall durch Verwendung einer kollisionsresistenten Hashfunktion $h$, sodass die Signaturerstellung zu $s = h(m)^d$ mod $n$ und die Verifikation zu $h(m) = s^e$ mod $n$ geändert wird. Dann ist nach Wahl eines beliebigen $s$ der Wert $s^e$ mod $n$ ein Hashwert, dessen dazugehörige Nachricht praktisch nicht berechnet werden kann. Außerdem können bei Verwendung einer geeigneten Hashfunktion beliebig lange Nachrichten signiert werden. Statt einer Hashfunktion kann z.B. auch eine Padding-Funktion zur Redundanzbildung vereinbart werden: Wenn etwa die Selbstkonkatenation der Nachricht $m \circ m$ signiert wird, ist es ausreichend unwahrscheinlich, dass der Wert $m = s^e$ mod $n$ eine 
+wohlgeformte Nachricht darstellt. 
 
 \section{Chosen-Message-Attack}
 
@@ -196,7 +199,7 @@ Dabei fällt $k k^{-1}$ im Exponenten nach dem kleinen fermatschen Satz heraus.
 
 \paragraph{Beispiel}
 
-Alice wählt zunächst die Primzahl $p = 2237$ und die Primitivwurzel $g = 2$. Als privaten Schlüssel wählt sie $a = 1234$ und berechnet für den öffentlichen Schlüssel $A = g^a = 2^{1234} = 10$ mod $2237$. Für einen Signaturvorgang wählt sie zufällig $k = 87$ und berechnet damit $k^{-1} = 1979$ mod $2236$ und $r = g^k = 2^{87} = 799$ mod $2237$.
+Alice wählt zunächst die Primzahl $p = 2237$ und die Primitivwurzel $g = 2$. Als privaten Schlüssel wählt sie $a = 1234$ und berechnet für den öffentlichen Schlüssel $A = g^a = 2^{1234} = 10$ mod $2237$. Für einen Signaturvorgang wählt sie zufällig $k = 87$ und berechnet $k^{-1} = 1979$ mod $2236$ und $r = g^k = 2^{87} = 799$ mod $2237$.
 
 Hat sie nun den Hash $h(m) = 111$ bestimmt, berechnet sie $s = k^{-1}(h(m)-ar) = 1979*(111-1234*799) = 1339$ mod $2236$. 
 
@@ -220,17 +223,17 @@ Da $A = g^a \mod p$ als Teil des öffentlichen Schlüssels preisgegeben wird, k�
 
 \section{Signaturverfahren}
 
-Anders als bei den herkömmlichen Signaturverfahren basiert die Sicherheit des Lamport-Diffie-Einmal-Signaturverfahrens nach \cite{LampoCDSFA79_138} nur auf der Nichtinvertierbarkeit einer beliebigen verwendeten Einwegfunktion, beispielsweise einer kollisionsresistenten Hashfunktion. Es wird praktisch selten verwendet, da für jede zu signierende Nachricht ein neues Schlüsselpaar erzeugt werden muss, ansonsten könnte der Schlüssel leicht rekonstruiert werden. Dieses Problem kann z.B. mit Hashbäumen gelöst werden. Um Nachrichten beliebiger Länge signieren zu können, wird eine Hash der Nachricht signiert. 
+Anders als bei den herkömmlichen Signaturverfahren basiert die Sicherheit des Lamport-Diffie-Einmal-Signaturverfahrens nach \cite{LampoCDSFA79_138} nur auf der Nichtinvertierbarkeit einer beliebigen verwendeten Einwegfunktion, beispielsweise einer kollisionsresistenten Hashfunktion. Es wird in der Praxis selten unmodifiziert verwendet, da für jede zu signierende Nachricht ein neues Schlüsselpaar erzeugt werden muss, ansonsten könnte der Schlüssel leicht rekonstruiert werden. Dieses Problem kann z.B. mit Hashbäumen gelöst werden. Um Nachrichten beliebiger Länge signieren zu können, wird ein Hashwert der Nachricht signiert. 
 
 \paragraph{Schlüsselerzeugung und Vorbereitungen}
 
-Alice wählt den Sicherheitsparameter $k \in \mathbb{N}$ und eine Einwegfunktion (engl. trapdoor) $H : \{0,1\}^k \mapsto \{0,1\}^k$. \footnote{$H$ muss zusätzlich die Eigenschaft haben, dass für $A \subseteq \{0,1\}^k$ mit $|A| \leq 2n$ leicht ein $b \notin A$ mit $H(b) \neq a$ $\forall a \in A$ zu finden ist. Dies ist für Hashfunktionen üblicherweise erfüllt, impliziert jedoch eine obere Grenze für $n$ bei sehr kleinen $k$. } Für jeden Signaturvorgang für eine Nachricht der Länge $n$ werden $2n$ zufällige Urbilder gewählt, sie bilden den privaten Schlüssel:
+Alice wählt den Sicherheitsparameter $k \in \mathbb{N}$ und eine Einwegfunktion $H : \{0,1\}^k \mapsto \{0,1\}^k$. \footnote{$H$ muss zusätzlich die Eigenschaft haben, dass für $A \subseteq \{0,1\}^k$ mit $|A| \leq 2n$ leicht ein $x \in \{0,1\}^k$ mit $H(x) \notin A$ zu finden ist. Dies ist für Hashfunktionen üblicherweise erfüllt, impliziert jedoch eine obere Grenze für $n$ bei sehr kleinen $k$. } Für jeden Signaturvorgang für eine Nachricht der Länge $n$ werden $2n$ zufällige Urbilder gewählt, sie bilden den privaten Schlüssel:
 
 \[ X = (x_{1,0},x_{1,1},x_{2,0},x_{2,1},\dots,x_{n,0},x_{n,1}) \in (\{0,1\}^k)^{2n}\]
 
 Als öffentlicher Schlüssel dienen die $2n$ Bilder der Elemente des privaten Schlüssels:
 
-\[ Y = (y_{1,0},y_{1,1},y_{2,0},y_{2,1},\dots,y_{n,0},y_{n,1}) \text{ mit } y_{j,j} = H(x_{i,j})\]
+\[ Y = (y_{1,0},y_{1,1},y_{2,0},y_{2,1},\dots,y_{n,0},y_{n,1}) \text{ mit } y_{i,j} = H(x_{i,j})\]
 
 \paragraph{Signatur-Erstellung}
 
@@ -246,15 +249,15 @@ Bob verifiziert die Signatur $S$ mit dem öffentlichem Schlüssel $Y$, indem er 
 
 \paragraph{Beispiel}
 
-Als Einwegfunktion werde $H(x) = x + 2$ verwendet. Alice generiert die folgende Zufallsfolge als privaten Schlüssel:
+Als Einwegfunktion werde $H(x) = x + 2$ verwendet. Alice generiert die folgende Zufallsfolge als privater Schlüssel:
 \[X = (000,001,010,011,100,101,110,111)\]
-Nach Anwendung der Hashfunktion erhält sie den öffentlichen Schlüssel:
+Nach Anwendung der Einwegfunktion erhält sie den öffentlichen Schlüssel:
 \[Y = (010,011,100,101,110,111,000,001)\]
 Will sie nun die Nachricht $m = 1101$ signieren, sendet sie als Singatur die entsprechenden Urbilder:
 \[S = (001,011,100,111)\]
-Bob verifiziert die Signatur, indem er jeweils die Hashwerte der Urbilder und erhält:
+Bob verifiziert die Signatur, indem er jeweils die Bilder der Urbilder berechnet und erhält:
 \[(011,101,110,001)\]
-und vergleicht dies mit den der Nachricht entsprechenden Einträgen des öffentlichen Schlüssels  $(011,101,110,001)$.
+Er vergleicht dies mit den der Nachricht entsprechenden Einträgen des öffentlichen Schlüssels  $(011,101,110,001)$.
 
 \paragraph{Effizienz}
 
@@ -262,11 +265,11 @@ Bei Signaturerstellung und Verifikation wird jeweils nur die Einwegfunktion bere
 
 \section{Sicherheit}
 
-Um aus dem öffentlichen Schlüssel den privaten Schlüsel zu gewinnen, müsste die Einwegfunktion invertiert werden, was definitionsgemäß praktisch nicht möglich ist. Ebenso müsste, um die Signatur irgendeines anderen Dokuments zu erstellen, mindestens eines der Urbilder bekannt sein, oder berechnet werden. Selbst wenn nach Art der Chosen-Message-Attack ein anderes Dokument bereits signiert ist, müsste mindestens ein weiteres Urbild gefunden werden. Somit ist das Verfahren genau so sicher, wie die verwendete Einwegfunktion. Wenn Alice den privaten Schlüssel nach der Signaturberechnung löscht, kann auch in Zukunft keine andere Nachricht signiert werden. 
+Um aus dem öffentlichen Schlüssel den privaten Schlüsel zu gewinnen, müsste die Einwegfunktion invertiert werden, was definitionsgemäß praktisch nicht möglich ist. Ebenso müsste, um die Signatur irgendeines anderen Dokuments zu erstellen, mindestens eines der Urbilder bekannt sein oder berechnet werden. Selbst wenn nach Art der Chosen-Message-Attack ein anderes Dokument bereits signiert ist, müsste mindestens ein weiteres Urbild gefunden werden um eine abgeänderte Nachricht zu signieren. Somit ist das Verfahren genau so sicher, wie die verwendete Einwegfunktion. Wenn Alice den privaten Schlüssel nach der Signaturberechnung löscht, kann auch in Zukunft keine andere Nachricht signiert werden. 
 
 \section{Benutzung für mehrere Nachrichten}
 
-Damit Alice mehre Nachrichten versenden kann, muss sie mehrere private Schlüssel verwenden. Im einfachsten Fall sendet Alice Bob zunächst mehrere öffentliche Schlüssel und gibt in der Nachricht dann an, welcher Schlüssel verwendet wurde. Dies ist jedoch bisweilen unpraktikabel. \footnote {Bei Verwendung von 512-Bit-Hashes können pro Megabyte Schlüsseldaten $\frac{8*2^{20}}{2*512^2} = 16$ Nachrichten versendet werden.} Daher wurden Verfahren entwickelt, die auf Hashbäumen basieren, sodass eine größere Anzahl von Nachrichten signiert werden kann, siehe \cite{bernstein2009post}. 
+Damit Alice mehre Nachrichten versenden kann, muss sie mehrere Schlüsselpaare verwenden. Im einfachsten Fall sendet Alice Bob zunächst mehrere öffentliche Schlüssel und gibt in der Nachricht dann an, welcher Schlüssel verwendet wurde. Dies ist jedoch bisweilen unpraktikabel.\footnote {Bei Verwendung von 512-Bit-Hashes können pro Megabyte Schlüsseldaten $\frac{8*2^{20}}{2*512^2} = 16$ Nachrichten versendet werden.} Daher wurden Verfahren entwickelt, die auf Hashbäumen basieren, sodass eine größere Anzahl von Nachrichten signiert werden kann, siehe \cite{bernstein2009post}. 
 
 
 
@@ -280,9 +283,9 @@ Daraufhin wurden wir auf einige Sicherheitsaspekte digitaler Signaturen sensibil
 
 Mit kritischem Blick konnten wir dann die Elgamal-Signatur kennenlernen.
 
-Zuletzt zeige uns die Lamport-Diffie-Einmal-Signatur die Funktionsweise von Einmalsignaturen und dass ein Signaturverfahren aus einer Einwegfunktion konstruiert werden kann.
+Zuletzt zeigte uns die Lamport-Diffie-Einmal-Signatur die Funktionsweise von Einmalsignaturen und dass ein Signaturverfahren aus einer Einwegfunktion konstruiert werden kann.
 
-Insofern haben wir ein solides Grundverständnis und einen guten Überblick über einige Signaturverfahren gewonnen und sind gerüstet um tiefer in Themen einzusteigen, die hier nur angerissen werden konnten, etwa Hashbäume, DSA und weitere Signaturverfahren. 
+Insofern haben wir ein solides Grundverständnis und einen guten Überblick über einige Signaturverfahren gewonnen und sind gerüstet um tiefer in Themen einzusteigen, die hier nur angerissen werden konnten, etwa Hashbäume, DSA, Implementierungsdetails und weitere Signaturverfahren. 
 
 
 
