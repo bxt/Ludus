@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage[bookmarks,pagebackref,bookmarksnumbered]{hyperref}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{Digitale Signaturen}
+
+\textit{Ein Vortrag Rahmen des Seminars Kryptographie, gehalten von Bernhard Häussner am 17. Januar 2013 im Wintersemester 2012/13. }\\
+
+Digitale Signaturverfahren werden benutzt, um digitale Dokumente kryptographisch vor Veränderungen zu schützen und ihre Authentizität zu belegen. 
+Sie erfüllen einen ähnlichen Zweck wie Unterschriften auf Papier. Mit einem geheimen, privaten Signaturschlüssel erstellt Alice zu einer
+Nachricht eine Signatur, die Bob mit ihrem öffentlichen Verifikationsschlüssel prüfen kann. 
+Die Signatur gilt nur für die signierte, unveränderte Nachricht und aus ihr lässt sich
+nicht auf den Signaturschlüssel schließen. 
+
+\subsection*{RSA-Signatur}
+
+Die Sicherheit der RSA-Signatur basiert auf der Sicherheit des RSA-Verschlüsselung-Verfahrens. 
+Da für RSA gilt $m = E(D(m,d),e)$, kann für das Signieren die Verschlüsselung und für das Verifizieren die
+Entschlüsselung verwendet werden. 
+
+\paragraph{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt/setzt ebenso wie für die Verschlüsselung: $p, q$ prim, $n = pq$ (Modul), $e$ 
+mit $1 < e < (p-1)(q-1)$, $\gcd(e,(p-1)(q-1)) = 1$ (öff. Schlüssel),
+$d$ mit $1 < d < (p-1)(q-1)$ und $de \equiv 1$ mod $(p-1)(q-1)$ (priv. Schlüssel). 
+
+\paragraph{Signatur-Erstellung}
+
+Alice erstellt die Signatur $s$ der Nachricht $m \in \{0,1,\dots,n-1\}$ mit dem privatem Schlüssel $d$: 
+
+\[ s = m^d \mod n \]
+
+\paragraph{Verifikitation}
+
+Bob verifiziert die Signatur $s$ mit dem öffentlichem Schlüssel $(n,e)$ und vergleicht die so erhaltene
+Nachricht $m$ mit der gesendeten:
+
+\[ m = s^e \mod n \]
+
+\paragraph{Redundanz oder Hashfunktion}
+
+Da sich aus zwei gültigen Signaturen durch Multiplikation eine dritte generieren lässt und auch
+jede Zahl für irgendeine Nachricht eine gülitge Signatur darstellt, werden statt der Nachricht
+eine gepaddede Nachicht (z.B. $m \circ m$) oder ein Hashwert signiert und die Nachricht wird gesondert
+übertragen.  
+
+\subsection*{Elgamal-Signatur}
+
+Die Sicherheit der Elgamal-Signatur basiert auf der Schwierigkeit diskrete Logarithmen zu berechnen. 
+Da hier Ver- und Entschlüsselung nicht vertauschbar sind, muss ein modifiziertes Verfahren verwendet
+werden. Das Prinzip der Elgamal-Signaturen wurde als DSA mit festen Bitlängen und einem 
+etwas effizienterem Verfahren standadisiert. 
+
+\paragraph{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt/setzt ähnlich zur Verschlüsselung: $p$ prim, $h : \Sigma^* \to \{1,2,\dots,p-2\}$ 
+kollisionsresistente Hashfunktion, $g \mod p$ Primitivwurzel, 
+$a \in \{1,2,\dots,p-2\}$ zufällig (priv. Schlüssel), $A = g^a \mod p$.
+
+\paragraph{Signatur-Erstellung}
+
+Alice erstellt die Signatur $(r,s)$ der Nachricht $m \in \Sigma^*$ mit dem privatem Schlüssel $a$ 
+und einer geheimen Zufallszahl $k \in \{1,2,\dots,p-2\}$ mit $\gcd(k,p-1) = 1$, sodass
+$k^{-1}$ mod $p-1$ existiert:
+
+\[ r = g^k \text{ mod } p \text{~~~~und~~~~} s = k^{-1}(h(m)-ar) \text{ mod } (p-1)\]
+
+\paragraph{Verifikitation}
+
+Bob verifiziert die Signatur $(r,s)$ mit dem öffentlichem Schlüssel $(p, g, A)$ durch:
+
+\[ 1 \leq r \leq p-1 \text{~~~~und~~~~} A^r r^s \equiv g^{h(m)} \text{ mod } p\]
+
+Duch Einsetzen der Terme zur Signaturerstellung kann man sich leicht von der Korrektheit
+überzeugen. 
+
+\subsection*{Lamport-Diffie-Einmal-Signatur}
+
+Anders als bei den herkömmlichen Signaturverfahren basiert die Sicherheit des Lamport-Diffie-Einmal-Signaturverfahrens
+nur auf der Nichtinvertierbarkeit einer beliebigen verwendeten Einwegfunktion, beispielsweise einer kollisionsresistenten Hashfunktion. 
+Es wird praktisch selten verwendet, da für jede zu signierende Nachricht ein neues Schlüsselpaar erzeugt werden muss, 
+ansosnten könnte der Schlüssel leicht rekonstruiert werden. Dieses Problem kann z.B. mit Hashbäumen gelöst werden. 
+Um Nachrichten beliebiger Länge signieren zu können, wird eine Hashfunktion vorgeschaltet. 
+
+\paragraph{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt den Sicherheitsparameter $k \in \mathbb{N}$ und eine Einwegfunktion 
+$H : \{0,1\}^k \mapsto \{0,1\}^k$ und setzt außerdem für jeden Signaturvorgang:
+
+\[ X = (x_{1,0},x_{1,1},x_{2,0},x_{2,1},\dots,x_{n,0},x_{n,1}) \in (\{0,1\}^k)^{2n} \text{(zufällig)}\]
+\[ Y = (y_{1,0},y_{1,1},y_{2,0},y_{2,1},\dots,y_{n,0},y_{n,1}) \text{ mit } y_{j,j} = H(x_{i,j}) \text{(öff. Schlüssel)}\]
+
+\paragraph{Signatur-Erstellung}
+
+Alice erstellt aus der Nachricht $m = (m_1, m_2, \dots, m_n) \in \{0,1\}^n$ die Signatur $S$:
+
+\[ S = (s_1, s_2, \dots, s_n) \text{ mit } s_i = x_{i,m_i}\]
+
+\paragraph{Verifikitation}
+
+Bob verifiziert die Signatur $S$ mit dem öffentlichem Schlüssel $Y$ druch:
+
+\[ (H(s_1),H(s_2),\dots,H(s_i)) = (y_{1,m_1},y_{2,m_2},\dots,y_{n,m_n})\]
+
+\end{document}
+

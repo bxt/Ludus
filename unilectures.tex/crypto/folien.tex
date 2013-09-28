@@ -1,0 +1,105 @@
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage[bookmarks,pagebackref,bookmarksnumbered]{hyperref}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{RSA-Signatur}
+
+\subsection*{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt/setzt ebenso wie für die Verschlüsselung:
+
+\begin{itemize}
+ \item $p, q$ prim. 
+ \item $n = pq$. (Modul)
+ \item $e$ mit $1 < e < (p-1)(q-1)$, $\gcd(e,(p-1)(q-1)) = 1$. (öff. Schlüssel)
+ \item $d$ mit $1 < d < (p-1)(q-1)$ und $de \equiv 1$ mod $(p-1)(q-1)$. (priv. Schlüssel)
+\end{itemize}
+
+
+\subsection*{Signatur-Erstellung}
+
+Alice erstellt Signatur $s$ der Nachricht $m \in \{0,1,\dots,n-1\}$ mit privatem Schlüssel $d$: 
+
+\[ s = m^d \mod n \]
+
+\subsection*{Verifikitation}
+
+Bob verifiziert die Signatur $s$ mit dem öffentlichem Schlüssel $(n,e)$ und vergleicht die so erhaltene
+Nachricht $m$ mit der gesendeten:
+
+\[ m = s^e \mod n \]
+
+
+\clearpage
+\section*{Elgamal-Signatur}
+
+\subsection*{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt/setzt ähnlich zur Verschlüsselung:
+
+\begin{itemize}
+ \item $p$ prim. 
+ \item $h : \Sigma^* \to \{1,2,\dots,p-2\}$ kollisionsresistente Hashfunktion.
+ \item $g \mod p$ Primitivwurzel.
+ \item $a \in \{1,2,\dots,p-2\}$ zufällig. (priv. Schlüssel)
+ \item $A = g^a \mod p$.
+\end{itemize}
+
+\subsection*{Signatur-Erstellung}
+
+Alice erstellt Signatur $(r,s)$ der Nachricht $m \in \Sigma^*$ privatem Schlüssel $a$ 
+und geheimer Zufallszahl $k \in \{1,2,\dots,p-2\}$ mit $\gcd(k,p-1) = 1$, sodass
+$k^{-1}$ (mod $p-1$) exitiert:
+
+\[ r = g^k \text{ mod } p \text{~~~~und~~~~} s = k^{-1}(h(m)-ar) \text{ mod } (p-1)\]
+
+\subsection*{Verifikitation}
+
+Bob verifiziert die Signatur $(r,s)$ mit öffentlichem dem Schlüssel $(p, g, A)$ durch:
+
+\[ 1 \leq r \leq p-1 \text{~~~~und~~~~} A^r r^s \equiv g^{h(m)} \text{ mod } p\]
+
+
+\clearpage
+\section*{Lamport-Diffie-Einmal-Signatur}
+
+\subsection*{Schlüsselerzeugung und Vorbereitungen}
+
+Alice wählt:
+
+\begin{itemize}
+ \item $k \in \mathbb{N}$. (Sicherheitsparameter)
+ \item $H : \{0,1\}^k \mapsto \{0,1\}^k$ Einwegfunktion. 
+\end{itemize}
+
+und außerdem für jeden Signaturvorgang:
+
+\begin{itemize}
+ \item $X = (x_{1,0},x_{1,1},x_{2,0},x_{2,1},\dots,x_{n,0},x_{n,1}) \in (\{0,1\}^k)^{2n} $ zufällig. (priv. Schlüssel)
+ \item $Y = (y_{1,0},y_{1,1},y_{2,0},y_{2,1},\dots,y_{n,0},y_{n,1}) $ mit $y_{j,j} = H(x_{i,j})$. (öff. Schlüssel)
+\end{itemize}
+
+\subsection*{Signatur-Erstellung}
+
+Alice erstellt die Signatur $S$ aus der Nachricht $m = (m_1, m_2, \dots, m_n) \in \{0,1\}^n$:
+
+\[ S = (s_1, s_2, \dots, s_n) \text{ mit } s_i = x_{i,m_i}\]
+
+\subsection*{Verfikitation}
+
+Bob verifiziert die Signatur $S$ mit dem öffentlichem Schlüssel $Y$ durch:
+
+\[ (H(s_1),H(s_2),\dots,H(s_i)) = (y_{1,m_1},y_{2,m_2},\dots,y_{n,m_n})\]
+
+\end{document}
+
