@@ -8,7 +8,8 @@
 \usetikzlibrary{arrows,automata}
 \usepackage{multirow}
 \usepackage[german]{fancyref}
-
+\usepackage{float}
+\usepackage{wrapfig}
 \hyphenation{Ver-bund-wahr-schein-lich-keits-ver-tei-lung}
 
 %opening
@@ -21,45 +22,45 @@
 \maketitle
 
 \begin{abstract}
-Im vorliegenden Dokument werden die Definitionen und wichtigsten Eigenschaften von Probabilistischen Graphen Modellen (PGMs) genannt und anhand von einfachen Beispielen erklärt. Im Anschluss werden Methoden zur Evaluierung solcher PGMs schrittweise erarbeitet und damit die drei verschiedenen Modelle verglichen und unter Betrachtung empirischer Studien verglichen. 
+In der vorliegenden Arbeit werden die Definitionen und wichtigsten Eigenschaften einiger probabilistischer graphischer Modelle (PGMs) genannt und anhand von einfachen Beispielen erklärt. Die drei Methoden bayessche Netze, naive Bayesmodelle und probabilistische Entscheidungsgraphen werden definiert und anhand einfacher Beispiele schrittweise erklärt. Im Anschluss werden Techniken zur Evaluierung solcher PGMs zusammengefasst und damit die drei verschiedenen Methoden unter Betrachtung empirischer Studien verglichen. 
 \end{abstract}
 
 
 \section{Einleitung}
 
-Probabilistische Graphische Modelle (PGMs) werdem im Rahmen künstlicher Intelligenz interdisziplinär angewendet in vielen Bereichen, etwa Computer Vision, medizinische Entscheidungsfindung, Sprach- und Textanalyse, Zoologie und Botanik, Mikrobiologie und viele weitere. 
+Probabilistische graphische Modelle (PGMs) werden im Rahmen künstlicher Intelligenz interdisziplinär angewendet in vielen Bereichen, etwa Computer Vision, medizinische Entscheidungsfindung, Sprach- und Textanalyse, Zoologie und Botanik, Mikrobiologie und viele weitere. 
 
-Während PGMs dem Anwender zu Beginn hauptsächlich in Form von Expertensystemen zur Verfügung gestellt wurden, finden sie heute als Anwendung für Jedermann im Rahmen des Web 2.0 anwendung, wodurch neue Datenquellen verarbeitet werden, etwa Profildaten in sozialen Netzwerken, Texte in Weblogs oder Nutzungsprofile in Onlineshops. Gewonnene Erkenntnisse können wiederum automiatisiert Präsentiert werden, zum Beispiel als individuelle Produktempfehlungen oder zur filterung uninteressanter/-erwünschter Beiträge. Beispielsweise können anhand von Twitter-Beiträgen von Benutzern, welche bekannter Weise an Depression erkrankt sind, Verfahren zur Erkennung von Verhaltensignalen für Depressionen entwickelt werden\cite{dechoudhury2013predicting}.
+Während PGMs dem Anwender zu Beginn hauptsächlich in Form von Expertensystemen zur Verfügung gestellt wurden, finden sie sich heute als Anwendung für jedermann im Rahmen des Web 2.0. Hierdurch werden neue Datenquellen verarbeitet, etwa Profildaten in sozialen Netzwerken, Texte in Weblogs oder Nutzungsprofile in Onlineshops. Gewonnene Erkenntnisse können wiederum automatisiert präsentiert werden, zum Beispiel als individuelle Produktempfehlungen oder zur Filterung uninteressanter oder unerwünschter Beiträge. Beispielsweise können anhand von Twitter-Beiträgen von Benutzern, welche bekannterweise an Depression erkrankt sind, Verfahren zur Erkennung von Verhaltenssignalen für Depressionen entwickelt werden\cite{dechoudhury2013predicting}.
 
-Ziel soll es nun sein das Prinzip hinter verschiedenen Ansätze für PGSs verständlich zu machen. Um den Rahmen dieser Arbeit nicht zu sprengen beschränken wir uns hier auf gerichtete, diskrete PGMs, von denen drei im Folgenden genauer definitert werden. Zuletzt wird untersucht, ob alle drei Methoden in verschiedenen Einsatzszenarien ähnlich effizient und genau arbeiten. 
+Ziel soll es nun sein, das Prinzip hinter verschiedenen Ansätze für PGMs verständlich zu machen. Um den Rahmen dieser Arbeit nicht zu sprengen beschränken wir uns hier auf gerichtete, diskrete PGMs, von denen drei im Folgenden genauer definiert werden. Zuletzt wird untersucht, ob alle drei Methoden in verschiedenen Einsatzszenarien ähnlich effizient und genau arbeiten. 
 
-\section{Stochastiche Grundlagen}
+\section{Stochastische Grundlagen}
 
-Um die PGMs formal beschreiben zu können und um den Kontext der hier verwendeten Notation ins Gedächtnis zu rufen werden hier kurz einige Grundlagen definiert. 
+Um die PGMs formal beschreiben zu können und um den Kontext der hier verwendeten Notation ins Gedächtnis zu rufen, werden hier kurz einige Grundlagen definiert. Sie sind an \cite{koller2009probabilistic} orientiert. 
 
 \subsection{Wahrscheinlichkeitsbegriff}
 
-Wirft man eine Münze sehr häufig, so wird sich nach eine hohen Anzahl Würfen ein bestimmtes Kopf/Zahl-Verhältnis einstellen, etwa annähernd 1:1 bei einer fairen Münze, wobei die erwartete Abweichung bei mehr Würfen immer kleiner wird. Dieser Vorgang lässt sich objektiv beschreiben und in Experimenten nachvollziehen. 
+Wirft man eine Münze sehr häufig, so wird sich nach einer hohen Anzahl Würfen ein bestimmtes Kopf/Zahl-Verhältnis einstellen, etwa annähernd 1:1 bei einer fairen Münze, wobei die erwartete Abweichung bei mehr Würfen immer kleiner wird. Dieser Vorgang lässt sich objektiv beschreiben und in Experimenten nachvollziehen. 
 
-Im Umfeld probabilistischer graphischer Modelle betrachtet man einen subjektiven Wahrscheinlichkeitsbegriff\cite{simon1958elements}. Will man beispielsweise eine Aussage über das zukünfige Wetter treffen, so kann man keine Experimente oder Stichproben durchführen. Man greift einerseits auf ein Hintergrundwissen zurück, am Beispiel Wetter wären dies die Erkenntnisse der Meteorologie und erhält eine A-priori-Wahrscheinlichkeit. Andererseits benutzt man aktuellen Beobachtungen, etwa graue Wolken am Horizont. Formalisiert wird dies als Beobachtung oder Messwert $x$ einer Zufallsvariable $X$. Hieraus bildet man sich einen Grad persönlicher Überzeugung, für ein nicht beobachtetes Phänomen, die A-posteriori-Wahrscheinlichkeitsverteilung für eine weitere Zufallsvariable $Y$, etwa ob es Regnen werde. Dieser Grad persönlicher Überzeugung ist ein Maß für die Unsicherheit. Im Beispiel wäre der Grad persönlicher Überzeugung z.B. messbar durch die festgesetzte Gewinnrate bei einer Wette, ob es Regen geben werde. 
+Im Umfeld probabilistischer graphischer Modelle betrachtet man einen subjektiven Wahrscheinlichkeitsbegriff nach \cite{simon1958elements}. Will man beispielsweise eine Aussage über das zukünftige Wetter treffen, so kann man keine Experimente oder Stichproben durchführen. Man greift einerseits auf ein Hintergrundwissen zurück, am Beispiel Wetter wären dies die Erkenntnisse der Meteorologie, und erhält eine A-priori-Wahrscheinlichkeit. Andererseits benutzt man aktuellen Beobachtungen, etwa graue Wolken am Horizont. Formalisiert wird dies als Beobachtung oder Messwert $x$ einer Zufallsvariable $X$. Hieraus bildet man sich einen Grad persönlicher Überzeugung für ein nicht beobachtetes Phänomen, die A-posteriori-Wahrscheinlichkeitsverteilung für eine weitere Zufallsvariable $Y$, etwa ob es Regnen werde. Dieser Grad persönlicher Überzeugung ist ein Maß für die Unsicherheit. Im Beispiel wäre der Grad persönlicher Überzeugung messbar durch die festgesetzte Gewinnrate bei einer Wette, ob es Regen geben werde. 
 
 \subsection{Zufallsvariablen}
 
-Wir betrachten im Rahmen dieses Dokuments stets eine Menge $X_1,\dots,X_n$ diskreter Zufallsvariablen und bezeichen eine mögliche Belegung aus dem Wertebereich von $X_i$ mit $x_i$. Die Notation $P(x_i)$ bezeichnet dabei den Grad der Überzeugung, dass $x_i$ eintritt, $P(X_i)$ die zugehörige Wahrscheinlichkeitsverteilung. Außerdem wird die Verbundwahrscheinlichkeit $P(x_i,x_k)$ und die bedingte Wahrscheinlichkeit $P(x_i,|x_k)$ jeweils auf die Wahrscheinlichkeitsverteilung erweitert als $P(X_i,X_k)$ und $P(X_i|X_k)$. 
+Wir betrachten im Rahmen dieser Arbeit stets eine Menge $X_1,\dots,X_n$ diskreter Zufallsvariablen und bezeichnen eine mögliche Belegung aus dem Wertebereich von $X_i$ mit $x_i$. Die Notation $P(x_i)$ bezeichnet dabei den Grad der Überzeugung, dass $x_i$ eintritt, $P(X_i)$ die zugehörige Wahrscheinlichkeitsverteilung. Außerdem wird die Verbundwahrscheinlichkeit $P(x_i,x_k)$ und die bedingte Wahrscheinlichkeit $P(x_i,|x_k)$ jeweils auf die Wahrscheinlichkeitsverteilung erweitert als $P(X_i,X_k)$ und $P(X_i|X_k)$. 
 
-Gilt für alle $i_i, x_k$ aus den Wertebereichen von $X_i$ und $X_k$, dass $P(x_i,x_k) = P(x_i) P(x_k)$ nennen wir die Zufallsvariablen $X_i$ und $X_k$ unabhängig und schreiben $(X_i \perp X_k)$. 
+Gilt für alle $x_i, x_k$ aus den Wertebereichen von $X_i$ und $X_k$, dass $P(x_i,x_k) = P(x_i) P(x_k)$ nennen wir die Zufallsvariablen $X_i$ und $X_k$ unabhängig und schreiben $(X_i \perp X_k)$. Zusätzlich nennen wir Variablen bedingt unabhängig, in Symbolen $(X_i \perp X_k | X_l)$, wenn stets gilt $P(x_i,x_k|x_l) = P(x_i|x_l) P(x_k|x_l)$. Dabei kann man nicht aus $(X_i \perp X_k)$ auf $(X_i \perp X_k | X_j)$ schließen. 
 
-\paragraph{Beispiel für Zufallsvariablen} In diesem Dokument werde ich die Beispiele an einer einfachen Menge von Zufallsvariablen erläutern, welche an der Beobachtung von Pilzarten ausgerichtet sind. Es sind dies Farbe, Muster und Gift, abgekürzt mit $F,M,G$. Sie haben die Wertebereiche ``braun'', ``rot'' für Farbe, ``keines'', ``weiße Tupfen'' für Muster und ``ja'',``nein'' für Gift, ggf. abgekürzt durch $b,r,k,w,j,n$. Mit diesen Zufallsvariablen lassen sich die Beispiele intuitiv verstehen, so ist beispielsweise $P(j)$ der Überzeugungsgrad, dass ein Pilz giftig ist, $P(F)$ bezeichet die Wahrscheinlichkeitsverteilung zu den Farben des Pilzes. 
+\paragraph{Beispiel für Zufallsvariablen} Ich werde sämtliche Beispiele an einer einfachen Menge von Zufallsvariablen erläutern, welche an der Beobachtung von Pilzarten ausgerichtet sind. Es sind dies Farbe, Muster und Gift, abgekürzt mit $F,M,G$. Sie haben die Wertebereiche "`braun"', "`rot"' für Farbe, "`keines"', "`weiße Tupfen"' für Muster und "`ja"',"`nein"' für Gift, gegebenenfalls abgekürzt durch $b,r,k,w,j,n$. Mit diesen Zufallsvariablen lassen sich die Beispiele intuitiv verstehen, so ist beispielsweise $P(j)$ der Überzeugungsgrad, dass ein Pilz giftig ist, $P(F)$ bezeichnet die Wahrscheinlichkeitsverteilung zu den Farben des Pilzes. 
 
 \subsection{Wahrscheinlichkeitsverteilungen}
 
-Letzendlich werden die Elementarereignisse druch den Zustand, die Belegungen, der Zufallsvariablen charakterisiert und die Wahrscheinlichkeitsverteilung ist eine reelwertige Fuktion über dem Zustandsraum der Zufallsvariablen. 
+Letztendlich werden die Elementarereignisse durch den Zustand, die Belegungen, der Zufallsvariablen charakterisiert und die Wahrscheinlichkeitsverteilung ist eine reellwertige Funktion über dem Zustandsraum der Zufallsvariablen. 
 
-Wir werden dabei Wahrscheinlichkeitsverteilungen mit $P(X_i)$ bezeichnen, und sie als Maß über den Wertebereichen der Zufallsvariablen in der Art einer Produkt-$\sigma$-Algebra multiplizieren. Die Verbundwahrscheinlichkeitsverteilung über alle Zufallsvariablen ergbit sich dann als $ P(X_1,X_2,\dots,X_n) = \prod_{i=1}^n P(X_i) $. 
-
+Wir werden dabei Wahrscheinlichkeitsverteilungen mit $P(X_i)$ bezeichnen, und sie als Maß über den Wertebereichen der Zufallsvariablen in der Art einer Produkt-$\sigma$-Algebra multiplizieren. Die gemeinsame Wahrscheinlichkeitsverteilung (oder Verbundwahrscheinlichkeitsverteilung) über alle Zufallsvariablen ergibt sich als $ P(X_1,X_2,\dots,X_n) = \prod_{i=1}^n P(X_i) $ genau dann, wenn die betroffenen Zufallsvariablen unabhängig sind. 
+% TODO Quellen
 \paragraph{Beispiel einer Verbundwahrscheinlichkeitsverteilung. } 
 
-In diesem Dokument werde ich weitestgehend durchgehend die Verbundwahrscheinlichkeitsverteilung in \fref{tab:bspverbwhrv} für die Beispiele verwenden, die in etwa die Information kodiert, dass rote pilze mit weißen Flocken giftig sind, und braune Pilze ohne weiße Flocken genießbar, wobei andere Merkmalkombination eher selten sind. 
+Für die folgenden Beispiele werde ich durchgehend die Verbundwahrscheinlichkeitsverteilung in \fref{tab:bspverbwhrv} verwenden. Sie kodiert in etwa die Information, dass rote Pilze mit weißen Flocken giftig sind und braune Pilze ohne weiße Flocken genießbar, wobei andere Merkmalkombinationen eher selten sind. 
 
 \begin{table}[htb]
 \caption{\label{tab:bspverbwhrv}Beispiel-Verbundwahrscheinlichkeitsverteilung}
@@ -79,78 +80,77 @@ In diesem Dokument werde ich weitestgehend durchgehend die Verbundwahrscheinlich
 
 Es ist festzustellen, dass obwohl hier nur drei Zufallsvariablen involviert sind und auch diese nur zweiwertig sind, bereits eine eher unübersichtliche Tabelle zu lesen ist. 
 
- % TODO
-\subsection{Unabhängigkeit zweier Zufallsvariablen}
-
-[$X \perp Y$, $ P(X|Y)$, unindependend becomes dependent given X]
-
-
 \section{Probabilistische Graphische Modelle}
 
-Die eben in \fref{tab:bspverbwhrv} beispielhaft gezeigte Verbundwahrscheinlichkeitsverteilung wollen wir durch probabilistische graphische Modelle darstellen. Zunächst bemühe ich mich hier um ein Verständinis der Intuition hinter PGMs und lege dann ihre Notwendigkeit im Zusammenhang mit maschineller Verarbeitung von Verbundwahrscheinlichkeitsverteilungen dar. 
+Die eben in \fref{tab:bspverbwhrv} beispielhaft gezeigte Verbundwahrscheinlichkeitsverteilung wollen wir durch probabilistische graphische Modelle darstellen. Zunächst bemühe ich mich hier um ein Verständnis der Intuition hinter PGMs und lege dann ihre Notwendigkeit im Zusammenhang mit maschineller Verarbeitung von Verbundwahrscheinlichkeitsverteilungen dar. 
 
 \subsection{Intuition hinter probabilistischen graphischen Modellen}
 
-Bei der Betrachtung von Naturvorgängen oder komplexen Zusammenhängen ist es laut \cite{pearl1988probabilistic} ein Anliegen der Menschen diese durch Kausalitäten zu erklären, etwa ``Wenn ein Tier ein Vogel ist, so kann es Fliegen''. 
+Bei der Betrachtung von Naturvorgängen oder komplexen Zusammenhängen ist es laut \cite{pearl1988probabilistic} und \cite{jensen2001bayesian} ein Anliegen der Menschen diese durch Kausalitäten zu erklären, etwa "`Wenn ein Tier ein Vogel ist, so kann es Fliegen"'. 
 
 Solcherlei Abhängigkeiten zwischen Hypothesen und Evidenz können als graphische Diagramme dargestellt werden, zunächst in der Form von Bäumen. Formalisiert werden solche Systeme als Entscheidungsbäume oder -graphen. 
 
-Jedoch genügt es bei vielen Anwendungen nicht, boolsche Formeln zu verwenden, da ein gewisser Grad an Unsicherheit in Betracht gezogen werden muss. Somit annotiert man die erhaltenen Graphen mit  Wahrscheinlichkeitsverteilungen, und erhält eine Datenstruktur für eine Verbundwahrscheinlichkeitsverteilung, ein probabilistisches graphisches Modell. 
+Jedoch genügt es bei vielen Anwendungen nicht, boolesche Formeln zu verwenden, da ein gewisser Grad an Unsicherheit in Betracht gezogen werden muss. Somit annotiert man die erhaltenen Graphen mit  Wahrscheinlichkeitsverteilungen, und erhält eine Datenstruktur für eine gemeinsame Wahrscheinlichkeitsverteilung, ein probabilistisches graphisches Modell. 
 
-Oftmals werden nicht direkt beobachtbare Ursachen angenommen, etwa der Jagttrieb eines Tiers oder ein elektrisches Feld. Solches finden versteckter Ursachen findet sich in Naiven Bayes-Modellen wieder, welche in einer Zufallsvariable Komponenten Definieren, die für alle weiteren Evidenzen entscheident sind. 
+Oftmals werden nicht direkt beobachtbare Ursachen angenommen, etwa der Jagdtrieb eines Tiers oder ein elektrisches Feld. Solche versteckten Ursachen finden sich in naiven Bayesmodellen wieder, welche in einer Zufallsvariable Komponenten definieren, die für alle weiteren Evidenzen entscheidend sind. 
 
 Somit orientieren sich probabilistische graphische Modelle (PGMs) im Grunde an unserem menschlichen Lernen, Wissen und Folgern, können aber von Computern auf maschinenlesbaren Daten deterministisch, objektiv und schneller angewendet werden.
 
-Wie schon in an Tabelle zur Beispielverbundwahrschenlichkeit zu erkennen, können bei der Verbundwahrscheinlichkeit nicht direkt Abhängigkeiten abgelesen werden. Wie wir in den nächsten Abschnitten sehen werden ist dies bei probabilistischen graphischen Modellen anders. 
+Wie schon in Tabelle zur Beispielverbundwahrscheinlichkeit zu erkennen, können bei der gemeinsamen Wahrscheinlichkeitsverteilung nicht direkt Abhängigkeiten abgelesen werden. Wie wir in den nächsten Abschnitten sehen werden, ist dies bei probabilistischen graphischen Modellen anders. 
 
-\subsection{Informationstechnologische Notwendigkeit probabilistischen graphischen Modellen}
+\subsection{Informationstechnologische Notwendigkeit probabilistischer graphischer Modelle}
 
 Bei \cite{koller2009probabilistic} wird die Notwendigkeit von PGMs weiter begründet: 
 
-In der stochastischen Wahrscheinlichkeitstheorie können Wahrscheinlichkeitsverteilungen $P(X_1,X_2,\dots,X_n)$ über ``viele'' Zufallsvariablen $X_1,X_2,\dots,X_n$ abstrakt behandelt werden. Speicherte man solch eine Wahrscheinlichkeitsverteilung jedoch als Tupel in abhängigkeit von den Zufallsvariablen ab, ergäben sich exponentiell viele Werte, für jede mögliche Belegung der Variablen eine. Im Falle von z.B. $30$ binären Zufallsvariablen wären dies bereits $2^{30} \approx 10^9 $ Werte. 
+In der stochastischen Wahrscheinlichkeitstheorie können Wahrscheinlichkeitsverteilungen $P(X_1,X_2,\dots,X_n)$ über "`viele"' Zufallsvariablen $X_1,X_2,\dots,X_n$ abstrakt behandelt werden. Speicherte man solch eine Wahrscheinlichkeitsverteilung jedoch als Tupel in Abhängigkeit von den Zufallsvariablen ab, ergäben sich exponentiell viele Werte, für jede mögliche Belegung der Variablen eine. Im Falle von $30$ binären Zufallsvariablen wären dies bereits $2^{30} \approx 10^9 $ Werte. 
 
 Insbesondere wäre der benötigte Speicherplatz sehr groß und die einzelnen Wahrscheinlichkeiten mitunter sehr klein. 
 
-Zudem hätten die Algorithmen, die auf der gesamten exponentiellen Dateneingabe arbeiten also exponentielle Laufzeit in der Anzahl der Variablen. Dieses Problem lösen PGMs, denn sie sind eine kompaktere, deklarative Repräsentation solcher Wahrscheinlichkeitsverteilungen und bilden somit die Grundlage für viele effiziente Algorithmen. Beim automatischen Lernen bildet man PGMs aus Stichproben solcher Wahrscheinlichkeitsverteilungen, welche z.B. empirisch erfasst wurden oder nur nicht-$0$-Werte beinhalten. Hieraus können Rückschlüsse auf die Beschaffenheit der Testobjekte geschlossen werden. PGMs können aber auch direkt von Domainexperten erstellt werden. 
+Zudem hätten die Algorithmen, die auf der gesamten exponentiellen Dateneingabe arbeiten, also exponentielle Laufzeit in der Anzahl der Variablen. Dieses Problem lösen PGMs, denn sie sind eine kompaktere, deklarative Repräsentation solcher Wahrscheinlichkeitsverteilungen und bilden somit die Grundlage für viele effiziente Algorithmen.
+
+Beim automatischen Lernen bildet man PGMs aus Stichproben solcher Wahrscheinlichkeitsverteilungen, welche empirisch erfasst wurden. Hieraus kann auf die Beschaffenheit der Testobjekte geschlossen werden. PGMs können aber auch direkt von Domainexperten erstellt werden. 
+
+% TODO: Quelle mit Enzymen
 
 Beim Schließen benutzt man Inferenzalgorithmen, welche für gegebene Variablenbelegungen mit einem PGM die Wahrscheinlichkeitsverteilungen für Zielvariablen berechnen. 
 
-\paragraph{Beispiel für Inferenz} In unserer Beispielverbundwahrschenlichkeitsverteilung aus \fref{tab:bspverbwhrv} könnten wir aus der beobachteten Farbe rot auf den Überzeugungsgrad schließen, dass der rote Pilz giftig ist:
+\paragraph{Beispiel für Inferenz} In unserer Beispielverbundwahrscheinlichkeitsverteilung aus \fref{tab:bspverbwhrv} könnten wir aus der beobachteten Farbe rot auf den Überzeugungsgrad schließen, dass der rote Pilz giftig ist:
 \[P(j|r) = \frac{P(r,k,j)+P(r,w,j)}{P(r)} = \frac{0,06+0,28}{0,4} = 0,85\]
 
 Bei der Anwendung im Rahmen eines Expertensystems würde man dieses Ergebnis so interpretieren, dass man rote Pilze besser nicht isst. 
 
 \section{Bayessche Netze}
 
-Bayessche Netze (BN) nach \cite{pearl1988probabilistic} und \cite{koller2009probabilistic} bieten eine kompakte Darstellung für eine zusammengesetzte Wahrscheinlichkeitsverteilung über eine Menge von Zufallsvariablen als kreisfreier, gerichteter Graph. 
+Bayessche Netze (BN) nach \cite{pearl1988probabilistic} und \cite{koller2009probabilistic} bieten eine kompakte Darstellung für eine zusammengesetzte Wahrscheinlichkeitsverteilung über eine Menge von Zufallsvariablen als kreisfreier, gerichteter Graph, in dem bedingte Unabhängigkeiten zwischen den Variablen ablesbar sind. 
 
 \subsection{Beschreibung}
 
-Im Graphen stehen die Knoten für die Zufallsvariablen und die Kanten für Abhängigkeiten zwischen diesen, bzw. die Absenz von Kanten für deren Unabhängigkeit. Für die Unabhängigkeiten gilt für alle $i \in \{1,\dots,n\}$:
+Im Graphen stehen die Knoten für die Zufallsvariablen und die Kanten für Abhängigkeiten zwischen diesen oder die Absenz von Kanten für deren Unabhängigkeit. Die bedingten Unabhängigkeiten sind im Graph so kodiert, dass für alle $i \in \{1,\dots,n\}$ die folgende bedingte Unabhängigkeit gilt:
 \[ ( X_i \perp \mbox{Nondesc}(X_i) | \mbox{Parents}(X_i) )\]
-wobei $\mbox{Parents}(X_i)$ die Eltern des Knotens $X_i$ im Graphen sind und $\mbox{Nondesc}(X_i)$ jene Knoten, die keine Nachkommen des Knotens $X_i$ sind, also zu denen keinen kein gerichteter Pfad von $X_i$ aus existiert. 
+wobei $\mbox{Parents}(X_i)$ die Eltern des Knotens $X_i$ im Graphen sind und $\mbox{Nondesc}(X_i)$ jene Knoten, die keine Nachkommen des Knotens $X_i$ sind, also zu denen kein gerichteter Pfad von $X_i$ aus existiert. 
 
 Zu jedem Knoten gehört eine bedingte Wahrscheinlichkeitsverteilung, welche die Wahrscheinlichkeiten für die Werte der Zufallsvariablen in Abhängigkeit der Werte der Zufallsvariablen der Elternknoten angibt. 
 
-Dies bedeutet die Wahrscheinlichkeitsverteilung lässt sich wie folgt Faktorisieren: 
+Dies bedeutet, die Wahrscheinlichkeitsverteilung lässt sich wie folgt faktorisieren: 
 \[ P(X_1,X_2,\dots,X_n) = \prod_{i=1}^n P(X_i | \mbox{Parents}(X_i)) \]
 wobei wiederum $\mbox{Parents}(X_i)$ die Eltern des Knotens $X_i$ im Graphen sind. 
 
-Das Schließen ist in Bayesschen Netzen möglich durch verschiedenste Algortihmen, wobei \cite{dechter1996bucket} diese Algorithmen auf den vergleichsweise einfachen\footnote{``A student was able to implement elim-bel within a few weeks of being introduced to it. '', dt.: ``Ein Studierender konnte elim-bel innerhalb weniger Wochen nach einer Einführung implementieren.'', ebd.} Algorithmus ``bucket elimination'' zurückführt. 
+Das Schließen ist in bayesschen Netzen möglich durch verschiedenste Algorthmen, wobei \cite{dechter1996bucket} diese Algorithmen auf den vergleichsweise einfachen\footnote{"`A student was able to implement elim-bel within a few weeks of being introduced to it. "', dt.: "`Ein Studierender konnte elim-bel innerhalb weniger Wochen nach einer Einführung implementieren."', ebd.} Algorithmus "`bucket elimination"' zurückführt. 
 
-Die Komplexität eines Bayesschen Netzes kann mit der Baumweite, also der Weite der optimalen Baumzerlegung des Graphens gemessen werden. In dieser ist das Schließen in linearer Zeit möglich. 
+Die Komplexität eines bayesschen Netzes kann mit der Baumweite, also der Weite der optimalen Baumzerlegung des Graphen gemessen werden. In dieser ist das Schließen in linearer Zeit möglich. 
 
 \subsection{Beispiel}
 
-Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrschenlichkeitsverteilung kann durch ein Bayessches Netz dargestellt werden. 
+Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrscheinlichkeitsverteilung kann durch ein bayessches Netz dargestellt werden. 
 
-Dazu überlegen wir uns zunächst die Netzstruktur. Ein Experte könnte das Netzt mit den Gedanken strukturieren, dass die verscheidenen Muster je nach Farbe unterschiedlich oft vorkommen und die Genießbarkeit anhand von Farbe und Muster festgestellt werden kann. Der entsrechende Graph dazu sähe wie in in \fref{fig:bayesnetwork} aus.
+Dazu überlegen wir uns zunächst die Netzstruktur. Ein Experte könnte das Netzt mit den Gedanken strukturieren, dass die verschiedenen Muster je nach Farbe unterschiedlich oft vorkommen und die Genießbarkeit anhand von Farbe und Muster festgestellt werden kann. Der entsprechende Graph dazu sähe wie in \fref{fig:bayesnetwork} aus.
 
 \begin{figure}[htb]
-\caption{\label{fig:bayesnetwork}Beispiel für ein bayesches Netz}
+\caption{\label{fig:bayesnetwork}Beispiel für ein bayessches Netz}
 \centering
 \begin{tikzpicture}
-  [->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
+  %[->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
+  [scale=0.6,->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
   \node (nf) at (2,4) {Farbe};
   \node (nm) at (6,4)  {Muster};
   \node (ng) at (4,1)  {Gift};
@@ -164,30 +164,34 @@ Dazu überlegen wir uns zunächst die Netzstruktur. Ein Experte könnte das Netz
 
 Weiterhin würden die Koten mit den entsprechenden bedingten Wahrscheinlichkeitsverteilungen annotiert werden. 
 
-Für den Knoten Farbe müsste der Experte bei unbekannter Verbundwahrscheinlichkeitsverteilung die Verteilung der Farben abschätzen, $P(F|\emptyset) = P(F)$, wie in \fref{tab:nodecolor} geschehen. Da es hier keine Elternknoten gibt, ist die Verteilung nicht bedingt.
+Für den Knoten Farbe müsste der Experte bei unbekannter Verbundwahrscheinlichkeitsverteilung die Verteilung der Farben $P(F|\emptyset) = P(F)$ abschätzen, wie in \fref{tab:nodecolor} geschehen. Da es hier keine Elternknoten gibt, ist die Verteilung nicht bedingt. Für den Knoten Muster müsste die Verteilung der Muster in Abhängigkeit der Farben bestimmt werden, $P(M|F)$, wie in \fref{tab:nodepattern} geschehen.
+
 
 \begin{table}[htb]
-\caption{\label{tab:nodecolor}Annotation für den Knoten Farbe}
+\begin{minipage}{0.45\textwidth}
 \centering
+\caption{\label{tab:nodecolor}Annotation für den Knoten Farbe}
 \begin{tabular}{l|l}
   braun & rot    \\ \hline
   0,6   & 0,4    \\
 \end{tabular}
-\end{table}
-
-Für den Knoten Muster müsste die Verteilung der Muster in Abhänigkeit der Farben bestimmt werden, $P(M|F)$, wie in \fref{tab:nodepattern} geschehen.
-
-\begin{table}[htb]
-\caption{\label{tab:nodepattern}Annotation für den Knoten Muster}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
 \centering
+\caption{\label{tab:nodepattern}Annotation für den Knoten Muster}
 \begin{tabular}{r|l|l}
   $F$   & keines & weiße Tupfen \\ \hline
   braun &    0,9 &          0,1 \\
   rot   &    0,3 &          0,7 \\
 \end{tabular}
+\end{minipage}
 \end{table}
 
-Für den Knoten Gift müsste der Experte angeben, wie die giftigen Pilze aussehen, $P(G|F,M)$, siehe \fref{tab:nodepoison}.
+
+
+
+Für den Knoten Gift müsste der Fachexperte angeben, wie die giftigen Pilze aussehen, $P(G|F,M)$, siehe \fref{tab:nodepoison}.
+
 
 \begin{table}[htb]
 \caption{\label{tab:nodepoison}Annotation für den Knoten Gift}
@@ -203,40 +207,41 @@ Für den Knoten Gift müsste der Experte angeben, wie die giftigen Pilze aussehe
 
 Multipliziert man diese drei Wahrscheinlichkeitsverteilungen erhält man wieder die Verbundwahrscheinlichkeitsverteilung aus \fref{tab:bspverbwhrv} mit 
 \[P(F,M,G) = P(F) P(M|F) P(G|F,M)\]
-zum Beispiel ist $ P(r,w,j) = P(r) P(w|r) P(j|r,w) = 0,4 \cdot 0,7 \cdot 1,0 = 0,28 $. Durch die Faktorisierung in drei Wahrscheinlichkeitsverteilungen wurde die Semantik der Wahrschnlichkeiten klarer hervorgehoben. 
+zum Beispiel ist $ P(r,w,j) = P(r) P(w|r) P(j|r,w) = 0,4 \cdot 0,7 \cdot 1,0 = 0,28 $. Durch die Faktorisierung in drei Wahrscheinlichkeitsverteilungen wurde die Semantik der Wahrscheinlichkeiten klarer hervorgehoben. 
 
-\section{Naive Bayes-Modelle}
+\section{Naive Bayesmodelle}
 
-Bei Naiven Bayes-Modellen\cite{lowd2005naive} (NB) konstruiert man eine unbeobachtbare Zufallsvariable $C$. Die Zustände von $C$ nennnt man Klasse oder Komponente. 
+Bei naiven Bayesmodellen\cite{lowd2005naive} (NB) konstruiert man eine unbeobachtbare Zufallsvariable $C$. Die Zustände von $C$ nennt man Klasse oder Komponente. 
 
 \subsection{Beschreibung}
 
-Es wird angenommen, dass in Abhängigkeit von $C$ alle Zufallsvariablen unabhängig sind. Somit entsprechen sie einem sehr einfachen baumförmigen Bayesschen Netz mit $C$ als Wurzel und den übrigen Zufallsvariablen als Blättern. Leitet man aus diesem Bayesschen Netz die Unabhängigkeiten ab ergibt sich, wie erwartet für alle Indices $i,k \in \{1,\dots,n\}$
+Es wird angenommen, dass in Abhängigkeit von $C$ alle Zufallsvariablen unabhängig sind. Somit entsprechen sie einem sehr einfachen baumförmigen bayesschen Netz mit $C$ als Wurzel und den übrigen Zufallsvariablen als Blättern. Leitet man aus diesem bayesschen Netz die bedingten Unabhängigkeiten ab, ergibt sich, wie erwartet, für alle Indizes $i,k \in \{1,\dots,n\}$
 \[ (X_i \perp X_k | C) \]
 
 Die Wahrscheinlichkeitsverteilung wird wie folgt faktorisiert: 
 \[ P(C,X_1,X_2,\dots,X_n) = P(C) \prod_{i=1}^n P(X_i|C) \]
 
-Insebesondere müssen wir, um von einer gegebenen Variablenbelegung $x_1,\dots,x_n$  (Beobachtungen) 
-auf die Klasse $c$ zu schließen lediglich
-\[ c = \mbox{argmax}_{c \in C} P(c) \prod_{i=1}^n P(x_i|c) \]
-berechnen. Dies ist das Prinzip des naiven Bayes-Klassifikators, die Inferenz ist hier möglich in linearer Zeit der Größe des Naiven Bayes-Modells. 
+Insbesondere müssen wir, um von einer gegebenen Variablenbelegung $x_1,\dots,x_n$  (Beobachtungen) 
+auf die Klasse $c$ zu schließen, lediglich
+\[ c = \mbox{argmax}_{c' \in C} P(c') \prod_{i=1}^n P(x_i|c') \]
+berechnen. Dies ist das Prinzip des naiven Bayes-Klassifikators, die Inferenz ist hier möglich in linearer Zeit der Größe des Naiven Bayesmodells. 
 
 Es können aber auch alle (Inferenz-)Algorithmen für Bayessche Netze verwendet werden. 
 
 \subsection{Beispiel}
 
-Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrschenlichkeitsverteilung kann durch ein naive Bayes-Modell mit der in \fref{fig:nbgraph} gezeigten Struktur modelliert werden. 
+Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrscheinlichkeitsverteilung kann durch ein naives Bayesmodell mit der in \fref{fig:nbgraph} gezeigten Struktur modelliert werden. 
 
 \begin{figure}[htb]
-\caption{\label{fig:nbgraph}Beispiel für ein naives Bayes-Modell}
+\caption{\label{fig:nbgraph}Beispiel für ein naives Bayesmodell}
 \centering
 \begin{tikzpicture}
-  [->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
-  \node (nc) at (3,3) {$C$};
+  %[->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
+  [scale=0.8,->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw,scale=0.8}]
+  \node (nc) at (2.5,2.5) {$C$};
   \node (nf) at (1,1) {Farbe};
-  \node (nm) at (3,1)  {Muster};
-  \node (ng) at (5,1)  {Gift};
+  \node (nm) at (2.5,1)  {Muster};
+  \node (ng) at (4,1)  {Gift};
 
   \path (nc) edge (nf);
   \path (nc) edge (ng);
@@ -245,7 +250,7 @@ Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrschenlichkeitsverteilu
 \end{tikzpicture}
 \end{figure}
 
-Die Anzahl der Klassen und die genauen Werte können dann mit einem Lernalgorithmus anhand der Daten gelern werden. 
+Die Anzahl der Klassen und die genauen Werte können dann mit einem Lernalgorithmus anhand der Daten gelernt werden. 
 
 \section{Probabilistische Entscheidungsgraphen}
 
@@ -255,32 +260,33 @@ Probabilistische Entscheidungsgraphen (engl. probabilistic decision graphs, PDG)
 
 Die Modelle bestehen aus zwei kaskadierenden Graphen: Zum einen aus einem Wald mit Knoten für die Zufallsvariablen $P(X_1,X_2,\dots,X_n)$ und baumförmigen Abhängigkeiten zwischen diesen. Die Verbundwahrscheinlichkeiten der Variablen eines zusammenhängenden Baumes in diesem Wald sind jeweils unabhängig von den Verbundwahrscheinlichkeiten der anderen Bäume. 
 
-Zum anderen besteht das Modell aus einer Menge gewurzelter gerichteter azyklischer Graphen für jeden Baum mit Knotenmengen $V_i$ für jede Zufallsvariable $X_i$. Für jeden Knoten in $V_i$  und für jeden Nachfolger $X_k$ von $X_i$ im Wald und jeden möglichen Wert von $X_i$ gibt genau eine Katen zu einem Knoten aus $V_k$. Hierbei können mehrere Knoten ``zusammen fallen''. Jeder Knoten $v_{i,k} \in V_i$ wird annotiert mit einer Wahrscheinlichkeitsverteilung $P_{i,k}(X_i)$. 
+Zum anderen besteht das Modell aus einer Menge gewurzelter gerichteter azyklischer Graphen für jeden Baum mit Knotenmengen $V_i$ für jede Zufallsvariable $X_i$. Für jeden Knoten in $V_i$  und für jeden Nachfolger $X_l$ von $X_i$ im Wald und jeden möglichen Wert von $X_i$ gibt es genau eine Katen zu einem Knoten aus $V_l$. Hierbei können mehrere Knoten "`zusammenfallen"'. Jeder Knoten $v_{i,k} \in V_i$ wird annotiert mit einer Wahrscheinlichkeitsverteilung $P_{i,k}(X_i)$. 
 
-Für jede Variablenbelegung $x_1, x_2, \dots, x_n$ wird jeweils ein Knoten $v_{i,k}$ aus den $V_1, \dots, V_i$ erreicht, indem man den Kanten wie bei einem herkömlichen Entscheidungsbaum folgt. 
+Für jede Variablenbelegung $x_1, x_2, \dots, x_n$ wird jeweils ein Knoten $v_{i,k}$ aus den $V_1, \dots, V_i$ erreicht, indem man den Kanten wie bei einem herkömmlichen Entscheidungsbaum folgt. 
 
 Für die Verbundwahrscheinlichkeitsverteilung ergibt sich dann in Abhängigkeit der Wahrscheinlichkeitsverteilungen $P_{i,k}$ der durch Variablenbelegung erreichten Knoten: 
 
 \[P(x_1,x_2,\dots,x_n) = \prod_{i=1}^n P_{i,k}(x_i) \]
 
-Wie schon an der Notation zu sehen, werden, anders als in Bayesschen Netzen, Wahrscheinlichkeitsverteilungen in Abhängigkeit von bestimten Variablenbelegungen ausgedrückt, welche Paratitionen des Zustandsraums der Zufallsvariablen bilden. Gleichzeitig gibt es Bayessche Netze, die nicht als probabilistische Entscheidungsgraphen repräsentiert werden können, die beiden Modelle sind somit inkompatibel\footnote{Es kann jedoch mit bewährten Lernalgorithmen ein intermediäres BN gelernt werden, und aus dessen Baumzerlegung ein probabilistischer Entscheidungsgraph abgeleitet werden, wie bei \cite{jaeger2006learning} demonstriert. }. 
+Wie schon an der Notation zu sehen, werden anders als in bayesschen Netzen Wahrscheinlichkeitsverteilungen in Abhängigkeit von bestimmten Variablenbelegungen ausgedrückt, welche Partitionen des Zustandsraums der Zufallsvariablen bilden. Gleichzeitig gibt es Unabhängigkeiten in bayesschen Netzen, die nicht in probabilistischen Entscheidungsgraphen repräsentiert werden können, die beiden Modelle sind somit inkompatibel\footnote{Es kann jedoch mit bewährten Lernalgorithmen ein intermediäres BN gelernt werden, und aus dessen Baumzerlegung ein probabilistischer Entscheidungsgraph abgeleitet werden, wie bei \cite{jaeger2006learning} demonstriert. }. 
 
 Inferenz ist möglich in linearer Zeit der Größe des Entscheidungsgraphen. 
 
 \subsection{Beispiel}
 
-Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrschenlichkeitsverteilung kann durch einen probabilistischen Entscheidungsgraphen dargestellt werden. 
+Die in \fref{tab:bspverbwhrv} gezeigte Beispielverbundwahrscheinlichkeitsverteilung kann durch einen probabilistischen Entscheidungsgraphen dargestellt werden. 
 
-Hierzu muss zuerst der Wald mit den Abhänigkeiten definiert werden. Wir wählen hier einen Baum so, dass die Wahrscheinlichkeiten des Musters von der Ausprägung der Farbe abhängen und die Wahrscheinlichkeiten von Gift von den Ausprägungen von Muster und Farbe, siehe \fref{fig:pdgforest}. 
+Hierzu muss zuerst der Wald mit den Abhängigkeiten definiert werden. Wir wählen hier einen Baum so, dass die Wahrscheinlichkeiten des Musters von der Ausprägung der Farbe abhängen und die Wahrscheinlichkeiten für Gift von den Ausprägungen von Muster und Farbe, siehe \fref{fig:pdgforest}. 
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \caption{\label{fig:pdgforest}Beispiel für den Abhängigkeiten-Wald eines probabilistischen Entscheidungsgraphen}
 \centering
 \begin{tikzpicture}
-  [->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
-  \node (nf) at (4,5) {Farbe};
-  \node (nm) at (4,3)  {Muster};
-  \node (ng) at (4,1)  {Gift};
+  %[->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw}]
+  [scale=0.75,->,>=stealth',shorten >=1pt,auto=left,every node/.style={circle,draw,scale=0.9}]
+  \node (nf) at (1,3) {Farbe};
+  \node (nm) at (3,2)  {Muster};
+  \node (ng) at (1,1)  {Gift};
 
   \path (nf) edge (nm);
   \path (nm) edge (ng);
@@ -290,7 +296,7 @@ Hierzu muss zuerst der Wald mit den Abhänigkeiten definiert werden. Wir wählen
 
 Danach erstellen wir für diesen Baum den gewurzelten azyklischen Graphen mit den Wahrscheinlichkeiten, siehe \fref{fig:pdgdag}.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \caption{\label{fig:pdgdag}Beispiel für den gewurzelten azyklischen Graphen eines probabilistischen Entscheidungsgraphen}
 \centering
 \begin{tikzpicture}
@@ -332,43 +338,52 @@ Der probabilistische Entscheidungsgraph teilt die Verbundwahrscheinlichkeit hier
 
 \section{Vergleich}
 
-Nun, da wir drei Varianten von PGMs kennen gelernt haben, bietet es sich an, diese zu evaulieren und zu vergleichen. 
+Nun, da wir drei Varianten von PGMs kennen gelernt haben, bietet es sich an, diese zu evaluieren und zu vergleichen. 
 
 \subsection{Stand der Wissenschaft}
 
-Bei \cite{heckerman1992evaluation} wurde ein Expertensystemen für medizinische Diagnosen in zwei Versionen verglichen. Die frühere Version, baiserend auf naiven Bayes-Modellen analyisete 47/53 Fällen richtig, die spätere Version, nun basierend auf Bayesschen Netzwerken erreichte 50/53 richtige Analysen. 
+Bei \cite{heckerman1992evaluation} wurde ein Expertensystemen für medizinische Diagnosen in zwei Versionen verglichen. Die frühere Version, basierend auf naiven Bayesmodellen analysierte 47/53 Fällen richtig, die spätere Version, nun basierend auf bayesschen Netzwerken, erreichte 50/53 richtige Analysen. 
 
-Einen weiteren Vergleich zwischen NB und BN liefert \cite{lowd2005naive}, wo 50 Datensätze, großtenteils aus \cite{bache2013machine}, zum Lernen verwendet wurden. Hier zeigte sich, dass NB diese Datensätze teils genauer, teils annähenerd gleich genau abbilden konnte, jedoch Inferenz deutlich schneller realisiertbar war. Auch war NB sehr leicht zu implementieren ($2500$ LOC). 
+Einen weiteren Vergleich zwischen NB und BN liefert \cite{lowd2005naive}, wo 50 Datensätze, größtenteils aus \cite{bache2013machine}, zum Lernen verwendet wurden. Hier zeigte sich, dass NB diese Datensätze teils genauer, teils an­nä­hernd gleich genau abbilden konnte, jedoch Inferenz deutlich schneller realisierbar war. Auch war NB sehr leicht zu implementieren ($2500$ LOC). 
 
-Den Vergleich mit der dritten Variante, den probabilistischen Entscheidungsgraphen, liefert \cite{nielsen2006empirical}.
+Den Vergleich mit der dritten Methode, den probabilistischen Entscheidungsgraphen, liefert \cite{nielsen2006empirical}.
 
 \subsection{Methodik}
 
-Wir werden uns nun den in \cite{nielsen2006empirical} vogenommenen Verleich näher ansehen, da er auch viele allgemein anwendbare Methoden verwendet. 
+Wir werden uns nun den in \cite{nielsen2006empirical} vorgenommenen Vergleich näher ansehen, da er auch viele allgemein anwendbare Methoden verwendet. 
 
-Für die theoretische Genauigkeit wird die logarithmierte Likelihood-Fuktion des Modells und der Daten benutzt. Diese wird gegen diese Größe des Modells aufgratragen, in der die komplexität des Inferenzvorgangs linear steigt. Es entstehen SL\footnote{SL steht für Size-Likelihood, die Größe des Modells wird gegen die Genauigkeit aufgetragen}-Kurven, an denen man die Effizienz der Methoden ablesen kann. 
+Als Testdaten für diese Studie wurden fünf repräsentative Datensätze aus dem Repositorium \cite{bache2013machine} ausgewählt mit 7 bis 23 Variablen und bis zu rund 25000 Einträgen. Die Datensätze wurden im Verhältnis 9:1 in Lern- und Vergleichsdatensammlungen partitioniert. 
 
-Für die empirischen Messung der Inferenzeffizienz werden zufällige Inferenz-Anfragen genereiert, indem eine zufällig ausgewählte Menge von Zufallsvariablen als Evidenz- und Abfragevariablen mit zufälligen Belegungen gewählt wird. Hier wird die benötigte Zeit einer ausgewählten Implementierung gemessen und die Genauigkeit wird wiederum in SL-Kurven dargestellt. 
+Für die theoretische Genauigkeit wird die logarithmierte Likelihood-Funktion des Modells und der Datensätze benutzt. Diese wird gegen jene Größe des Modells aufgetragen, in der die Komplexität des Inferenzvorgangs linear steigt. Es entstehen SL-Kurven\footnote{SL steht für Size-Likelihood, die Größe des Modells wird gegen die Genauigkeit aufgetragen}, an denen man die Effizienz der Methoden ablesen kann. Die Entropie der Daten $H(D)$ stellt eine obere Grenze für die logarithmierte Likelihood-Funktion dar. 
 
-Als Testdaten für die Studie wurden einige repräsentative Datensätze aus dem Repositorium \cite{bache2013machine} ausgewählt mit 7-23 Variablen und bis zu rund 25000 Datensätzen. 
+Für die empirische Messung der Inferenz-Effizienz werden zufällige Inferenz-Anfragen generiert, indem eine zufällig ausgewählte Menge von Zufallsvariablen als Evidenz- und Abfragevariablen mit zufälligen Belegungen gewählt wird. Hier wird die benötigte Zeit einer ausgewählten Implementierung gemessen und die Genauigkeit wird wiederum in SL-Kurven dargestellt. 
 
-Obwohl alle fünf Datensätze für bestimmte, eher subjektive, Eigenschaften stehen, will ich zwei besonders behandeln, an denen sich sehr klare Ergebnisse abzeichnen. 
+\begin{figure}[H]
+  \caption{\label{fig:datagraphs}SL-Kurven mit empirischen Daten aus \cite{nielsen2006empirical}}
+  \centering
+  %\includegraphics[width=0.7\textwidth]{graphs.png}
+  \includegraphics{graphs.png}
+\end{figure}
 
-Dies ist zum einen die Datenansammlung über Pilze, in der verschiedenen Pilzarten als Tupel von 23 Eigenschaften repräsentiert werden. So kann z.B. der Geruch einen der Werte Mandel, Fischartig, Faulig etc. annehmen. 
+Zwei Datensätze will ich besonders behandeln, an denen sich sehr klare Ergebnisse abzeichnen. Ihre SL-Kurven finden sich in \fref{fig:datagraphs}. 
 
-Zum anderen ist dies die Datenansammlung aus einer Bildzerlegung von Landschaftsbildern, bei der für Regionen von 3x3 Pixeln jeweils die Koordinaten, durschnittliche und extreme Farbwerte und verschiedene Maßzahlen aus (Kantenerkennungs-)Algorithmen finden. Um im Deskreten zu bleiben werden die Farbwerte auf 5 Stufen quantisiert. 
+Dies ist zum einen die Lerndatenansammlung über Pilze, in der verschiedenen Pilzarten als Tupel von 23 Eigenschaften repräsentiert werden. So kann beispielsweise der Geruch einen der Werte Mandel, Fischartig, Faulig etc. annehmen. 
+
+Zum anderen ist dies die Vergleichsdatenansammlung aus einer Bildzerlegung von Landschaftsbildern, bei der sich für Regionen von 3x3 Pixeln jeweils die Koordinaten, durchschnittliche und extreme Farbwerte und verschiedene Maßzahlen aus (Kantenerkennungs-)Algorithmen finden. Um im diskreten zu bleiben werden die Farbwerte auf 5 Stufen quantisiert. 
 
 \subsection{Schlussfolgerungen}
 
-Bei der SL-Kurve für die Datenansammlung über Pilze mit rund 7500 Datensätzen erkennt man, dass sich schon ab einer effektiven Modellgröße von 7500 die Log-Likelihood, also die Genauigkeit des Modells, für alle drei Methoden schon sehr gut ist und nicht mehr signifikant verbessert. Hier ist der PDG in allen Größen genauer als das BN, vielleicht ein Zeichen, dass PDG gut geeignet sind für derartige Anwendungen. Die NB-Modelle überholen ab Größen über 7500 die anderen beiden Methoden. 
+Bei der SL-Kurve für die Datenansammlung über Pilze mit rund 7500 Einträgen erkennt man, dass sich schon ab einer effektiven Modellgröße von 7500 die Log-Likelihood, also die Genauigkeit des Modells, für alle drei Methoden sehr gut ist und sich nicht mehr signifikant verbessert. Hier ist der PDG in allen Größen genauer als das BN, vielleicht ein Zeichen, dass PDGs gut geeignet sind für derartige Anwendungen. Die NB-Modelle überholen ab Größen über 7500 die anderen beiden Methoden. 
 
-Bei der Test-SL-Kurve für die Datensammlung der Bildzerlegung ergibt sich ein durchweg schlechtes Bild für die PDGs. Dies wird damit erklärt, dass die Modelle zu nahe an den 263 Lerndaten sind, und somit nicht mehr gut auf die Fülle der rund 2000 Testdaten passen. 
+Bei der SL-Kurve für die Vergleichsdatenansammlung der Bildzerlegung ergibt sich ein durchweg schlechteres Bild für die PDGs. Dies wird damit erklärt, dass die gelernten Modelle zu nahe an den 263 Lerndateneinträgen sind, und somit nicht mehr gut auf die Fülle der rund 2000 Vergleichsdateneinträgen passen. 
 
 Der erwartete Geschwindigkeitsvorteil von NB gegenüber BN durch die einfachere Netzstruktur konnte experimentell nicht bestätigt werden. 
 
+Über die Gesamtheit der Graphen erkennt man, dass BN bei keinem Datensatz sehr schlechte Ergebnisse zeigte. 
+
 \section{Zusammenfassung}
 
-Zusammefassend lässt sich sagen, dass keine Methode generell hinter den anderen zurück steht. Naive Bayes-Modelle und probabilistische Entscheidungsgraphen lassen sich leichter implementieren und weisen dennoch vergleichbare Qualitäts- und Geschwindikeitscharakteristika wie Bayessche Netze auf. Somit empfiehlt sich eine gleichberechtigten Anwendung der drei Methoden im Bereich des Web 2.0. 
+Zusammenfassend lässt sich sagen, dass keine Methode generell hinter den anderen zurück steht. Naive Bayesmodelle und probabilistische Entscheidungsgraphen lassen sich leichter implementieren und weisen oft dennoch vergleichbare Qualitäts- und Geschwindigkeits-Charakteristika wie bayessche Netze auf. Bayessche Netze konnten jedoch unabhängig von der Beschaffenheit der Daten stets akzeptable Modelle bilden. Somit empfiehlt sich eine gleichberechtigten Anwendung der drei Methoden im Bereich des Web 2.0. 
 
 \bibliography {haeussner}
 \bibliographystyle{splncs}
