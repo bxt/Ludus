@@ -72,12 +72,19 @@ def SubByte(A):
 
 def ShiftRow(A):
   B = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-  # TODO
+  for i in range(4):
+    B[i] = A[i][i:] + A[i][:i]
   return B
 
 def MixCol(A):
   B = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-  # TODO
+  T = [[2,3,1,1],[1,2,3,1],[1,1,2,3],[3,1,1,2]]
+  for i in range(4):
+    for k in range(4):
+      result = 0
+      for j in range(4):
+        result = F256Add(result, F256Mul(T[i][j],A[j][k]))
+      B[i][k] = result
   return B
 
 # addiert den Schluessel K zu den Daten A
@@ -85,15 +92,16 @@ def AddKey(A,K):
   # A = zu verschluesselnde Daten (4x4 Matrix ueber F256)
   # K = Schluessel (4x4 Matrix ueber F256)
   B = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-  # TODO
+  for i in range(4):
+    for k in range(4):
+      B[i][k] = F256Add(A[i][k], K[i][k])
   return B
 
 # eine AES-Runde bestehend aus SubByte, ShiftRow, MixCol und AddKey
 def AESRound(A,K):
   # A = zu verschluesselnde Daten (4x4 Matrix ueber F256)
   # K = Schluessel (4x4 Matrix ueber F256)
-  # TODO
-  return ...
+  return AddKey(MixCol(ShiftRow(SubByte(A))),K)
 
 # gesamtes AES bestehend aus 11 Runden
 def AES(P,K):
@@ -101,8 +109,11 @@ def AES(P,K):
   # K = Schluessel (4x4 Matrix ueber F256)
   K = KeyExpansion(K)
   # K[0], ..., K[10] sind die Schluessel fuer die Runden 0-10 (4x4 Matrizen ueber F256)
-  # TODO
-  return ...
+  C = AddKey(P,K[0]) # round 0
+  for i in range(1, 10): # round 1 to 9
+    C = AESRound(C,K[i])
+  C = AddKey(ShiftRow(SubByte(C)),K[10]) # round 10
+  return C
 
 # es folgen einige Tests fuer die obigen Funktionen
 def AESTests():
@@ -132,4 +143,9 @@ def AESTests():
   C = [[0x39,0x02,0xdc,0x19],[0x25,0xdc,0x11,0x6a],[0x84,0x09,0x85,0x0b],[0x1d,0xfb,0x97,0x32]]
   if AES(P,K)!=C: print("Fehler in AES")
   return
+
+if __name__ == '__main__':
+  #import doctest
+  #doctest.testmod()
+  AESTests()
 
