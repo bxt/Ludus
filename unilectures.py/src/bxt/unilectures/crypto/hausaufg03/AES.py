@@ -52,16 +52,13 @@ def F256Add(x,y):
 
 # Multiplikation in F256
 def F256Mul(x,y):
-  p = 0             # zuerst Produkt der Polynome bilden
-  while y>0:
-    if y&1 == 1:
-      p = p ^ x
-    x = x << 1
-    y = y >> 1
+  z = 0 # zuerst Produkt der Polynome bilden
+  for i in range(8):
+      z ^= (1 & y>>i) * (x<<i)
   f = 0b100011011   # jetzt modulo f(x)=x^8+x^4+x^3+x+1 rechnen
-  while len(bin(p)) >= 11:
-    p = p ^ (f<<(len(bin(p))-11))
-  return p
+  for i in reversed(range(8,16)):
+      z ^= (1 & z>>i) * (f << i-8)
+  return z
 
 def SubByte(A):
   B = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
