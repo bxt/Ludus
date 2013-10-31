@@ -8,6 +8,81 @@ See: http://qandwhat.apps.runkite.com/i-failed-a-twitter-interview/
 @author: Bernhard Häussner
 """
 
+class SliceIterator:
+  """
+  Allows us to walk over the landscape, retieving the ground height and
+  setting the water level for each.
+  
+  >>> i = [1, 2, 3, 4]
+  >>> o = [0, 0, 0, 0]
+  >>> it = SliceIterator(i, o)
+  >>> it.get()
+  1
+  
+  The output array is modified in place.
+  
+  >>> it.set(5)
+  >>> o[0]
+  5
+  
+  We may advance the itarator.
+  
+  >>> it.next()
+  >>> it.get()
+  2
+  
+  The output pointer is advanced too.
+  
+  >>> it.set(6)
+  >>> o[1]
+  6
+  
+  We may adjust the step size and the start position.
+  
+  >>> it2 = SliceIterator(i, o, -2, 3)
+  >>> it2.get()
+  4
+  >>> it2.set(7)
+  >>> o[3]
+  7
+  >>> it2.next()
+  >>> it2.get()
+  2
+  
+  We can compare two iterators, to see which one is further advanced.
+  
+  >>> cmp(it, it2)
+  0
+  >>> it == it2
+  True
+  
+  >>> it.next()
+  >>> cmp(it, it2)
+  1
+  >>> it > it2
+  True
+  
+  """
+  
+  def __init__(self, inarray, outarray, step=1, start=0):
+    self._inarray = inarray
+    self._outarray = outarray
+    self._step = step
+    self._pointer = start
+  
+  def set(self, to):
+    self._outarray[self._pointer] = to
+  
+  def get(self):
+    return self._inarray[self._pointer]
+  
+  def next(self):
+    self._pointer += self._step
+  
+  def __cmp__(self, other):
+    return cmp(self._pointer, other._pointer)
+
+
 def puddle_sizes(wallsizes):
   """
   Calculates the water between the walls.
@@ -93,26 +168,23 @@ def puddle_sizes(wallsizes):
   
   """
   waterlevels = ['*' for _ in wallsizes]
-  frnt = {'max': 0, 'step': +1, 'pointer': 0}
-  back = {'max': 0, 'step': -1, 'pointer': len(wallsizes) - 1}
-  while frnt['pointer'] <= back['pointer']:
-    didi = back
-    if frnt['max'] < back['max']:
-      didi = frnt
-    ch = wallsizes[didi['pointer']]
-    mh = didi['max']
-    if ch > mh:
-      didi['max'] = ch
-      waterlevels[didi['pointer']] = 0
+  frnt = SliceIterator(wallsizes, waterlevels)
+  back = SliceIterator(wallsizes, waterlevels, -1, len(wallsizes) - 1)
+  for i in [frnt, back]:
+    i.max = 0 
+  while frnt <= back:
+    p = frnt if frnt.max < back.max else back
+    if p.get() > p.max:
+      p.max = p.get()
+      p.set(0)
     else:
-      waterlevels[didi['pointer']] = mh-ch
-    didi['pointer'] += didi['step']
+      p.set(p.max - p.get())
+    p.next()
   return waterlevels
 
 
 if __name__ == '__main__':
   import doctest
   doctest.testmod()
- 
- 
- 
+
+
