@@ -92,7 +92,18 @@ def puddle_sizes(wall_sizes):
   [0, 0, 1, 0, 0]
   
   """
-  pass
+  result = [0 for _ in wall_sizes]
+  for i in range(len(wall_sizes)):
+    current_height = wall_sizes[i]
+    for h in range(current_height, 0, -1):
+      def x():
+        for k in range(i+1, len(wall_sizes)):
+          if wall_sizes[k] >= h:
+            for j in range(i+1, k):
+              result[j] += 1
+            return
+      x()
+  return result
 
 
 if __name__ == '__main__':
