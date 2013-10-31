@@ -92,29 +92,21 @@ def puddle_sizes(wallsizes):
   [0, 0, 1, 0, 0]
   
   """
-  frnt = 0
-  back = len(wallsizes) - 1
-  fh = 0
-  bh = 0
-  max = 0
   waterlevels = ['*' for _ in wallsizes]
-  while frnt <= back:
-    if fh < bh:
-      cfh = wallsizes[frnt]
-      if cfh > fh:
-        fh = cfh
-        waterlevels[frnt] = 0
-      else:
-        waterlevels[frnt] = fh-cfh
-      frnt += 1
+  frnt = {'max': 0, 'step': +1, 'pointer': 0}
+  back = {'max': 0, 'step': -1, 'pointer': len(wallsizes) - 1}
+  while frnt['pointer'] <= back['pointer']:
+    didi = back
+    if frnt['max'] < back['max']:
+      didi = frnt
+    ch = wallsizes[didi['pointer']]
+    mh = didi['max']
+    if ch > mh:
+      didi['max'] = ch
+      waterlevels[didi['pointer']] = 0
     else:
-      cbh = wallsizes[back]
-      if cbh > bh:
-        bh = cbh
-        waterlevels[back] = 0
-      else:
-        waterlevels[back] = bh-cbh
-      back -= 1
+      waterlevels[didi['pointer']] = mh-ch
+    didi['pointer'] += didi['step']
   return waterlevels
 
 
