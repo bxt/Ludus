@@ -166,6 +166,24 @@ def puddle_sizes(wallsizes):
   >>> puddle_sizes([2, 3, 1, 2, 1])
   [0, 0, 1, 0, 0]
   
+  This is a basic puddle spawning over the whole landscape:
+  
+    3
+  2~#
+  #1#
+  ----
+  0123 (indices)
+  
+  This is the accompanying calculation:
+  
+  >>> puddle_sizes([2, 1, 3])
+  [0, 1, 0]
+  
+  We want to handle empty puddles just fine:
+  
+  >>> puddle_sizes([])
+  []
+  
   """
   waterlevels = ['*' for _ in wallsizes]
   frnt = SliceIterator(wallsizes, waterlevels)
