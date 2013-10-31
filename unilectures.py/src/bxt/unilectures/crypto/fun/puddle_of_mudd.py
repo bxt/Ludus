@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-Answest a twitter interview question.
+Answers a twitter interview question.
 See: http://qandwhat.apps.runkite.com/i-failed-a-twitter-interview/
 
 @date 2013-10-31
 @author: Bernhard Häussner
 """
 
-def puddle_sizes(wall_sizes):
+def puddle_sizes(wallsizes):
   """
   Calculates the water between the walls.
   
-  Consider this picture, where ~ is water and # are walls:
+  Consider this picture, where '~' represents water and '#' walls:
   
         77
         ##6
@@ -92,18 +92,30 @@ def puddle_sizes(wall_sizes):
   [0, 0, 1, 0, 0]
   
   """
-  result = [0 for _ in wall_sizes]
-  for i in range(len(wall_sizes)):
-    current_height = wall_sizes[i]
-    for h in range(current_height, 0, -1):
-      def x():
-        for k in range(i+1, len(wall_sizes)):
-          if wall_sizes[k] >= h:
-            for j in range(i+1, k):
-              result[j] += 1
-            return
-      x()
-  return result
+  frnt = 0
+  back = len(wallsizes) - 1
+  fh = 0
+  bh = 0
+  max = 0
+  waterlevels = ['*' for _ in wallsizes]
+  while frnt <= back:
+    if fh < bh:
+      cfh = wallsizes[frnt]
+      if cfh > fh:
+        fh = cfh
+        waterlevels[frnt] = 0
+      else:
+        waterlevels[frnt] = fh-cfh
+      frnt += 1
+    else:
+      cbh = wallsizes[back]
+      if cbh > bh:
+        bh = cbh
+        waterlevels[back] = 0
+      else:
+        waterlevels[back] = bh-cbh
+      back -= 1
+  return waterlevels
 
 
 if __name__ == '__main__':
