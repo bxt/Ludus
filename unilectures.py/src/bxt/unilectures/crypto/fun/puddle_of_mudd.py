@@ -82,167 +82,180 @@ class SliceIterator:
   def __cmp__(self, other):
     return cmp(self._pointer, other._pointer)
 
-
-def puddledepths(wallsizes):
+class Landscape():
   """
-  Calculates the water between the walls.
+  Represents a landscape, a list of profile heights.
   
-  Consider this picture, where '~' represents water and '#' walls:
+  Generate random landscapes and simulate where the water would go if it rains.
+  """
   
-        77
-        ##6
-   5~~~~###
-   #~~~4###
-   #~~3####
-  2#~2#####
-  ##1######
-  ---------
-  012345678 (indices)
   
-  We have a list of wall heights and want to know how much water would
-  accumulate at any index in case of rain. The water on the sides spills out.
-  For the above picture we would get:
-  
-  >>> puddledepths([2, 5, 1, 2, 3, 4, 7, 7, 6])
-  [0, 0, 4, 3, 2, 1, 0, 0, 0]
-  
-  Let's consider another picture:
-  
-         77
-         ##6
-   5~~~~~###
-   #~~~~~###
-   #~3~~~###
-  2#~#~2~###
-  ##1#1#1###
-  ----------
-  0123456789 (indices)
-  
-  This is the accompanying calculation:
-  
-  >>> puddledepths([2, 5, 1, 3, 1, 2, 1, 7, 7, 6])
-  [0, 0, 4, 2, 4, 3, 4, 0, 0, 0]
-  
-  There can be more than one puddle though. Consider this picture:
-  
-         7~7
-         #~#6
-   5~~~~~#~##
-   #~~~~~#4##
-   #~3~~~####
-  2#~#~2~####
-  ##1#1#1####
-  -----------
-  0123456789A (hex indices)
-  
-  This is the accompanying calculation:
-  
-  >>> puddledepths([2, 5, 1, 3, 1, 2, 1, 7, 4, 7, 6])
-  [0, 0, 4, 2, 4, 3, 4, 0, 3, 0, 0]
-  
-  There can be no puddle at all. Consider this picture:
-  
-   3
-  2#
-  ##1
-  ---
-  012 (indices)
-  
-  This is the accompanying calculation:
-  
-  >>> puddledepths([2, 3, 1])
-  [0, 0, 0]
-  
-  Also consider this picture:
-  
-   3
-  2#~2
-  ##1#1
-  -----
-  01234 (indices)
-  
-  This is the accompanying calculation:
-  
-  >>> puddledepths([2, 3, 1, 2, 1])
-  [0, 0, 1, 0, 0]
-  
-  This is a basic puddle spawning over the whole landscape:
-  
+  def __init__(self, wallsizes):
+    self.wallsizes = wallsizes
+
+  def puddledepths(self):
+    """
+    Calculates the water between the walls.
+    
+    Consider this picture, where '~' represents water and '#' walls:
+    
+          77
+          ##6
+    5~~~~###
+    #~~~4###
+    #~~3####
+    2#~2#####
+    ##1######
+    ---------
+    012345678 (indices)
+    
+    We have a list of wall heights and want to know how much water would
+    accumulate at any index in case of rain. The water on the sides spills out.
+    For the above picture we would get:
+    
+    >>> Landscape([2, 5, 1, 2, 3, 4, 7, 7, 6]).puddledepths()
+    [0, 0, 4, 3, 2, 1, 0, 0, 0]
+    
+    Let's consider another picture:
+    
+          77
+          ##6
+    5~~~~~###
+    #~~~~~###
+    #~3~~~###
+    2#~#~2~###
+    ##1#1#1###
+    ----------
+    0123456789 (indices)
+    
+    This is the accompanying calculation:
+    
+    >>> Landscape([2, 5, 1, 3, 1, 2, 1, 7, 7, 6]).puddledepths()
+    [0, 0, 4, 2, 4, 3, 4, 0, 0, 0]
+    
+    There can be more than one puddle though. Consider this picture:
+    
+          7~7
+          #~#6
+    5~~~~~#~##
+    #~~~~~#4##
+    #~3~~~####
+    2#~#~2~####
+    ##1#1#1####
+    -----------
+    0123456789A (hex indices)
+    
+    This is the accompanying calculation:
+    
+    >>> Landscape([2, 5, 1, 3, 1, 2, 1, 7, 4, 7, 6]).puddledepths()
+    [0, 0, 4, 2, 4, 3, 4, 0, 3, 0, 0]
+    
+    There can be no puddle at all. Consider this picture:
+    
     3
-  2~#
-  #1#
-  ----
-  0123 (indices)
-  
-  This is the accompanying calculation:
-  
-  >>> puddledepths([2, 1, 3])
-  [0, 1, 0]
-  
-  We want to handle empty puddles just fine:
-  
-  >>> puddledepths([])
-  []
-  
-  """
-  waterlevels = ['*' for _ in wallsizes]
-  frnt = SliceIterator(wallsizes, waterlevels)
-  back = SliceIterator(wallsizes, waterlevels, -1, len(wallsizes) - 1)
-  for i in [frnt, back]:
-    i.max = 0 
-  while frnt <= back:
-    p = frnt if frnt.max < back.max else back
-    if p.get() > p.max:
-      p.max = p.get()
-      p.set(0)
-    else:
-      p.set(p.max - p.get())
-    p.next()
-  return waterlevels
+    2#
+    ##1
+    ---
+    012 (indices)
+    
+    This is the accompanying calculation:
+    
+    >>> Landscape([2, 3, 1]).puddledepths()
+    [0, 0, 0]
+    
+    Also consider this picture:
+    
+    3
+    2#~2
+    ##1#1
+    -----
+    01234 (indices)
+    
+    This is the accompanying calculation:
+    
+    >>> Landscape([2, 3, 1, 2, 1]).puddledepths()
+    [0, 0, 1, 0, 0]
+    
+    This is a basic puddle spawning over the whole landscape:
+    
+      3
+    2~#
+    #1#
+    ----
+    0123 (indices)
+    
+    This is the accompanying calculation:
+    
+    >>> Landscape([2, 1, 3]).puddledepths()
+    [0, 1, 0]
+    
+    We want to handle empty puddles just fine:
+    
+    >>> Landscape([]).puddledepths()
+    []
+    
+    """
+    wallsizes = self.wallsizes
+    waterlevels = ['*' for _ in wallsizes]
+    frnt = SliceIterator(wallsizes, waterlevels)
+    back = SliceIterator(wallsizes, waterlevels, -1, len(wallsizes) - 1)
+    for i in [frnt, back]:
+      i.max = 0 
+    while frnt <= back:
+      p = frnt if frnt.max < back.max else back
+      if p.get() > p.max:
+        p.max = p.get()
+        p.set(0)
+      else:
+        p.set(p.max - p.get())
+      p.next()
+    return waterlevels
 
-def stringpuddles(wallsizes):
-  """
-  String representation of a landscape with puddles
+  def __str__(self):
+    """
+    String representation of a landscape with puddles.
+    
+    >>> str(Landscape([1, 2, 3, 1]))
+    '  # \\n ## \\n####'
+    
+    >>> str(Landscape([1, 3, 2, 3, 1]))
+    ' #~# \\n ### \\n#####'
+    
+    """
+    wallsizes = self.wallsizes
+    waterlevels = self.puddledepths()
+    return '\n'.join([(''.join([('#' if wallsizes[k] >= i else ('~' if wallsizes[k]+waterlevels[k] >= i else ' ')) for k in range(len(wallsizes))])) for i in range(max(wallsizes),0,-1)])
   
-  >>> stringpuddles([1, 2, 3, 1])
-  '  # \\n ## \\n####'
-  
-  >>> stringpuddles([1, 3, 2, 3, 1])
-  ' #~# \\n ### \\n#####'
-  
-  """
-  waterlevels = puddledepths(wallsizes)
-  return '\n'.join([(''.join([('#' if wallsizes[k] >= i else ('~' if wallsizes[k]+waterlevels[k] >= i else ' ')) for k in range(len(wallsizes))])) for i in range(max(wallsizes),0,-1)])
-
-def random_landscape(length=80):
-  """
-  Generate a random landscape.
-  
-  Landscapes may not have negative values and no excess height:
-  >>> all([min(random_landscape()) == 0 for _ in range(200)])
-  True
-  
-  Landscapes of size 80 are default:
-  >>> len(random_landscape())
-  80
-  
-  Generate landscapes of specific lengths:
-  >>> len(random_landscape(40))
-  40
-  
-  """
-  from random import randint
-  landscape = [1]
-  for i in range(1,length):
-    landscape.append(landscape[-1] + randint(-2,2))
-  m = min(landscape)
-  landscape = map(lambda x: x-m, landscape)
-  return landscape
+  @staticmethod
+  def random(length=80):
+    """
+    Generate a random landscape using a random walk in one dimension.
+    
+    Landscapes may not have negative values and no excess height:
+    >>> all([min(Landscape.random().wallsizes) == 0 for _ in range(200)])
+    True
+    
+    Landscapes of size 80 are default:
+    >>> len(Landscape.random().wallsizes)
+    80
+    
+    Generate landscapes of specific lengths:
+    >>> len(Landscape.random(40).wallsizes)
+    40
+    
+    """
+    from random import randint
+    wallsizes = [1]
+    for i in range(1,length):
+      wallsizes.append(wallsizes[-1] + randint(-2,2))
+    m = min(wallsizes)
+    wallsizes = map(lambda x: x-m, wallsizes)
+    return Landscape(wallsizes)
 
 if __name__ == '__main__':
   import doctest
   doctest.testmod()
   
-  print stringpuddles(random_landscape())
+  print Landscape.random()
 
 
