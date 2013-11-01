@@ -10,8 +10,8 @@ See: http://qandwhat.apps.runkite.com/i-failed-a-twitter-interview/
 
 class SliceIterator:
   """
-  Allows us to walk over the landscape, retieving the ground height and
-  setting the water level for each.
+  Allows us to walk over the landscape, retrieving the ground height and
+  setting the water level for each slice.
   
   >>> i = [1, 2, 3, 4]
   >>> o = [0, 0, 0, 0]
@@ -19,25 +19,25 @@ class SliceIterator:
   >>> it.get()
   1
   
-  The output array is modified in place.
+  The output array is modified in place:
   
   >>> it.set(5)
   >>> o[0]
   5
   
-  We may advance the itarator.
+  Advance the itarator:
   
   >>> it.next()
   >>> it.get()
   2
   
-  The output pointer is advanced too.
+  The output pointer is advanced too:
   
   >>> it.set(6)
   >>> o[1]
   6
   
-  We may adjust the step size and the start position.
+  Adjustable the step size and the start position:
   
   >>> it2 = SliceIterator(i, o, -2, 3)
   >>> it2.get()
@@ -49,7 +49,7 @@ class SliceIterator:
   >>> it2.get()
   2
   
-  We can compare two iterators, to see which one is further advanced.
+  Compare two iterators, which one is further advanced:
   
   >>> cmp(it, it2)
   0
