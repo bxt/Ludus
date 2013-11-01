@@ -200,9 +200,40 @@ def puddledepths(wallsizes):
     p.next()
   return waterlevels
 
+def stringpuddles(wallsizes):
+  waterlevels = puddledepths(wallsizes)
+  return '\n'.join([(''.join([('#' if wallsizes[k] >= i else ('~' if wallsizes[k]+waterlevels[k] >= i else ' ')) for k in range(len(wallsizes))])) for i in range(max(wallsizes),0,-1)])
+
+
+def random_landscape(length=80):
+  """
+  Generate a random landscape.
+  
+  Landscapes may not have negative values:
+  >>> all([min(random_landscape()) >= 0 for _ in range(200)])
+  True
+  
+  Landscapes of size 80 are default:
+  >>> len(random_landscape())
+  80
+  
+  Generate landscapes of specific lengths:
+  >>> len(random_landscape(40))
+  40
+  
+  """
+  from random import randint
+  landscape = [1]
+  for i in range(1,length):
+    landscape.append(landscape[-1] + randint(-2,2))
+  m = min(landscape)
+  landscape = map(lambda x: x-m, landscape)
+  return landscape
 
 if __name__ == '__main__':
   import doctest
   doctest.testmod()
+  
+  print stringpuddles(random_landscape())
 
 
