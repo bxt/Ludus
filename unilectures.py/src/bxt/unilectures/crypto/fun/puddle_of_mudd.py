@@ -201,16 +201,25 @@ def puddledepths(wallsizes):
   return waterlevels
 
 def stringpuddles(wallsizes):
+  """
+  String representation of a landscape with puddles
+  
+  >>> stringpuddles([1, 2, 3, 1])
+  '  # \\n ## \\n####'
+  
+  >>> stringpuddles([1, 3, 2, 3, 1])
+  ' #~# \\n ### \\n#####'
+  
+  """
   waterlevels = puddledepths(wallsizes)
   return '\n'.join([(''.join([('#' if wallsizes[k] >= i else ('~' if wallsizes[k]+waterlevels[k] >= i else ' ')) for k in range(len(wallsizes))])) for i in range(max(wallsizes),0,-1)])
-
 
 def random_landscape(length=80):
   """
   Generate a random landscape.
   
-  Landscapes may not have negative values:
-  >>> all([min(random_landscape()) >= 0 for _ in range(200)])
+  Landscapes may not have negative values and no excess height:
+  >>> all([min(random_landscape()) == 0 for _ in range(200)])
   True
   
   Landscapes of size 80 are default:
