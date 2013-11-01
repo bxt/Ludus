@@ -83,7 +83,7 @@ class SliceIterator:
     return cmp(self._pointer, other._pointer)
 
 
-def puddle_sizes(wallsizes):
+def puddledepths(wallsizes):
   """
   Calculates the water between the walls.
   
@@ -103,7 +103,7 @@ def puddle_sizes(wallsizes):
   accumulate at any index in case of rain. The water on the sides spills out.
   For the above picture we would get:
   
-  >>> puddle_sizes([2, 5, 1, 2, 3, 4, 7, 7, 6])
+  >>> puddledepths([2, 5, 1, 2, 3, 4, 7, 7, 6])
   [0, 0, 4, 3, 2, 1, 0, 0, 0]
   
   Let's consider another picture:
@@ -120,7 +120,7 @@ def puddle_sizes(wallsizes):
   
   This is the accompanying calculation:
   
-  >>> puddle_sizes([2, 5, 1, 3, 1, 2, 1, 7, 7, 6])
+  >>> puddledepths([2, 5, 1, 3, 1, 2, 1, 7, 7, 6])
   [0, 0, 4, 2, 4, 3, 4, 0, 0, 0]
   
   There can be more than one puddle though. Consider this picture:
@@ -137,7 +137,7 @@ def puddle_sizes(wallsizes):
   
   This is the accompanying calculation:
   
-  >>> puddle_sizes([2, 5, 1, 3, 1, 2, 1, 7, 4, 7, 6])
+  >>> puddledepths([2, 5, 1, 3, 1, 2, 1, 7, 4, 7, 6])
   [0, 0, 4, 2, 4, 3, 4, 0, 3, 0, 0]
   
   There can be no puddle at all. Consider this picture:
@@ -150,7 +150,7 @@ def puddle_sizes(wallsizes):
   
   This is the accompanying calculation:
   
-  >>> puddle_sizes([2, 3, 1])
+  >>> puddledepths([2, 3, 1])
   [0, 0, 0]
   
   Also consider this picture:
@@ -163,7 +163,7 @@ def puddle_sizes(wallsizes):
   
   This is the accompanying calculation:
   
-  >>> puddle_sizes([2, 3, 1, 2, 1])
+  >>> puddledepths([2, 3, 1, 2, 1])
   [0, 0, 1, 0, 0]
   
   This is a basic puddle spawning over the whole landscape:
@@ -176,12 +176,12 @@ def puddle_sizes(wallsizes):
   
   This is the accompanying calculation:
   
-  >>> puddle_sizes([2, 1, 3])
+  >>> puddledepths([2, 1, 3])
   [0, 1, 0]
   
   We want to handle empty puddles just fine:
   
-  >>> puddle_sizes([])
+  >>> puddledepths([])
   []
   
   """
