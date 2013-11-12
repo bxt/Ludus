@@ -251,14 +251,14 @@ def MyNameIsAChiffreFind():
   return
 
 def MyNameIsAChiffreDemo():
-  ms = 'VZm3N9w9'
+  ms = 'BX4WasEh'
   m=str2int(ms)
   print("Klartext als String:      "+ms)
   print("Klartext als Zahl:        "+str(m))
   r = len(bin(m))-2                 # Laenge des Klartexts bestimmen
-  n = 38233457318277333263
-  e = 17500616985308425891
-  d = 14479615910965358491
+  n = 36421206322963484411
+  e = 1124563396042368919
+  d = 14684569227719454799
   pk = (n,e)
   sk = (n,d)
   print("n =                       "+str(n))
