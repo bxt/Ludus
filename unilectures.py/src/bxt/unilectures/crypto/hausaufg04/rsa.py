@@ -200,9 +200,48 @@ def RSATest():
   print("entschl. Text als Zahl:   "+str(b))
   return
 
+def MyNameIsAChiffre():
+  names = 'Bernhard Haeusssner'
+  name = str2int(names)
+  print("Name als String:      "+names)
+  print("Name als Zahl:        "+str(name))
+  r = len(bin(name))-2                 # Laenge des Klartexts bestimmen
+  
+  import sys
+  mask = ~str2int(''.join([chr(127) for i in range(r/8+1)]))
+  tries = 0
+  while True:
+    (pk,sk)=RSAKeyGen(r)
+    m=RSADecrypt(sk,name)
+    if (m & mask) == 0:
+      break;
+    tries += 1
+  
+  print("Tries:                    "+str(tries))
+  (n,e)=pk
+  (n,d)=sk
+  print("n =                       "+str(n))
+  print("e =                       "+str(e))
+  print("d =                       "+str(d))
+  m=RSADecrypt(sk,name)
+  ms=int2str(m)
+  print("Klartext als String:      "+ms)
+  print("Klartext als Zahl:        "+str(m))
+  c=RSAEncrypt(pk,m)
+  cs=int2str(c)
+  print("Chiffretext als String:   "+cs)
+  print("Chiffretext als Zahl:     "+str(c))
+  b=RSADecrypt(sk,c)
+  bs=int2str(b) 
+  print("entschl. Text als String: "+bs)
+  print("entschl. Text als Zahl:   "+str(b))
+  return
+
 if __name__ == '__main__':
   import doctest
   doctest.testmod()
   
   RSATest()
+  print('-------------------------------------')
+  MyNameIsAChiffre()
 
