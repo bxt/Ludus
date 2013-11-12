@@ -134,7 +134,7 @@ def RSAKeyGen(r=1024):
     (ggT,x,y) = egcd(e,phi)
     if ggT == 1:
       break
-  d = x
+  d = x % phi
     
   return ((n,e),(n,d))
 
