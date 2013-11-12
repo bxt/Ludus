@@ -200,33 +200,70 @@ def RSATest():
   print("entschl. Text als Zahl:   "+str(b))
   return
 
-def MyNameIsAChiffre():
-  names = 'Bernhard Haeusssner'
+def MyNameIsAChiffreFind():
+  names = 'Bernhard'
   name = str2int(names)
-  print("Name als String:      "+names)
-  print("Name als Zahl:        "+str(name))
+  print("Name als String:          "+names)
+  print("Name als Zahl:            "+str(name))
   r = len(bin(name))-2                 # Laenge des Klartexts bestimmen
+  print("Length:                   "+str(r))
   
-  import sys
+  import datetime
+  import re
+  print(datetime.datetime.now())
   mask = ~str2int(''.join([chr(127) for i in range(r/8+1)]))
   tries = 0
+  results = 0
   while True:
-    (pk,sk)=RSAKeyGen(r)
+    print('-------------------------------------')
+    while True:
+      (pk,sk)=RSAKeyGen(r)
+      m=RSADecrypt(sk,name)
+      if (m & mask) == 0 and re.match('[a-zA-Z0-9]*$',int2str(m)):
+        results += 1
+        break;
+      tries += 1
+    
+    print(datetime.datetime.now())
+    (n,e)=pk
+    (n,d)=sk
+    print("n =                       "+str(n))
+    print("e =                       "+str(e))
+    print("d =                       "+str(d))
     m=RSADecrypt(sk,name)
-    if (m & mask) == 0:
-      break;
-    tries += 1
-  
-  print("Tries:                    "+str(tries))
-  (n,e)=pk
-  (n,d)=sk
+    ms=int2str(m)
+    print("Klartext als String:      "+ms)
+    print("Klartext als Zahl:        "+str(m))
+    c=RSAEncrypt(pk,m)
+    cs=int2str(c)
+    print("Chiffretext als String:   "+cs)
+    print("Chiffretext als Zahl:     "+str(c))
+    b=RSADecrypt(sk,c)
+    bs=int2str(b) 
+    print("entschl. Text als String: "+bs)
+    print("entschl. Text als Zahl:   "+str(b))
+    
+    print("Tries:                    "+str(tries))
+    print("Results:                    "+str(tries))
+    
+    with open("results.txt", "a") as myfile:
+      myfile.write("(n, e, d, ms) = ("+str(n)+", "+str(e)+", "+str(d)+", '"+ms+"')\n")
+  return
+
+def MyNameIsAChiffreDemo():
+  ms = 'VZm3N9w9'
+  m=str2int(ms)
+  print("Klartext als String:      "+ms)
+  print("Klartext als Zahl:        "+str(m))
+  r = len(bin(m))-2                 # Laenge des Klartexts bestimmen
+  n = 38233457318277333263
+  e = 17500616985308425891
+  d = 14479615910965358491
+  pk = (n,e)
+  sk = (n,d)
   print("n =                       "+str(n))
   print("e =                       "+str(e))
   print("d =                       "+str(d))
-  m=RSADecrypt(sk,name)
-  ms=int2str(m)
-  print("Klartext als String:      "+ms)
-  print("Klartext als Zahl:        "+str(m))
   c=RSAEncrypt(pk,m)
   cs=int2str(c)
   print("Chiffretext als String:   "+cs)
@@ -243,5 +280,6 @@ if __name__ == '__main__':
   
   RSATest()
   print('-------------------------------------')
-  MyNameIsAChiffre()
-
+  MyNameIsAChiffreDemo()
+  print('-------------------------------------')
+  MyNameIsAChiffreFind()
