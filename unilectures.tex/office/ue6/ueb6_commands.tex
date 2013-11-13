@@ -1,0 +1,68 @@
+\documentclass[a4paper,12pt,oneside]{scrbook}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage[bookmarks,pagebackref,bookmarksnumbered]{hyperref}
+
+\usepackage{calc}
+
+\usepackage{pifont}
+
+\begin{document}
+
+\section*{Zu Aufgabenteil 2}
+
+\newcommand\indMatrix[3]{
+$ \left( \begin{array}{cccc}
+{#1}_{1,1} & #1_{1,2} & \cdots & #1_{1,#3} \\
+#1_{2,1} & #1_{2,2} & \cdots & #1_{2,#3} \\
+\vdots & \vdots & \ddots & \vdots \\
+#1_{#2,1} & #1_{#2,2} & \cdots & #1_{#2,#3} 
+
+\end{array} \right) $
+}
+
+
+\indMatrix{a}{m}{n}
+
+\section*{Zu Aufgabenteil 3}
+
+\newcounter{mat}
+\newcommand\matRow[1]{\addtocounter{mat}{1}\themat & \addtocounter{mat}{1}\themat & \cdots & \addtocounter{mat}{-2}\addtocounter{mat}{#1}\themat \\}
+\newcommand\valMatrix[1]{
+\setcounter{mat}{0}
+$ \left( \begin{array}{cccc}
+\matRow{#1}
+\matRow{#1}
+\vdots & \vdots & \ddots & \vdots \\
+\setcounter{mat}{#1 * (#1 - 1)}
+\matRow{#1}
+\end{array} \right) $
+}
+
+\valMatrix{10}
+
+\section*{Zu Aufgabenteil 4}
+
+\newenvironment{custItemize}[1]{
+   \let\olditem\item
+   \begin{itemize}
+   \renewcommand{\labelitemi}{#1}
+}{
+   \end{itemize}
+}
+
+
+\begin{custItemize}{\ding{241}}
+\item Erster Punkt
+\item Zweiter Punkt
+\item Dritter Punkt
+\end{custItemize}
+
+
+
+\end{document}
+
+

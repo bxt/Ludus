@@ -1,0 +1,84 @@
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{geometry}
+\geometry{a4paper,left=25mm,right=25mm, top=25mm, bottom=45mm}
+
+% babelbib
+\usepackage[fixlanguage]{babelbib}
+\setbibliographyfont{title}{}
+\setbibliographyfont{jtitle}{}
+\setbibliographyfont{btitle}{\emph}
+\setbibliographyfont{stitle}{\emph}
+\setbibliographyfont{journal}{\emph}
+\usepackage{longtable}
+
+\usepackage[german,linesnumbered,algoruled,longend,vlined,algo2e]{algorithm2e}
+%\DontPrintSemicolon
+\dontprintsemicolon
+\SetArgSty{}
+\SetKw{KwOr}{or}
+\SetKw{KwAnd}{and}
+\SetKw{KwNot}{not}
+\setlength{\algomargin}{3ex}
+
+\usepackage{graphicx}
+\usepackage[bookmarks,pagebackref,bookmarksnumbered]{hyperref}
+\usepackage[font=small,format=hang,labelfont=bf,figurename=Abb.,tablename=Tab.]{caption}
+\usepackage{enumerate}
+
+\renewcommand{\backreflastsep}{, }
+\renewcommand{\backreftwosep}{, }
+\renewcommand{\backrefsep}{, }
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  % #1: number of distinct back references
+  % #2: backref list with distinct entries
+  % #3: number of back references including duplicates
+  % #4: backref list including duplicates
+  \small
+  \ifcase #1 %
+  [nicht zitiert]%
+  \or
+%  [Cited on page~#2.]%
+  [S.~#2]%
+  \else
+%  [Cited on pages~#2.]
+  [S.~#2]
+  \fi
+}
+\usepackage{scrpage2}
+\ihead{}
+\ohead{\rightmark}
+\chead{}
+\pagestyle{scrheadings}
+\automark{chapter}
+
+\newtheorem{satz}{Satz}[chapter]
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{beobachtung}[satz]{Beobachtung}
+\newtheorem{folgerung}[satz]{Folgerung}
+\newtheorem{korollar}[satz]{Korollar}
+\theoremstyle{definition}
+\newtheorem{definition}[satz]{Definition}
+\newenvironment{beweis}{\begin{proof}}{\end{proof}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ousum}[2]{\underset{#1}{\overset{#2}{\sum}}}
+\newcommand{\usum}[1]{\underset{#1}{\sum}}
+
+\graphicspath{{abbildungen/}}
+
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setlength{\parskip}{1ex}
+
+\def\theequation{\arabic{equation}}

@@ -1,0 +1,24 @@
+\documentclass[
+	12pt,
+	listof=numbered,
+	bibliography=totocnumbered
+]{scrreprt}
+
+\input{ueb7_prelude_mod}
+
+\begin{document}
+\title{\Huge{Tourenplanung mit Zeitfenstern\\
+für mehrere Fahrzeuge}}
+\author{Philipp Kindermann}
+\maketitle
+\tableofcontents
+\clearpage
+
+\include{ueb7_einleitung_mod}
+
+Dies ist ein kurzer Satz. \cite{tourpla-12}
+
+\bibliographystyle{babalpha-fl}
+\bibliography{ueb7_abbrv_mod,ueb7_bibvrp_mod}
+
+\end{document}

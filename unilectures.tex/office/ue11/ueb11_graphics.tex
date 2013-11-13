@@ -1,0 +1,52 @@
+\documentclass[a4paper,12pt]{scrbook}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage[crop=off,tightpage]{auto-pst-pdf}
+\usepackage{pst-bar}
+
+\begin{document}
+
+\chapter{Dreieck}
+
+\begin{figure}[h]
+\centering
+\includegraphics{ueb11_triangle.eps}
+\caption{Dreieck ohne ersetzten Text}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\psfrag{AAA}[c][c]{a = \sqrt{b^2 + c^2} = 5m}
+\psfrag{BBB}[r][c]{b = 3m}
+\psfrag{CCC}[c][c]{c = 4m}
+\includegraphics{ueb11_triangle.eps}
+\caption{Dreieck mit erstem ersetzten Text}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\psfrag{AAA}[r][c]{a = \sqrt{b^2 + c^2} \approx 7,21m}
+\psfrag{BBB}[r][c]{b = 4m}
+\psfrag{CCC}[c][c]{c = 6m}
+\includegraphics{ueb11_triangle.eps}
+\caption{Dreieck mit zweitem ersetzten Text}
+\end{figure}
+
+
+\chapter{Diagramm}
+
+\psset{unit=1in}%
+
+\begin{pspicture}(-0.5,-0.5)(5,5)%
+\newpsbarstyle{yellow}{fillcolor=yellow,fillstyle=solid,framearc=0}
+\newpsbarstyle{magenta}{fillcolor=magenta,fillstyle=solid,framearc=0}
+\psgrid[xunit=1in,yunit=0.5in,gridlabels=0,subgriddiv=0,griddots=25](0,0)(5,6)%
+\psaxes[axesstyle=frame,Dy=10,yunit=0.05in,labels=y,ticks=y](0,0)(5,60)%
+\readpsbardata{\data}{data.csv}%
+\psbarscale(0.05){}
+\psbarchart[barstyle={yellow,magenta}]{\data}%
+\end{pspicture}
+
+\end{document}

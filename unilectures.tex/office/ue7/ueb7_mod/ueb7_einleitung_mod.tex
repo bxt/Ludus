@@ -1,0 +1,18 @@
+\chapter{Einleitung}\label{chap:einl}
+
+Das Problem der Tourenplanung für mehrere Fahrzeuge ist als das \emph{Vehicle Routing Problem} (VRP) bekannt und wurde 1959 von Dantzig \& Ramser~\cite{dr-tdp-59} eingeführt. Dabei soll eine Menge von Aufträgen für eine Menge von Kunden zu optimalen Touren (im Sinne von Kosten und Wartezeiten) für Fahrzeuge zusammengestellt werden. Eine Tour besteht dabei aus einer Teilmenge der gegebenen Aufträge und einer dazugehörigen Reihenfolge. Dieses Problem wurde in der Vergangenheit bereits ausgiebig behandelt. Als Verallgemeinerung des \emph{Traveling Salesman Problems} (TSP) ist auch das VRP NP-schwer. Daher wurden mehrere Heuristiken entwickelt, die mit geringem Rechenaufwand und kurzer Laufzeit gute, aber nicht notwendigerweise optimale Lösungen für das Problem berechnen. Für dieses Problem existieren diverse Anwendungsgebiete, zum einen im Logistikbereich, zum Anderen aber auch bei allen Unternehmen, die ihre Kunden beliefern (z.B. Getränkelieferanten, Möbelindustrie oder Zeitungsverlage). Eine bekannte Variante des VRP ist das $m$-TSP, bei dem genau $m$ Routen konstruiert werden sollen, um alle gegebenen Punkte zu besuchen. Im Gegensatz zu diesem ist beim VRP die Anzahl der Touren nicht fest vorgegeben, sondern nur durch die Anzahl der verfügbaren Fahrzeuge nach oben beschränkt und soll minimiert werden.
+
+
+\section{Problemdefinition}\label{sec:prob}
+
+\section{Bisheriger Stand der Forschung}\label{sec:forsch}
+
+Die im Sinne von Güte und Laufzeit besten Heuristiken zur Lösung des VRPTW wurden von Solomon~\cite{s-vrsptw-87} gegenübergestellt. Dabei verglich er folgende Algorithmen miteinander: die Savings-Heuristik von Clarke und Wright~\cite{bq-ipdp-64}, eine Nearest-Neighbor Heuristik, die Insertion-Heuristik (auch I1 genannt) und eine Sweep-Heuristik von Gillet und Miller~\cite{gm-havdp-74}. Die besten Ergebnisse erzielte er dabei mit der Insertion-Heuristik. Der populärste Algorithmus ist allerdings der Savings-Algorithmus. Von Paessens~\cite{p-savrp-88} wurden Verbesserungen der Zielfunktion genauer betrachtet sowie eine prozedurale Implementierung angegeben. 
+
+Bräysy \& Gendreau~\cite{s-bp-05} setzten sich mit verschiedenen Möglichkeiten der lokalen Suche und Nachbearbeitung auseinander. Dabei gaben sie zuerst einen Überblick über verschiedene Swap-Verfahren, bei denen einzelne Kunden oder auch ein Folge von Kunden entweder innerhalb der Tour, oder auch zwischen verschiedenen Touren getauscht werden. Anschließend wurden verschiedene Heuristiken miteinander verglichen. Dabei schnitten das Ruin \& Recreate Verfahren von Schrimpf et al.~\cite{sssd-rrp-00}, eine Greedy-Such-Heuristik von Prosser und Shaw~\cite{ps-sgs-96} und eine deterministische, alternierende k-OPT Heuristik von Cordone und Wolfer-Calvo~\cite{lmt-eavrpst-01} am besten ab.
+
+Laporte~\cite{l-vrpeaa-92} beschäftigte sich intensiv mit exakten Lösungsverfahren. Dabei stellte er mehrere Lösungswege vor, die hauptsächlich auf ganzzahliger linearer Programmierung basieren. Laporte et al.~\cite{NET:NET3230160104} benutzten dafür einen Branch-and-Bound Algorithmus, der auf dem Spezialfall m-TSP des VRP beruht. Christofides et al.~\cite{lmt-eavrpst-01} bauten ihren Algorithmus sogar auf dem Spezialfall k-degree center tree des m-TSP auf, während Balinski und Quandt~\cite{bq-ipdp-64} eine Mengen Partitionierungs Formulierung des VRP entwickelten. Laporte et al.~\cite{c-tatsp-85} arbeiteten eine 2-Index Fluss Formulierung für Kapazitäts- und Distanzschranken aus, Fisher und Jaikumar~\cite{fj-gahvr-81} benutzten eine 3-Index Fluss Formulierung für das VRP mit Kapazitätsbeschränkung und Zeitfenstern, aber ohne Stoppzeiten.
+
+\section{Zielstellung}\label{sec:ziel}
+
+\section{Durchführung}\label{sec:durchf}
