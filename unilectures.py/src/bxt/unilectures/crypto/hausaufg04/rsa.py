@@ -281,5 +281,5 @@ if __name__ == '__main__':
   RSATest()
   print('-------------------------------------')
   MyNameIsAChiffreDemo()
-  print('-------------------------------------')
-  MyNameIsAChiffreFind()
+  #print('-------------------------------------')
+  #MyNameIsAChiffreFind()
