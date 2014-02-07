@@ -13,10 +13,10 @@ public class App {
 				{ "foo", "bar", "baz", "bam", "42", "1337", "3.14", "0815", "911"
 				, "19111990", "foobar", "fruchtbar", "und", "vermehret euch!"});
 		
-		BloomFilter<String> bloomFilter = new BloomFilter<String>(size, hashFunctionsFor(new int[]{3,5}));
+		Collection<String> bloomFilter = new BloomFilter<String>(size, hashFunctionsFor(new int[]{3,5}));
 		bloomFilter.addAll(testInputs);
 		
-		BloomFilter<String> hashSet = new BloomFilter<String>(size, hashFunctionsFor(new int[]{1}));
+		Collection<String> hashSet = new BloomFilter<String>(size, hashFunctionsFor(new int[]{1}));
 		hashSet.addAll(testInputs);
 		
 		System.out.println();
