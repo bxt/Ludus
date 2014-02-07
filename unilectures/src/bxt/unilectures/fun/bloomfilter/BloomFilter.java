@@ -3,7 +3,6 @@ package bxt.unilectures.fun.bloomfilter;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 public class BloomFilter<E> implements Set<E> {
@@ -19,10 +18,6 @@ public class BloomFilter<E> implements Set<E> {
 		bitSet = new BitSet(size);
 	}
 	
-	public BloomFilter(int size, List<HashFunction<Object>> asList) {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public boolean add(E element) {
 		count++;
