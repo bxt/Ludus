@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("\n    «Mix, mix, swirl... mix!»\n");
+		System.out.println("\n    «Mix, mix, swirl... mix!»");
 		System.out.println("\n                   - Singed\n");
 		
 		Collection<Point2D> points = new LinkedList<>();
@@ -18,7 +18,7 @@ public class Main {
 		points.add(new Point2D.Double(0.50, 0.50));
 		points.add(new Point2D.Double(0.25, 0.75));
 		
-		ConvexHullBuilder chb = new FirstConvexHullBuilder();
+		ConvexHullBuilder chb = new StableConvexHullBuilder();
 		List<Point2D> result = chb.build(points);
 		System.out.println(result);
 		
