@@ -53,7 +53,10 @@ public class ConvexHullSketch extends PApplet {
 	public void mouseClicked() {
 		if(mouseButton == LEFT) {
 			points.add(new Point2D.Double(mouseX, mouseY));
+		} else {
+			points.clear();
 		}
+		//System.out.println(points);
 	}
 	
 	private void line(Point2D a, Point2D b) {
