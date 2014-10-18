@@ -31,6 +31,7 @@ public class IcosahedronSketch extends PApplet {
 	public void setup() {
 		
 		size(1920, 1200, P3D);
+		hint(DISABLE_DEPTH_TEST); // make transparency kinda work
 		//frameRate(100);
 		
 		font = loadFont("BitstreamVeraSans-Roman-48.vlw");
