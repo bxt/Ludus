@@ -26,11 +26,11 @@ public class ConvexHullSketch extends PApplet {
 	public void setup() {
 		size(700, 400);
 		
-		randomPoints(20);
+		randomPoints(80000);
 	}
 	
 	public void draw() {
-		boolean fast = false;
+		boolean fast = true;
 		
 		background(20);
 		
