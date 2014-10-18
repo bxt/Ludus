@@ -24,7 +24,9 @@ public class ConvexHullSketch extends PApplet {
 		PApplet.main(new String[]{ConvexHullSketch.class.getCanonicalName()});
 	}
 	public void setup() {
-		size(700, 400);	
+		size(700, 400);
+		
+		randomPoints(20);
 	}
 	
 	public void draw() {
@@ -54,8 +56,13 @@ public class ConvexHullSketch extends PApplet {
 		}
 	}
 	
-	public void line(Point2D a, Point2D b) {
+	private void line(Point2D a, Point2D b) {
 		line((float)a.getX(), (float)a.getY(), (float)b.getX(), (float)b.getY());
 	}
 
+	private void randomPoints(int count) {
+		for (int i = 0; i < count; i++) {
+			points.add(new Point2D.Double(Math.random()*width, Math.random()*height));
+		}
+	}
 }
