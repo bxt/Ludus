@@ -7,6 +7,7 @@ import java.util.List;
 import processing.core.PApplet;
 import bxt.unilectures.algogeo.fun.convexhull.ConvexHullBuilder;
 import bxt.unilectures.algogeo.fun.convexhull.FirstConvexHullBuilder;
+import bxt.unilectures.algogeo.fun.convexhull.GiftWrapppingConvexHullBuilder;
 import bxt.unilectures.algogeo.fun.convexhull.StableConvexHullBuilder;
 
 public class ConvexHullSketch extends PApplet {
@@ -14,6 +15,12 @@ public class ConvexHullSketch extends PApplet {
 	private static final long serialVersionUID = 1L;
 	
 	private List<Point2D> points = new LinkedList<Point2D>();
+	
+	private ConvexHullBuilder[] cbhs = new ConvexHullBuilder[]{
+			new GiftWrapppingConvexHullBuilder(),
+			new FirstConvexHullBuilder(),
+			new StableConvexHullBuilder(),
+	};
 	
 	/**
 	 * Main-method for direct invocation, dispatches to 
@@ -30,13 +37,10 @@ public class ConvexHullSketch extends PApplet {
 	}
 	
 	public void draw() {
-		boolean fast = true;
-		
 		background(20);
 		
 		stroke(color(0,0,255));
-		ConvexHullBuilder chb = fast ? new StableConvexHullBuilder() : new FirstConvexHullBuilder();
-		List<Point2D> complexHull = chb.build(points);
+		List<Point2D> complexHull = cbhs[2].build(points);
 		for (int i = 1; i < complexHull.size(); i++) {
 			line(complexHull.get(i-1), complexHull.get(i));
 		}
