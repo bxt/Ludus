@@ -25,9 +25,16 @@ public class Main {
 		points.add(new Point2D.Double(0.50, 0.50));
 		points.add(new Point2D.Double(0.25, 0.75));
 		
-		ConvexHullBuilder chb = new StableConvexHullBuilder();
-		List<Point2D> result = chb.build(points);
-		System.out.println(result);
+		ConvexHullBuilder[] chbs = new ConvexHullBuilder[]{
+				new FirstConvexHullBuilder(),
+				new StableConvexHullBuilder(),
+				new GiftWrapppingConvexHullBuilder(),
+				};
+		for (ConvexHullBuilder chb : chbs) {
+			System.out.println(chb.getClass().getSimpleName());
+			List<Point2D> result = chb.build(points);
+			System.out.println(result);
+		}
 		
 	}
 }
