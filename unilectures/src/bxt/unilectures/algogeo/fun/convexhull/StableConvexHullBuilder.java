@@ -25,20 +25,31 @@ public class StableConvexHullBuilder implements ConvexHullBuilder {
 		
 		if (sortedPoints.size() <= 2) return sortedPoints;
 		
-		// TODO: lower convex hull!
+		LinkedList<Point2D> upperHalf = new LinkedList<Point2D>();
 		
-		LinkedList<Point2D> halfHull = new LinkedList<Point2D>();
-		halfHull.add(sortedPoints.get(0));
-		halfHull.add(sortedPoints.get(1));
-		
-		for (int i = 2; i < sortedPoints.size(); i++) {
-			halfHull.add(sortedPoints.get(i));
-			while (halfHull.size() > 2 && lastThreePointsNotRightTurn(halfHull)) {
-				removeSecondLastElement(halfHull);
+		for (int i = 0; i < sortedPoints.size(); i++) {
+			upperHalf.add(sortedPoints.get(i));
+			while (upperHalf.size() > 2 && lastThreePointsNotRightTurn(upperHalf)) {
+				removeSecondLastElement(upperHalf);
 			}
 		}
 		
-		return halfHull;
+		LinkedList<Point2D> lowerHalf = new LinkedList<Point2D>();
+		
+		for (int i = sortedPoints.size()-1; i >= 0; i--) {
+			lowerHalf.add(sortedPoints.get(i));
+			while (lowerHalf.size() > 2 && lastThreePointsNotRightTurn(lowerHalf)) {
+				removeSecondLastElement(lowerHalf);
+			}
+		}
+		
+		upperHalf.removeLast();
+		lowerHalf.removeLast();
+		
+		LinkedList<Point2D> result = upperHalf;
+		result.addAll(lowerHalf);
+		
+		return result;
 	}
 
 	private void removeSecondLastElement(LinkedList<Point2D> halfHull) {
@@ -50,9 +61,9 @@ public class StableConvexHullBuilder implements ConvexHullBuilder {
 	
 	private boolean lastThreePointsNotRightTurn(LinkedList<Point2D> halfHull) {
 		Iterator<Point2D> it = halfHull.descendingIterator();
-		Point2D a = it.next();
-		Point2D b = it.next();
 		Point2D c = it.next();
+		Point2D b = it.next();
+		Point2D a = it.next();
 		return ! Util.strictlyRight(c, a, b);
 	}
 
