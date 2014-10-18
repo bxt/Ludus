@@ -1,6 +1,7 @@
 package bxt.unilectures.algogeo.fun.convexhull;
 
 import java.awt.geom.Point2D;
+import java.util.Comparator;
 
 public abstract class Util {
 	
@@ -34,7 +35,13 @@ public abstract class Util {
 		     - a13*a22*a31 - a12*a21*a33 - a11*a23*a32;
 	}
 	
-	
-
+	public static class Point2DComparator implements Comparator<Point2D> {
+		@Override
+		public int compare(Point2D o1, Point2D o2) {
+			int xCmp = Double.compare(o1.getX(), o2.getX());
+			if (xCmp == 0) return Double.compare(o1.getY(), o2.getY());
+			return xCmp;
+		}
+	}
 
 }
