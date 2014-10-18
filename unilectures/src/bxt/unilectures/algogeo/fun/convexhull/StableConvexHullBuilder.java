@@ -8,6 +8,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Andrew's monotone chain convex hull algorithm.
+ * 
+ * This algorithm works by walking through all points from left to right
+ * and removing those points that do not belong to the convex hull thus
+ * ironing out concave sections. This yields the upper c. h. and the steps
+ * are repeated in the other direction to get the lower section of the c. h.
+ * and has O(n log n) running time.
+ */
 public class StableConvexHullBuilder implements ConvexHullBuilder {
 
 	@Override

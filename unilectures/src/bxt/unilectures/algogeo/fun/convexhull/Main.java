@@ -5,6 +5,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Displays a welcome message and runs one convex hull algorithm
+ * on a simple set of points.
+ * 
+ * If you want to run the convex hull algorithms with a graphical
+ * output check the unilectures.processing project.
+ */
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("\n    «Mix, mix, swirl... mix!»");

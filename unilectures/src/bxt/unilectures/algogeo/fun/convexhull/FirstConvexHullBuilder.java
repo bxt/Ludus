@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Very naive convex hull algorithm.
+ * 
+ * This is a really bad algorithm for finding the convex hull, however it is
+ * easily proven to be correct. It checks all pairs of points like a possible
+ * edge of the convex hull polygon, by checking for all other points if they
+ * are on the right side of the edge. It as O(n^3) running time. It might lead
+ * to gaps and errors in the hull due to shortcomings of floating point
+ * arithmetics.
+ */
 public class FirstConvexHullBuilder implements ConvexHullBuilder {
 
 	@Override
