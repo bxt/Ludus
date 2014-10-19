@@ -75,6 +75,14 @@ Kryptographie
 
 * AES: [py](https://github.com/bxt/Ludus/blob/master/unilectures.py/src/bxt/unilectures/crypto/hausaufg03/AES.py)
 
+Algorithmische Geometrie
+------------------------
+
+* Flächenberechnung von Polygonen: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/vorkurs/flaechenberechnung/Flaechenberechnung.java)
+* Konvexe Hülle (naiv): [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/algogeo/fun/convexhull/FirstConvexHullBuilder.java)
+* Jarvis' gift wrapping Algorithmus: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/algogeo/fun/convexhull/GiftWrapppingConvexHullBuilder.java)
+* Andrew's monotone chain convex hull algorithm: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/algogeo/fun/convexhull/StableConvexHullBuilder.java) [processing](https://github.com/bxt/Ludus/blob/master/unilectures.processing/src/bxt/convexhull/processing/ConvexHullSketch.java)
+
 Sonstiges
 ---------
 
@@ -82,5 +90,4 @@ Sonstiges
 * PI-Berechnung (Monte-Carlo, Leibniz-Reihe): [java](https://github.com/bxt/Ludus/tree/master/unilectures/src/bxt/unilectures/vorkurs/pi)
 * FizzBuzz: [rs](https://github.com/bxt/Ludus/blob/master/unilectures.rs/fizzbuzz.rs)
 * Hirsch-Index: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/HirschIndex.java)
-* Flächenberechnung von Polygonen: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/vorkurs/flaechenberechnung/Flaechenberechnung.java)
 * Hello-World: [java](https://github.com/bxt/Ludus/blob/master/unilectures/src/bxt/unilectures/vorkurs/flaechenberechnung/Flaechenberechnung.java), [rs](https://github.com/bxt/Ludus/blob/master/unilectures.rs/hello.rs), [py](https://github.com/bxt/Ludus/blob/master/unilectures.py/src/bxt/unilectures/theoinf/fun/helloWorld.py)
