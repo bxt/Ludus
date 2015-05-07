@@ -29,22 +29,23 @@ public class CalculatePi {
 	 * @param args Command line arguments (not used)
 	 */
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcher Algorithmus soll verwendet werden? ");
-		for (Integer key:ALGO_MAP.keySet()) {
-			System.out.println("  "+key+" => "+ALGO_MAP.get(key).getSimpleName());
-		}
-		int algoNo=sc.nextInt();
-		try {
-			PiStrategy calculator=ALGO_MAP.get(algoNo).newInstance();
-			System.out.println("Wieviele iterationen? ");
-			int iterations=sc.nextInt();
-			System.out.println("Pi ist etwa: "+calculator.getPi(iterations));
-			System.out.println("Pi ist aber: "+Math.PI);
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		try (Scanner sc = new Scanner(System.in)) {
+			System.out.println("Welcher Algorithmus soll verwendet werden? ");
+			for (Integer key:ALGO_MAP.keySet()) {
+				System.out.println("  "+key+" => "+ALGO_MAP.get(key).getSimpleName());
+			}
+			int algoNo=sc.nextInt();
+			try {
+				PiStrategy calculator=ALGO_MAP.get(algoNo).newInstance();
+				System.out.println("Wieviele iterationen? ");
+				int iterations=sc.nextInt();
+				System.out.println("Pi ist etwa: "+calculator.getPi(iterations));
+				System.out.println("Pi ist aber: "+Math.PI);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

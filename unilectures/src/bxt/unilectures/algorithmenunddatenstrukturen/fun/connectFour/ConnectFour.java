@@ -86,49 +86,50 @@ public class ConnectFour {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		// Nach Dimensionen m und n des Spielgitters fragen:
-		System.out.println("Breite des Feldes:");
-		int width= sc.nextInt();
-
-		System.out.println("Hoehe des Feldes:");
-		int height= sc.nextInt();
-		
-		if(width<1 || height<1 || (width<WINCNT && height<WINCNT)) {
-			System.out.println("Feld zu klein zum Gewinnen. ");
-			return;
-		}
-		
-		// Feld mit Leerzeichen initialisieren:
-		char[][] field = new char[height][width];
-		for(int zeile=0;zeile<field.length;zeile++) {
-			for(int spalte=0;spalte<field[zeile].length;spalte++) {
-				field[zeile][spalte]=' ';
+		try (Scanner sc = new Scanner(System.in)) {
+			
+			// Nach Dimensionen m und n des Spielgitters fragen:
+			System.out.println("Breite des Feldes:");
+			int width= sc.nextInt();
+	
+			System.out.println("Hoehe des Feldes:");
+			int height= sc.nextInt();
+			
+			if(width<1 || height<1 || (width<WINCNT && height<WINCNT)) {
+				System.out.println("Feld zu klein zum Gewinnen. ");
+				return;
 			}
-		}
-		
-		char[] players={'●','○'};
-		for(int zugnummer=0;!isFull(field);zugnummer++) {
-			// Speieler abwechselnd auswaehlen:
-			char currentPayer=players[zugnummer%players.length];
 			
-			int column = 0;
-			do { // wenn der Zug ungueltig war, wiederholen
-				System.out.println("Spieler "+currentPayer+" Spalte eingeben:");
-				column= sc.nextInt();
-			} while (!makeMove(field, currentPayer, column));
-			
-			printField(field);
-			
-			// Gewinn-Kontrolle:
-			if(hasWon(field,currentPayer)) {
-				System.out.println("Gratuliere, Spieler "+currentPayer+
-						" hat gewonnen!");
-				return; // Sofort Spielende
+			// Feld mit Leerzeichen initialisieren:
+			char[][] field = new char[height][width];
+			for(int zeile=0;zeile<field.length;zeile++) {
+				for(int spalte=0;spalte<field[zeile].length;spalte++) {
+					field[zeile][spalte]=' ';
+				}
 			}
+			
+			char[] players={'●','○'};
+			for(int zugnummer=0;!isFull(field);zugnummer++) {
+				// Speieler abwechselnd auswaehlen:
+				char currentPayer=players[zugnummer%players.length];
+				
+				int column = 0;
+				do { // wenn der Zug ungueltig war, wiederholen
+					System.out.println("Spieler "+currentPayer+" Spalte eingeben:");
+					column= sc.nextInt();
+				} while (!makeMove(field, currentPayer, column));
+				
+				printField(field);
+				
+				// Gewinn-Kontrolle:
+				if(hasWon(field,currentPayer)) {
+					System.out.println("Gratuliere, Spieler "+currentPayer+
+							" hat gewonnen!");
+					return; // Sofort Spielende
+				}
+			}
+			System.out.println("Unentschieden.");
 		}
-		System.out.println("Unentschieden.");
 	}
 	
 	/**

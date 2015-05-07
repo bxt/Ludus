@@ -18,24 +18,25 @@ public class MatrixZ2 {
 	
 	public static MatrixZ2 fromString(String s) {
 		Pattern digits=Pattern.compile("[01]+");
-		Scanner sc=new Scanner(s);
 		Queue<boolean[]> entiresList=new LinkedList<boolean[]>();
-		int preColumns=-1;
-		
-		while(sc.hasNext(digits)) {
-			String digit=sc.next(digits);
+		try(Scanner sc=new Scanner(s)) {
+			int preColumns=-1;
 			
-			if(preColumns>=0 && preColumns!=digit.length())
-				throw new IllegalArgumentException();
-			preColumns=digit.length();
-			
-			boolean[] row=new boolean[digit.length()];
-			int col=0;
-			for (char c: digit.toCharArray()) {
-				row[col]=c=='1'?true:false;
-				col++;
+			while(sc.hasNext(digits)) {
+				String digit=sc.next(digits);
+				
+				if(preColumns>=0 && preColumns!=digit.length())
+					throw new IllegalArgumentException();
+				preColumns=digit.length();
+				
+				boolean[] row=new boolean[digit.length()];
+				int col=0;
+				for (char c: digit.toCharArray()) {
+					row[col]=c=='1'?true:false;
+					col++;
+				}
+				entiresList.add(row);
 			}
-			entiresList.add(row);
 		}
 		
 		boolean[][] entries=new boolean[entiresList.size()][];

@@ -18,10 +18,11 @@ public class RecursiveFibonacci {
 	 * @param args Command line arguments (not used)
 	 */
 	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		System.out.print(greetingText);
-		int n=sc.nextInt();
-		System.out.printf(resultText, n, getFib(n));
+		try (Scanner sc=new Scanner(System.in)) {
+			System.out.print(greetingText);
+			int n=sc.nextInt();
+			System.out.printf(resultText, n, getFib(n));
+		}
 	}
 	
 	/**

@@ -67,17 +67,17 @@ public class CliInputFactory {
 		out.printf(message,type.getSimpleName());
 		try {
 			if (type.isAssignableFrom(String.class)) {
-				Scanner sc = new Scanner(in);
-				String created= sc.nextLine();
-				return type.cast(created);
+				try (Scanner sc = new Scanner(in)) {
+					return type.cast(sc.nextLine());
+				}
 			} else if (type.isAssignableFrom(Integer.class)) {
-				Scanner sc = new Scanner(in);
-				Integer created= sc.nextInt();
-				return type.cast(created);
+				try (Scanner sc = new Scanner(in)) {
+					return type.cast(sc.nextInt());
+				}
 			} else if (type.isAssignableFrom(Double.class)) {
-				Scanner sc = new Scanner(in);
-				Double created= sc.nextDouble();
-				return type.cast(created);
+				try (Scanner sc = new Scanner(in)) {
+					return type.cast(sc.nextDouble());
+				}
 			} else {
 				T created = type.newInstance();
 				createChildren(created);
@@ -99,10 +99,10 @@ public class CliInputFactory {
 		Method[] methods = object.getClass().getMethods();
 		for(Method method : methods){
 			String methodName = method.getName();
-			String name=methodName.substring(3);
 			boolean hasSetterName = methodName.startsWith("set");
 			boolean hasOneAndOnlyOneArgument = 1 == method.getParameterTypes().length;
 			if(hasSetterName && hasOneAndOnlyOneArgument) {
+				String name=methodName.substring(3);
 				Object[] params={create(method.getParameterTypes()[0],"Bitte "+name+" (%s) eingeben: ")};
 				try {
 					method.invoke(object, params);
