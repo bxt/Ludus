@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 
 public class T9 {
 	
+	private final static String ARROW = " --> ";
+	
 	Map<String, Integer> digaramCounts = new HashMap<String, Integer>();
 	Map<String, Integer> characterKey = new HashMap<String, Integer>();
 	{
@@ -34,7 +36,9 @@ public class T9 {
 		Stream.of("hello", "world", "the", "in", "and", "reuter", "bernhard", "people", "reliability", "many", "kind", "words", "for", "you").forEach(word -> {
 			int[] keys = t9.keypresses(word);
 			System.out.print(word);
+			System.out.print(ARROW);
 			System.out.print(Arrays.toString(keys));
+			System.out.print(ARROW);
 			System.out.print(t9.word(keys));
 			System.out.println();
 		});
@@ -44,12 +48,10 @@ public class T9 {
 		InputStream stream = getClass().getResourceAsStream(sampleTextFilename);
 		try(Scanner sc = new Scanner(stream)) {
 			sc.useDelimiter("");
-			String prev = null;
+			String prev = " ";
 			for (String curr : (Iterable<String>) () -> sc) {
-				if(prev != null) {
-					String digram = prev + curr;
-					digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1);
-				}
+				String digram = prev + curr;
+				digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1);
 				sc.skip("[0-9]*");
 				prev = curr;
 			}
