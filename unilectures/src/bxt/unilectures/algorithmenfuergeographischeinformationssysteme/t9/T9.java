@@ -1,13 +1,15 @@
 package bxt.unilectures.algorithmenfuergeographischeinformationssysteme.t9;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,8 +45,7 @@ public class T9 {
 		try(Scanner sc = new Scanner(stream)) {
 			sc.useDelimiter("");
 			String prev = null;
-			while(sc.hasNext()) {
-				String curr = sc.next();
+			for (String curr : (Iterable<String>) () -> sc) {
 				if(prev != null) {
 					String digram = prev + curr;
 					digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1);
@@ -62,41 +63,12 @@ public class T9 {
 	
 	public String word(int[] keypresses) {
 		
-		Node dummy = new Node(" ", null, 0);
-		List<Node> prev = new ArrayList<T9.Node>();
-		prev.add(dummy);
+		Collection<Node> prev = Arrays.stream(keypresses).boxed().reduce(
+				Collections.singletonList(new Node(" ", null, 0)),
+				(nodes, key) -> lettersFor(key).map(letter -> maxTransition(nodes, letter)).collect(Collectors.toList()),
+				(a,b) -> {throw new UnsupportedOperationException();});
 		
-		for(int i = 0; i < keypresses.length; i++) {
-			List<Node> curr = new ArrayList<T9.Node>();
-			for (String letter : candidatesFor(keypresses[i])) {
-				Node pre = null;
-				int max = 0;
-				for(Node n : prev) {
-					int foo = n.probability + digaramCounts.getOrDefault(n.letter + letter, 0);
-					if (foo > max) {
-						max = foo;
-						pre = n;
-					}
-				}
-				Node m = new Node(letter, pre, max);
-				curr.add(m);
-			}
-			prev = curr;
-		}
-		
-		Node m;
-		{
-			Node pre = null;
-			int max = 0;
-			for(Node n : prev) {
-				int foo = n.probability + digaramCounts.getOrDefault(n.letter + " ", 0);
-				if (foo > max) {
-					max = foo;
-					pre = n;
-				}
-			}
-			m = new Node("", pre, max);
-		}
+		Node m = maxTransition(prev, " ");
 		
 		String result = "";
 		while (m.predecessor != null) {
@@ -107,8 +79,14 @@ public class T9 {
 		return result;
 	}
 	
-	private List<String> candidatesFor(int key) {
-		return characterKey.entrySet().stream().filter(e -> e.getValue() == key).map(Entry::getKey).collect(Collectors.toList());
+	private Node maxTransition(Collection<Node> prev, String letter) {
+		Function<Node, Integer> f = n -> n.probability + digaramCounts.getOrDefault(n.letter + letter, 0);
+		Node predecessor = prev.stream().max(Comparator.comparing(f)).get();
+		return new Node(letter, predecessor, f.apply(predecessor));
+	}
+	
+	private Stream<String> lettersFor(int key) {
+		return characterKey.entrySet().stream().filter(e -> e.getValue() == key).map(Entry::getKey);
 	}
 	
 	private static class Node {
