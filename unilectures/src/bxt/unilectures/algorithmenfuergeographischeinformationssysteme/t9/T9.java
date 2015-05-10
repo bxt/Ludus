@@ -4,14 +4,15 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.jooq.lambda.Seq;
+import org.jooq.lambda.tuple.Tuple2;
 
 public class T9 {
 	
@@ -35,26 +36,17 @@ public class T9 {
 		T9 t9 = new T9("sample.txt");
 		Stream.of("hello", "world", "the", "in", "and", "reuter", "bernhard", "people", "reliability", "many", "kind", "words", "for", "you").forEach(word -> {
 			int[] keys = t9.keypresses(word);
-			System.out.print(word);
-			System.out.print(ARROW);
-			System.out.print(Arrays.toString(keys));
-			System.out.print(ARROW);
-			System.out.print(t9.word(keys));
-			System.out.println();
+			System.out.println(word + ARROW + Arrays.toString(keys) + ARROW + t9.word(keys));
 		});
 	}
 
 	public T9(String sampleTextFilename) {
 		InputStream stream = getClass().getResourceAsStream(sampleTextFilename);
 		try(Scanner sc = new Scanner(stream)) {
-			sc.useDelimiter("");
-			String prev = " ";
-			for (String curr : (Iterable<String>) () -> sc) {
-				String digram = prev + curr;
-				digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1);
-				sc.skip("[0-9]*");
-				prev = curr;
-			}
+			sc.useDelimiter("[0-9]*");
+			Seq.seq(sc).duplicate().map1(s -> Seq.concat(Seq.of(" "),s))
+				.map((l,r) -> Seq.zip(l, r, String::concat))
+				.forEach(digram -> digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1));
 		}
 		System.out.println(digaramCounts);
 	}
@@ -64,27 +56,20 @@ public class T9 {
 	}
 	
 	public String word(int[] keypresses) {
-		
-		Collection<Node> prev = Arrays.stream(keypresses).boxed().reduce(
+		Collection<Node> prev = Seq.foldLeft(Arrays.stream(keypresses).boxed(),
 				Collections.singletonList(new Node(" ", null, 0)),
-				(nodes, key) -> lettersFor(key).map(letter -> maxTransition(nodes, letter)).collect(Collectors.toList()),
-				(a,b) -> {throw new UnsupportedOperationException();});
+				(nodes, key) -> lettersFor(key).map(letter -> maxTransition(nodes, letter)).collect(Collectors.toList()));
 		
 		Node m = maxTransition(prev, " ");
 		
-		String result = "";
-		while (m.predecessor != null) {
-			result = m.letter + result;
-			m = m.predecessor;
-		}
-		
-		return result;
+		return Seq.iterate(m, Node::getPredecessor).limitUntil(n -> n == null)
+				.map(Node::getLetter).reverse().collect(Collectors.joining());
 	}
 	
 	private Node maxTransition(Collection<Node> prev, String letter) {
-		Function<Node, Integer> f = n -> n.probability + digaramCounts.getOrDefault(n.letter + letter, 0);
-		Node predecessor = prev.stream().max(Comparator.comparing(f)).get();
-		return new Node(letter, predecessor, f.apply(predecessor));
+		return Seq.zip(prev.stream(), prev.stream().map(n -> n.getProbability() + digaramCounts.getOrDefault(n.getLetter() + letter, 0)))
+				.maxBy(Tuple2::v2).get()
+				.map((predecessor, probability) -> new Node(letter, predecessor, probability));
 	}
 	
 	private Stream<String> lettersFor(int key) {
@@ -100,6 +85,18 @@ public class T9 {
 			this.letter = letter;
 			this.predecessor = predecessor;
 			this.probability = probability;
+		}
+
+		public String getLetter() {
+			return letter;
+		}
+
+		public Node getPredecessor() {
+			return predecessor;
+		}
+
+		public int getProbability() {
+			return probability;
 		}
 	}
 	
