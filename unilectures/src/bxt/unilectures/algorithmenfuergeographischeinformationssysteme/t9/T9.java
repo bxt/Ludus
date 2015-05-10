@@ -48,7 +48,7 @@ public class T9 {
 				.duplicate()
 				.map1(s -> Seq.concat(Seq.of(" "),s))
 				.map((l,r) -> Seq.zip(l, r, String::concat))
-				.forEach(digram -> digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1));
+				.forEach(digram -> digaramCounts.merge(digram, 1, Integer::sum));
 		}
 		System.out.println(digaramCounts);
 	}
