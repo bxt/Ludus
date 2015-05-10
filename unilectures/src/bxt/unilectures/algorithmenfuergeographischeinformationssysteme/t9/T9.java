@@ -44,7 +44,9 @@ public class T9 {
 		InputStream stream = getClass().getResourceAsStream(sampleTextFilename);
 		try(Scanner sc = new Scanner(stream)) {
 			sc.useDelimiter("[0-9]*");
-			Seq.seq(sc).duplicate().map1(s -> Seq.concat(Seq.of(" "),s))
+			Seq.seq(sc)
+				.duplicate()
+				.map1(s -> Seq.concat(Seq.of(" "),s))
 				.map((l,r) -> Seq.zip(l, r, String::concat))
 				.forEach(digram -> digaramCounts.put(digram, digaramCounts.getOrDefault(digram, 0) + 1));
 		}
@@ -52,28 +54,44 @@ public class T9 {
 	}
 	
 	public int[] keypresses(String word) {
-		return word.chars().map(i -> characterKey.get(String.valueOf((char)i))).toArray();
+		return word
+				.chars()
+				.map(i -> characterKey.get(String.valueOf((char)i)))
+				.toArray();
 	}
 	
 	public String word(int[] keypresses) {
-		Collection<Node> prev = Seq.foldLeft(Arrays.stream(keypresses).boxed(),
+		Collection<Node> prev = Seq.foldLeft(
+				Arrays.stream(keypresses).boxed(),
 				Collections.singletonList(new Node(" ", null, 0)),
-				(nodes, key) -> lettersFor(key).map(letter -> maxTransition(nodes, letter)).collect(Collectors.toList()));
+				(nodes, key) -> lettersFor(key)
+					.map(letter -> maxTransition(nodes, letter))
+					.collect(Collectors.toList()));
 		
 		Node m = maxTransition(prev, " ");
 		
-		return Seq.iterate(m, Node::getPredecessor).limitUntil(n -> n == null)
-				.map(Node::getLetter).reverse().collect(Collectors.joining());
+		return Seq
+				.iterate(m, Node::getPredecessor)
+				.limitUntil(n -> n == null)
+				.map(Node::getLetter)
+				.reverse()
+				.collect(Collectors.joining());
 	}
 	
 	private Node maxTransition(Collection<Node> prev, String letter) {
-		return Seq.zip(prev.stream(), prev.stream().map(n -> n.getProbability() + digaramCounts.getOrDefault(n.getLetter() + letter, 0)))
+		return Seq
+				.zip(prev.stream(), prev.stream().map(
+					n -> n.getProbability() + digaramCounts.getOrDefault(n.getLetter() + letter, 0)))
 				.maxBy(Tuple2::v2).get()
 				.map((predecessor, probability) -> new Node(letter, predecessor, probability));
 	}
 	
 	private Stream<String> lettersFor(int key) {
-		return characterKey.entrySet().stream().filter(e -> e.getValue() == key).map(Entry::getKey);
+		return characterKey
+				.entrySet()
+				.stream()
+				.filter(e -> e.getValue() == key)
+				.map(Entry::getKey);
 	}
 	
 	private static class Node {
