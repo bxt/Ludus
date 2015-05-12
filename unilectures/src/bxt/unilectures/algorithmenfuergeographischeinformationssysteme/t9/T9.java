@@ -11,9 +11,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 
 import org.jooq.lambda.Seq;
 import org.jooq.lambda.tuple.Tuple2;
@@ -23,7 +21,6 @@ public class T9 {
 	private final static String ARROW = " --> ";
 	private final static int PRECISION = 100000;
 	
-	private Map<String, Long> emissionProbabilites = new HashMap<>();
 	private Map<String, Long> transitionProbabilities = new HashMap<>();
 	
 	private Map<String, Integer> characterKey = new HashMap<String, Integer>();
@@ -59,7 +56,6 @@ public class T9 {
 				.map((l,r) -> Seq.zip(l, r, String::concat))
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 		
-		calculateEmissions(letterCounts);
 		calculateTransitions(letterCounts, digaramCounts);
 	}
 	
@@ -74,24 +70,9 @@ public class T9 {
 	}
 	
 	private void calculateTransitions(Map<String, Long> letterCounts, Map<String, Long> digaramCounts) {
+		//transitionProbabilities = digaramCounts;
 		digaramCounts.forEach((digram, count) -> {
 			transitionProbabilities.put(digram, log((double)count/letterCounts.get(digram.substring(0, 1))));
-		});
-	}
-
-	private void calculateEmissions(Map<String, Long> letterCounts) {
-		Seq.concat(Seq.of(0),IntStream.range(2, 10).boxed())
-		.map(this::lettersFor)
-		.map(s -> s.collect(Collectors.toList()))
-		.forEach(letters -> {
-			long total = letters
-				.stream()
-				.map(letterCounts::get)
-				.reduce(Long::sum)
-				.get();
-			letters.stream().forEach((letter) -> {
-				emissionProbabilites.put(letter, log((double)letterCounts.get(letter)/total));
-			});
 		});
 	}
 
@@ -123,7 +104,7 @@ public class T9 {
 	private Node maxTransition(Collection<Node> prev, String letter) {
 		return Seq
 				.zip(prev.stream(), prev.stream().map(
-					n -> n.getProbability() + transitionProbabilities.getOrDefault(n.getLetter() + letter, 0L) + emissionProbabilites.get(letter)))
+					n -> n.getProbability() + transitionProbabilities.getOrDefault(n.getLetter() + letter, 0L)))
 				.maxBy(Tuple2::v2).get()
 				.map((predecessor, probability) -> new Node(letter, predecessor, probability));
 	}
