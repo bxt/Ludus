@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,8 +20,9 @@ public class T9 {
 	
 	private final static String ARROW = " --> ";
 	
-	Map<String, Integer> digaramCounts = new HashMap<String, Integer>();
-	Map<String, Integer> characterKey = new HashMap<String, Integer>();
+	private Map<String, Long> letterCounts = new HashMap<String, Long>();
+	private Map<String, Integer> digaramCounts = new HashMap<String, Integer>();
+	private Map<String, Integer> characterKey = new HashMap<String, Integer>();
 	{
 		Stream.of("a","b","c"    ).forEach(c -> characterKey.put(c, 2));
 		Stream.of("d","e","f"    ).forEach(c -> characterKey.put(c, 3));
@@ -46,13 +49,26 @@ public class T9 {
 			sc.useDelimiter("[0-9]*");
 			Seq.seq(sc)
 				.duplicate()
+				.map1(s -> {
+					Tuple2<Seq<String>, Seq<String>> t = s.duplicate();
+					letterCounts = t.v1().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+					return t.v2();
+				})
 				.map1(s -> Seq.concat(Seq.of(" "),s))
 				.map((l,r) -> Seq.zip(l, r, String::concat))
 				.forEach(digram -> digaramCounts.merge(digram, 1, Integer::sum));
 		}
 		System.out.println(digaramCounts);
+		normalizeCounts();
+		System.out.println(digaramCounts);
 	}
 	
+	private void normalizeCounts() {
+		digaramCounts.forEach((digram, count) -> {
+			digaramCounts.put(digram, (int)Math.round(100*Math.log((float)count/letterCounts.get(digram.substring(0, 1)))));
+		});
+	}
+
 	public int[] keypresses(String word) {
 		return word
 				.chars()
@@ -72,7 +88,7 @@ public class T9 {
 		
 		return Seq
 				.iterate(m, Node::getPredecessor)
-				.limitUntil(n -> n == null)
+				.limitUntil(Objects::isNull)
 				.map(Node::getLetter)
 				.reverse()
 				.collect(Collectors.joining());
