@@ -23,8 +23,9 @@ public class T9 {
 	private final static String ARROW = " --> ";
 	private final static int PRECISION = 100000;
 	
-	private Map<String, Long> letterCounts = new HashMap<String, Long>();
-	private Map<String, Long> digaramCounts = new HashMap<String, Long>();
+	private Map<String, Long> emissionProbabilites = new HashMap<>();
+	private Map<String, Long> transitionProbabilities = new HashMap<>();
+	
 	private Map<String, Integer> characterKey = new HashMap<String, Integer>();
 	{
 		Stream.of("a","b","c"    ).forEach(c -> characterKey.put(c, 2));
@@ -47,29 +48,38 @@ public class T9 {
 	}
 
 	public T9(String sampleTextFilename) {
+		Collection<String> tokens = readTokens(sampleTextFilename);
+		
+		Map<String, Long> letterCounts = tokens.stream()
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		
+		Map<String, Long> digaramCounts = Seq.seq(tokens)
+				.duplicate()
+				.map1(s -> Seq.concat(Seq.of(" "),s))
+				.map((l,r) -> Seq.zip(l, r, String::concat))
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		
+		calculateEmissions(letterCounts);
+		calculateTransitions(letterCounts, digaramCounts);
+	}
+	
+	private Collection<String> readTokens(String sampleTextFilename) {
 		InputStream stream = getClass().getResourceAsStream(sampleTextFilename);
 		Collection<String> tokens = null;
 		try(Scanner sc = new Scanner(stream)) {
 			sc.useDelimiter("[0-9]*");
 			tokens = Seq.seq(sc).collect(Collectors.toList());
 		}
-		letterCounts = tokens.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-		digaramCounts = Seq.seq(tokens)
-			.duplicate()
-			.map1(s -> Seq.concat(Seq.of(" "),s))
-			.map((l,r) -> Seq.zip(l, r, String::concat))
-			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-		normalizeTransitions();
-		normalizeEmissions();
+		return tokens;
 	}
 	
-	private void normalizeTransitions() {
+	private void calculateTransitions(Map<String, Long> letterCounts, Map<String, Long> digaramCounts) {
 		digaramCounts.forEach((digram, count) -> {
-			digaramCounts.put(digram, log((double)count/letterCounts.get(digram.substring(0, 1))));
+			transitionProbabilities.put(digram, log((double)count/letterCounts.get(digram.substring(0, 1))));
 		});
 	}
 
-	private void normalizeEmissions() {
+	private void calculateEmissions(Map<String, Long> letterCounts) {
 		Seq.concat(Seq.of(0),IntStream.range(2, 10).boxed())
 		.map(this::lettersFor)
 		.map(s -> s.collect(Collectors.toList()))
@@ -80,7 +90,7 @@ public class T9 {
 				.reduce(Long::sum)
 				.get();
 			letters.stream().forEach((letter) -> {
-				letterCounts.compute(letter, (x, count) -> log((double)count/total));
+				emissionProbabilites.put(letter, log((double)letterCounts.get(letter)/total));
 			});
 		});
 	}
@@ -113,7 +123,7 @@ public class T9 {
 	private Node maxTransition(Collection<Node> prev, String letter) {
 		return Seq
 				.zip(prev.stream(), prev.stream().map(
-					n -> n.getProbability() + digaramCounts.getOrDefault(n.getLetter() + letter, 0L) + letterCounts.get(letter)))
+					n -> n.getProbability() + transitionProbabilities.getOrDefault(n.getLetter() + letter, 0L) + emissionProbabilites.get(letter)))
 				.maxBy(Tuple2::v2).get()
 				.map((predecessor, probability) -> new Node(letter, predecessor, probability));
 	}
