@@ -1,4 +1,4 @@
-package bxt.unilectures.algorithmenfuergeographischeinformationssysteme.t9;
+package bxt.unilectures.algogis.t9;
 
 import java.io.InputStream;
 import java.util.Arrays;
