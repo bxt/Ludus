@@ -31,6 +31,10 @@ public class App {
 		System.out.println(matrixToString(l.getUnknowns()));
 		System.out.println("Corrected measurements:");
 		System.out.println(matrixToString(l.getTrueObservations()));
+		System.out.println("Standard deviation of heights:");
+		System.out.println(IntStream.range(0, m.getPointsSize()-1).mapToObj(i -> ""+Math.sqrt(l.getUnknownVariance().get(i, i))).collect(Collectors.joining("\n")));
+		System.out.println("Standard deviation of measurements:");
+		System.out.println(IntStream.range(0, m.getMeasurementsSize()).mapToObj(i -> ""+Math.sqrt(l.getObservationVariance().get(i, i))).collect(Collectors.joining("\n")));
 	}
 
 	private static Measurements scanMeasurements(Scanner scanner) {
