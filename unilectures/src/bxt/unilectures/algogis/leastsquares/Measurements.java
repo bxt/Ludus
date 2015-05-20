@@ -1,11 +1,11 @@
 package bxt.unilectures.algogis.leastsquares;
 
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Measurements {
 	
-	private Collection<Measurement> measurements = new LinkedList<Measurements.Measurement>();
+	private List<Measurement> measurements = new ArrayList<Measurements.Measurement>();
 	private int pointsSize;
 	
 	public Measurements(int pointsSize) {
@@ -36,7 +36,7 @@ public class Measurements {
 		if(point > pointsSize) throw new IllegalArgumentException("Point number exceeds point count.");
 	}
 	
-	public Collection<Measurement> getMeasurements() {
+	public List<Measurement> getMeasurements() {
 		return measurements;
 	}
 
