@@ -20,17 +20,17 @@ public class App {
 				+ "\n"
 				+ "\n"
 				;
-		Measeurements m = scanMaseurements(new Scanner(input));
+		Measurements m = scanMeasurements(new Scanner(input));
 		
 		System.out.println(m);
 	}
 
-	private static Measeurements scanMaseurements(Scanner scanner) {
+	private static Measurements scanMeasurements(Scanner scanner) {
 		scanner.useLocale(Locale.US);
 		int pointsSize = scanner.nextInt();
 		int maseurementSize = scanner.nextInt();
 		
-		Measeurements maseurements =  new Measeurements(pointsSize);
+		Measurements maseurements =  new Measurements(pointsSize);
 		
 		IntStream.range(0, maseurementSize).forEach(mn -> {
 			int from = scanner.nextInt();
