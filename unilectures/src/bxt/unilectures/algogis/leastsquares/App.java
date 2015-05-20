@@ -3,12 +3,10 @@ package bxt.unilectures.algogis.leastsquares;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import Jama.Matrix;
-import bxt.unilectures.algogis.leastsquares.Measurements.Measurement;
 
 public class App {
 	
@@ -28,11 +26,7 @@ public class App {
 				;
 		Measurements m = scanMeasurements(new Scanner(input));
 		
-		Matrix observations = buildObservations(m);
-		Matrix phi = buildPhi(m);
-		 double[] variance = buildVariance(m);
-		
-		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(observations, phi, variance);
+		LeastSuqaresAdjustment l = m.getLeastSuqaresAdjustment();
 		System.out.println("Least-squares estimates of heights:");
 		System.out.println(matrixToString(l.getUnknowns()));
 		System.out.println("Corrected measurements:");
@@ -55,29 +49,6 @@ public class App {
 		});
 		
 		return maseurements;
-	}
-	
-	private static Matrix buildObservations(Measurements m) {
-		return new Matrix(m.getMeasurements().stream().map(v -> new double[]{v.getValue()}).toArray(size -> new double[size][]));
-	}
-	
-	private static double[] buildVariance(Measurements m) {
-		return m.getMeasurements().stream().mapToDouble(Measurement::getVariance).toArray();
-	}
-	
-	private static Matrix buildPhi(Measurements m) {
-		Matrix result = new Matrix(m.getMeasurementsSize(), m.getPointsSize()-1);
-		buildPhiHelper(result, m, Measurement::getFrom, -1);
-		buildPhiHelper(result, m, Measurement::getTo  ,  1);
-		return result;
-	}
-	
-	private static void buildPhiHelper(Matrix result, Measurements m, ToIntFunction<Measurement> f, double value) {
-		for(int i = 0; i < m.getMeasurementsSize(); i++) {
-			int point = f.applyAsInt(m.getMeasurements().get(i));
-			if(point != 1)
-				result.set(i, point - 2, value);
-		}
 	}
 	
 	private static String matrixToString(Matrix m) {

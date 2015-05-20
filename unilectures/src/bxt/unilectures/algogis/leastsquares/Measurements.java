@@ -2,10 +2,13 @@ package bxt.unilectures.algogis.leastsquares;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToIntFunction;
+
+import Jama.Matrix;
 
 public class Measurements {
 	
-	private List<Measurement> measurements = new ArrayList<Measurements.Measurement>();
+	private List<Measurement> measurements = new ArrayList<Measurement>();
 	private int pointsSize;
 	
 	public Measurements(int pointsSize) {
@@ -23,6 +26,10 @@ public class Measurements {
 		return measurements.add(measurement);
 	}
 
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+	
 	public int getPointsSize() {
 		return pointsSize;
 	}
@@ -31,90 +38,45 @@ public class Measurements {
 		return measurements.size();
 	}
 
+	public LeastSuqaresAdjustment getLeastSuqaresAdjustment() {
+		Matrix observations = buildObservations();
+		Matrix phi = buildPhi();
+		double[] variance = buildVariance();
+		return new LeastSuqaresAdjustment(observations, phi, variance);
+	}
+
+	private Matrix buildObservations() {
+		return new Matrix(getMeasurements().stream().map(v -> new double[]{v.getValue()}).toArray(size -> new double[size][]));
+	}
+	
+	private double[] buildVariance() {
+		return getMeasurements().stream().mapToDouble(Measurement::getVariance).toArray();
+	}
+	
+	private Matrix buildPhi() {
+		Matrix result = new Matrix(getMeasurementsSize(), getPointsSize()-1);
+		setPhiValues(result, Measurement::getFrom, -1);
+		setPhiValues(result, Measurement::getTo  ,  1);
+		return result;
+	}
+	
+	private void setPhiValues(Matrix result, ToIntFunction<Measurement> f, double value) {
+		for(int i = 0; i < getMeasurementsSize(); i++) {
+			int point = f.applyAsInt(getMeasurements().get(i));
+			if(point != 1)
+				result.set(i, point - 2, value);
+		}
+	}
+	
 	private void checkBounds(int point) {
 		if(point < 1) throw new IllegalArgumentException("Point numbers must be postive.");
 		if(point > pointsSize) throw new IllegalArgumentException("Point number exceeds point count.");
 	}
 	
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
 	@Override
 	public String toString() {
 		return "Maseurements [measurements=" + measurements + ", pointsSize="
 				+ pointsSize + "]";
-	}
-
-	public static class Measurement {
-		private int from;
-		private int to;
-		private double value;
-		private double variance;
-		
-		public Measurement(int from, int to, double value, double variance) {
-			if(variance < 0 ) throw new IllegalArgumentException("Variance must be positive.");
-			this.from = from;
-			this.to = to;
-			this.value = value;
-			this.variance = variance;
-		}
-		
-		public int getFrom() {
-			return from;
-		}
-		public int getTo() {
-			return to;
-		}
-		public double getValue() {
-			return value;
-		}
-		public double getVariance() {
-			return variance;
-		}
-		
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + from;
-			result = prime * result + to;
-			long temp;
-			temp = Double.doubleToLongBits(value);
-			result = prime * result + (int) (temp ^ (temp >>> 32));
-			temp = Double.doubleToLongBits(variance);
-			result = prime * result + (int) (temp ^ (temp >>> 32));
-			return result;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Measurement other = (Measurement) obj;
-			if (from != other.from)
-				return false;
-			if (to != other.to)
-				return false;
-			if (Double.doubleToLongBits(value) != Double
-					.doubleToLongBits(other.value))
-				return false;
-			if (Double.doubleToLongBits(variance) != Double
-					.doubleToLongBits(other.variance))
-				return false;
-			return true;
-		}
-		
-		@Override
-		public String toString() {
-			return "Measurement [from=" + from + ", to=" + to + ", value="
-					+ value + ", variance=" + variance + "]";
-		}
-		
 	}
 	
 }
