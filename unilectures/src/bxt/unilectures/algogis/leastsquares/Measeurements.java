@@ -32,7 +32,7 @@ public class Measeurements {
 	}
 
 	private void checkBounds(int point) {
-		if(point < 0) throw new IllegalArgumentException("Point numbers must be postive.");
+		if(point < 1) throw new IllegalArgumentException("Point numbers must be postive.");
 		if(point > pointsSize) throw new IllegalArgumentException("Point number exceeds point count.");
 	}
 	
