@@ -3,12 +3,12 @@ package bxt.unilectures.algogis.leastsquares;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class Maseurements {
+public class Measeurements {
 	
-	private Collection<Measurement> measurements = new LinkedList<Maseurements.Measurement>();
+	private Collection<Measurement> measurements = new LinkedList<Measeurements.Measurement>();
 	private int pointsSize;
 	
-	public Maseurements(int pointsSize) {
+	public Measeurements(int pointsSize) {
 		super();
 		this.pointsSize = pointsSize;
 	}
