@@ -45,13 +45,17 @@ public class LeastSuqaresAdjustmentTest {
 		double[][] a = {{1,0,0},{-1,1,0},{0,-1,1},{0,0,-1},{1,0,-1}};
 		
 		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(column(4.1,-7,1.1,1.2,5.4), new Matrix(a));
+		
 		assertMatrixEquals(column(4.2,-2.6,-1.3), l.getUnknowns());
 		assertMatrixEquals(column(4.2,-6.8,1.3,1.3,5.5), l.getTrueObservations());
 		assertMatrixEquals(column(-0.1,-0.2,-0.2,-0.1,-0.1), l.getError());
+		
 		assertEquals(0.055, l.getVariance(), DELTA);
+		
 		assertEquals(0.0344, l.getUnknownVariance().get(0, 0), 0.0005);
 		assertEquals(0.0344, l.getUnknownVariance().get(2, 2), 0.0005);
 		assertEquals(0.055, l.getUnknownVariance().get(1, 1), 0.0005);
+		
 		IntStream.range(0, 4).forEach(i -> {
 			assertEquals(0.0344, l.getObservationVariance().get(i, i), 0.0005);
 		});
@@ -65,7 +69,9 @@ public class LeastSuqaresAdjustmentTest {
 	}
 	
 	private static Matrix column(double... values) {
-		return new Matrix(Arrays.stream(values).mapToObj(v -> new double[]{v}).toArray(size -> new double[size][]));
+		return new Matrix(Arrays.stream(values)
+				.mapToObj(v -> new double[]{v})
+				.toArray(size -> new double[size][]));
 	}
 	
 }

@@ -27,12 +27,16 @@ public class App {
 		Measurements m = scanMeasurements(new Scanner(input));
 		
 		LeastSuqaresAdjustment l = m.getLeastSuqaresAdjustment();
+		
 		System.out.println("Least-squares estimates of heights:");
 		System.out.println(matrixToString(l.getUnknowns()));
+		
 		System.out.println("Corrected measurements:");
 		System.out.println(matrixToString(l.getTrueObservations()));
+		
 		System.out.println("Standard deviation of heights:");
 		System.out.println(IntStream.range(0, m.getPointsSize()-1).mapToObj(i -> ""+Math.sqrt(l.getUnknownVariance().get(i, i))).collect(Collectors.joining("\n")));
+		
 		System.out.println("Standard deviation of measurements:");
 		System.out.println(IntStream.range(0, m.getMeasurementsSize()).mapToObj(i -> ""+Math.sqrt(l.getObservationVariance().get(i, i))).collect(Collectors.joining("\n")));
 	}
@@ -56,7 +60,11 @@ public class App {
 	}
 	
 	private static String matrixToString(Matrix m) {
-		return Arrays.stream(m.getArray()).map(row -> Arrays.stream(row).mapToObj(v -> ""+v).collect(Collectors.joining(" "))).collect(Collectors.joining("\n"));
+		return Arrays
+				.stream(m.getArray())
+				.map(row -> Arrays.stream(row)
+						.mapToObj(v -> ""+v).collect(Collectors.joining(" ")))
+						.collect(Collectors.joining("\n"));
 	} 
 	
 }

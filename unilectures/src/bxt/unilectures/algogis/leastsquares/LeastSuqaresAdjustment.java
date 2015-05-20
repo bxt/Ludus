@@ -36,7 +36,9 @@ public class LeastSuqaresAdjustment {
 		unknowns = atpa.solve(atpl);
 		trueObservations = phi.times(unknowns);
 		error = observations.minus(trueObservations);
-		variance = error.transpose().times(covariance).times(error).get(0, 0) / (observations.getRowDimension()-unknowns.getRowDimension());
+		
+		variance = error.transpose().times(covariance).times(error).get(0, 0)
+				/ (observations.getRowDimension()-unknowns.getRowDimension());
 		unknownVariance = atpa.inverse().times(variance);
 		observationVariance = phi.times(unknownVariance).times(phi.transpose());
 	}

@@ -46,11 +46,14 @@ public class Measurements {
 	}
 
 	private Matrix buildObservations() {
-		return new Matrix(getMeasurements().stream().map(v -> new double[]{v.getValue()}).toArray(size -> new double[size][]));
+		return new Matrix(getMeasurements().stream()
+				.map(v -> new double[]{v.getValue()})
+				.toArray(size -> new double[size][]));
 	}
 	
 	private double[] buildVariance() {
-		return getMeasurements().stream().mapToDouble(Measurement::getVariance).toArray();
+		return getMeasurements().stream()
+				.mapToDouble(Measurement::getVariance).toArray();
 	}
 	
 	private Matrix buildPhi() {
