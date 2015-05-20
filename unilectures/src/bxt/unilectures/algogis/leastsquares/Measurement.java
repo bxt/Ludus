@@ -1,5 +1,8 @@
 package bxt.unilectures.algogis.leastsquares;
 
+/**
+ * Represents one single measurement.
+ */
 public class Measurement {
 	private int from;
 	private int to;

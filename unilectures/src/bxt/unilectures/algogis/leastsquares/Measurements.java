@@ -6,6 +6,9 @@ import java.util.function.ToIntFunction;
 
 import Jama.Matrix;
 
+/**
+ * Represents a set of measurements of height differences to estimate relative hights of points.
+ */
 public class Measurements {
 	
 	private List<Measurement> measurements = new ArrayList<Measurement>();
@@ -16,6 +19,14 @@ public class Measurements {
 		this.pointsSize = pointsSize;
 	}
 	
+	/**
+	 * Add a height difference measurement between two points.
+	 * @param from Number of the first point of the measurement (1-n)
+	 * @param to Number of the second point of the measurement (1-n)
+	 * @param value Measured height difference.
+	 * @param variance Assumed variance/reliability of this measurement.
+	 * @return <tt>true</tt>
+	 */
 	public boolean addMeasurement(int from, int to, double value, double variance) {
 		return add(new Measurement(from, to, value, variance));
 	}
@@ -37,7 +48,11 @@ public class Measurements {
 	public int getMeasurementsSize() {
 		return measurements.size();
 	}
-
+	
+	/**
+	 * Calculate the least squares adjustment for the measurements.
+	 * @return
+	 */
 	public LeastSuqaresAdjustment getLeastSuqaresAdjustment() {
 		Matrix observations = buildObservations();
 		Matrix phi = buildPhi();
