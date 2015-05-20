@@ -9,6 +9,9 @@ public class LeastSuqaresAdjustment {
 	private Matrix unknowns;
 	private Matrix trueObservations;
 	private Matrix error;
+	private double variance;
+	private Matrix observationVariance;
+	private Matrix unknownVariance;
 	
 	public LeastSuqaresAdjustment(Matrix observations, Matrix phi) {
 		this(observations, phi, Matrix.identity(observations.getRowDimension(), observations.getRowDimension()));
@@ -33,6 +36,9 @@ public class LeastSuqaresAdjustment {
 		unknowns = atpa.solve(atpl);
 		trueObservations = phi.times(unknowns);
 		error = observations.minus(trueObservations);
+		variance = error.transpose().times(covariance).times(error).get(0, 0) / (observations.getRowDimension()-unknowns.getRowDimension());
+		unknownVariance = atpa.inverse().times(variance);
+		observationVariance = phi.times(unknownVariance).times(phi.transpose());
 	}
 
 	public Matrix getUnknowns() {
@@ -47,6 +53,18 @@ public class LeastSuqaresAdjustment {
 		return error;
 	}
 	
+	public double getVariance() {
+		return variance;
+	}
+
+	public Matrix getObservationVariance() {
+		return observationVariance;
+	}
+
+	public Matrix getUnknownVariance() {
+		return unknownVariance;
+	}
+
 	private static Matrix diagonal(double[] covariance) {
 		Matrix result = new Matrix(covariance.length, covariance.length);
 		IntStream.range(0, covariance.length)

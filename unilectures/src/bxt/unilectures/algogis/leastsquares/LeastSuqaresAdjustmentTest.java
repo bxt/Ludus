@@ -3,6 +3,7 @@ package bxt.unilectures.algogis.leastsquares;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 
@@ -36,6 +37,9 @@ public class LeastSuqaresAdjustmentTest {
 		assertMatrixEquals(column(-1,0,1,2,3), l.getError());
 	}
 	
+	/*
+	 * These are the values form the lecture slides "Beispiel 2"
+	 */
 	@Test
 	public void testHeightDifferences() {
 		double[][] a = {{1,0,0},{-1,1,0},{0,-1,1},{0,0,-1},{1,0,-1}};
@@ -44,6 +48,14 @@ public class LeastSuqaresAdjustmentTest {
 		assertMatrixEquals(column(4.2,-2.6,-1.3), l.getUnknowns());
 		assertMatrixEquals(column(4.2,-6.8,1.3,1.3,5.5), l.getTrueObservations());
 		assertMatrixEquals(column(-0.1,-0.2,-0.2,-0.1,-0.1), l.getError());
+		assertEquals(0.055, l.getVariance(), DELTA);
+		assertEquals(0.0344, l.getUnknownVariance().get(0, 0), 0.0005);
+		assertEquals(0.0344, l.getUnknownVariance().get(2, 2), 0.0005);
+		assertEquals(0.055, l.getUnknownVariance().get(1, 1), 0.0005);
+		IntStream.range(0, 4).forEach(i -> {
+			assertEquals(0.0344, l.getObservationVariance().get(i, i), 0.0005);
+		});
+		assertEquals(0.0275, l.getObservationVariance().get(4, 4), 0.0005);
 	}
 	
 	private void assertMatrixEquals(Matrix expected, Matrix actual) {
