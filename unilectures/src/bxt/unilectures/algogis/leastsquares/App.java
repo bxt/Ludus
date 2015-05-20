@@ -25,7 +25,7 @@ public class App {
 				;
 		Measurements m = scanMeasurements(new Scanner(input));
 		
-		LeastSuqaresAdjustment l = m.getLeastSuqaresAdjustment();
+		LeastSquaresAdjustment l = m.getLeastSquaresAdjustment();
 		
 		System.out.println("Least-squares estimates of heights:");
 		System.out.println(matrixToString(l.getUnknowns()));

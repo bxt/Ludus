@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import Jama.Matrix;
 
-public class LeastSuqaresAdjustmentTest {
+public class LeastSquaresAdjustmentTest {
 	
 	private static double DELTA = 0.00001;
 	
 	@Test
 	public void testMinimalExample() {	
-		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(column(1), column(1));
+		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(1), column(1));
 		assertMatrixEquals(column(1), l.getUnknowns());
 		assertMatrixEquals(column(1), l.getTrueObservations());
 		assertMatrixEquals(column(0), l.getError());
@@ -23,7 +23,7 @@ public class LeastSuqaresAdjustmentTest {
 	
 	@Test
 	public void testSingleDistance() {
-		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(column(1,2,3,4,5), column(1,1,1,1,1));
+		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(1,2,3,4,5), column(1,1,1,1,1));
 		assertMatrixEquals(column(3), l.getUnknowns());
 		assertMatrixEquals(column(3,3,3,3,3), l.getTrueObservations());
 		assertMatrixEquals(column(-2,-1,0,1,2), l.getError());
@@ -31,7 +31,7 @@ public class LeastSuqaresAdjustmentTest {
 	
 	@Test
 	public void testSingleDistanceWithCovariance() {
-		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(column(1,2,3,4,5), column(1,1,1,1,1), new double[]{6,1,1,1,1});
+		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(1,2,3,4,5), column(1,1,1,1,1), new double[]{6,1,1,1,1});
 		assertMatrixEquals(column(2), l.getUnknowns());
 		assertMatrixEquals(column(2,2,2,2,2), l.getTrueObservations());
 		assertMatrixEquals(column(-1,0,1,2,3), l.getError());
@@ -44,7 +44,7 @@ public class LeastSuqaresAdjustmentTest {
 	public void testHeightDifferences() {
 		double[][] a = {{1,0,0},{-1,1,0},{0,-1,1},{0,0,-1},{1,0,-1}};
 		
-		LeastSuqaresAdjustment l = new LeastSuqaresAdjustment(column(4.1,-7,1.1,1.2,5.4), new Matrix(a));
+		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(4.1,-7,1.1,1.2,5.4), new Matrix(a));
 		
 		assertMatrixEquals(column(4.2,-2.6,-1.3), l.getUnknowns());
 		assertMatrixEquals(column(4.2,-6.8,1.3,1.3,5.5), l.getTrueObservations());

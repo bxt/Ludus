@@ -53,11 +53,11 @@ public class Measurements {
 	 * Calculate the least squares adjustment for the measurements.
 	 * @return
 	 */
-	public LeastSuqaresAdjustment getLeastSuqaresAdjustment() {
+	public LeastSquaresAdjustment getLeastSquaresAdjustment() {
 		Matrix observations = buildObservations();
 		Matrix phi = buildPhi();
 		double[] variance = buildVariance();
-		return new LeastSuqaresAdjustment(observations, phi, variance);
+		return new LeastSquaresAdjustment(observations, phi, variance);
 	}
 
 	private Matrix buildObservations() {

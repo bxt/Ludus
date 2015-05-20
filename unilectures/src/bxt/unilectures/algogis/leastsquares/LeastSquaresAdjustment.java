@@ -8,7 +8,7 @@ import Jama.Matrix;
  * Performs Least Squares Adjustments which allow to estimate a set of unknowns
  * from a set of observations and a function mapping from observations to unknowns.
  */
-public class LeastSuqaresAdjustment {
+public class LeastSquaresAdjustment {
 	
 	private Matrix unknowns;
 	private Matrix trueObservations;
@@ -23,7 +23,7 @@ public class LeastSuqaresAdjustment {
 	 * @param observations
 	 * @param phi
 	 */
-	public LeastSuqaresAdjustment(Matrix observations, Matrix phi) {
+	public LeastSquaresAdjustment(Matrix observations, Matrix phi) {
 		this(observations, phi, Matrix.identity(observations.getRowDimension(), observations.getRowDimension()));
 	}
 	
@@ -33,7 +33,7 @@ public class LeastSuqaresAdjustment {
 	 * @param phi Linear mapping from observations to measurements
 	 * @param covariance List containing variance/reliability values for observations
 	 */
-	public LeastSuqaresAdjustment(Matrix observations, Matrix phi, double[] covariance) {
+	public LeastSquaresAdjustment(Matrix observations, Matrix phi, double[] covariance) {
 		this(observations, phi, diagonal(covariance));
 	}
 	
@@ -43,7 +43,7 @@ public class LeastSuqaresAdjustment {
 	 * @param phi Linear mapping from observations/measurements to unknowns/estimations.
 	 * @param covariance Diagonal matrix containing variance/reliability values for observations
 	 */
-	public LeastSuqaresAdjustment(Matrix observations, Matrix phi, Matrix covariance) {
+	public LeastSquaresAdjustment(Matrix observations, Matrix phi, Matrix covariance) {
 		if(phi.getRowDimension() != observations.getRowDimension())
 			throw new IllegalArgumentException("Observartion and Phi dimenstions must agree!");
 		if(covariance.getRowDimension() != covariance.getColumnDimension())
