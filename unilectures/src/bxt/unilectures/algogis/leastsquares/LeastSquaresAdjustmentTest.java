@@ -11,7 +11,7 @@ import Jama.Matrix;
 
 public class LeastSquaresAdjustmentTest {
 	
-	private static double DELTA = 0.00001;
+	private static final double DELTA = 0.00001;
 	
 	@Test
 	public void testMinimalExample() {	

@@ -10,9 +10,9 @@ import Jama.Matrix;
 
 public class App {
 	
-	private static boolean USE_STDIN = false;
+	private static final boolean USE_STDIN = false;
 	
-	private static String EXAMPLE_INPUT = ""
+	private static final String EXAMPLE_INPUT = ""
 			+ "4\n"
 			+ "5\n"
 			+ "1 2 4.1 1\n"
