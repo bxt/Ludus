@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import Jama.Matrix;
 
@@ -27,17 +28,19 @@ public class App {
 		
 		LeastSquaresAdjustment l = m.getLeastSquaresAdjustment();
 		
-		System.out.println("Least-squares estimates of heights:");
-		System.out.println(matrixToString(l.getUnknowns()));
-		
-		System.out.println("Corrected measurements:");
-		System.out.println(matrixToString(l.getTrueObservations()));
-		
-		System.out.println("Standard deviation of heights:");
-		System.out.println(IntStream.range(0, m.getPointsSize()-1).mapToObj(i -> ""+Math.sqrt(l.getUnknownVariance().get(i, i))).collect(Collectors.joining("\n")));
-		
-		System.out.println("Standard deviation of measurements:");
-		System.out.println(IntStream.range(0, m.getMeasurementsSize()).mapToObj(i -> ""+Math.sqrt(l.getObservationVariance().get(i, i))).collect(Collectors.joining("\n")));
+		Stream.of( "Least-squares estimates of heights:"
+		         , matrixToString(l.getUnknowns())
+		         
+		         , "Corrected measurements:"
+		         , matrixToString(l.getTrueObservations())
+		         
+		         , "Standard deviation of heights:"
+		         , IntStream.range(0, m.getPointsSize()-1).mapToObj(i -> ""+Math.sqrt(l.getUnknownVariance().get(i, i))).collect(Collectors.joining("\n"))
+		         
+		         , "Standard deviation of measurements:"
+		         , IntStream.range(0, m.getMeasurementsSize()).mapToObj(i -> ""+Math.sqrt(l.getObservationVariance().get(i, i))).collect(Collectors.joining("\n"))
+		         
+		         ).forEachOrdered(System.out::println);
 	}
 
 	private static Measurements scanMeasurements(Scanner scanner) {
@@ -61,9 +64,10 @@ public class App {
 	private static String matrixToString(Matrix m) {
 		return Arrays
 				.stream(m.getArray())
-				.map(row -> Arrays.stream(row)
+				.map(row -> Arrays
+						.stream(row)
 						.mapToObj(v -> ""+v).collect(Collectors.joining(" ")))
-						.collect(Collectors.joining("\n"));
+				.collect(Collectors.joining("\n"));
 	} 
 	
 }
