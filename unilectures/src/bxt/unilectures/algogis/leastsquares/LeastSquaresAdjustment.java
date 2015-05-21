@@ -61,7 +61,7 @@ public class LeastSquaresAdjustment {
 		error = observations.minus(trueObservations); // v = L-L̂
 		
 		variance = error.transpose().times(covariance).times(error).get(0, 0) // σ₀² = vᵀPv /
-				/ (observations.getRowDimension()-unknowns.getRowDimension()); //      n-u
+		         / (observations.getRowDimension()-unknowns.getRowDimension()); //      n-u
 		unknownVariance = atpa.inverse().times(variance); // Σxx = (AᵀPA)⁻¹ * σ₀²
 		observationVariance = phi.times(unknownVariance).times(at); // Σll = AΣxxAᵀ
 	}

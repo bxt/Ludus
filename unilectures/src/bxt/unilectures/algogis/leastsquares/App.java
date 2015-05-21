@@ -3,6 +3,7 @@ package bxt.unilectures.algogis.leastsquares;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -28,6 +29,12 @@ public class App {
 		
 		LeastSquaresAdjustment l = m.getLeastSquaresAdjustment();
 		
+		BiFunction<Integer, Matrix, String> printSqrtDiagonal = (n, x) ->
+			IntStream.range(0, n)
+				.mapToObj(i -> x.get(i, i))
+				.map(v -> Double.toString(Math.sqrt(v)))
+				.collect(Collectors.joining("\n"));
+		
 		Stream.of( "Least-squares estimates of heights:"
 		         , matrixToString(l.getUnknowns())
 		         
@@ -35,10 +42,10 @@ public class App {
 		         , matrixToString(l.getTrueObservations())
 		         
 		         , "Standard deviation of heights:"
-		         , IntStream.range(0, m.getPointsSize()-1).mapToObj(i -> ""+Math.sqrt(l.getUnknownVariance().get(i, i))).collect(Collectors.joining("\n"))
+		         , printSqrtDiagonal.apply(m.getPointsSize()-1, l.getUnknownVariance())
 		         
 		         , "Standard deviation of measurements:"
-		         , IntStream.range(0, m.getMeasurementsSize()).mapToObj(i -> ""+Math.sqrt(l.getObservationVariance().get(i, i))).collect(Collectors.joining("\n"))
+		         , printSqrtDiagonal.apply(m.getMeasurementsSize(), l.getObservationVariance())
 		         
 		         ).forEachOrdered(System.out::println);
 	}
@@ -66,7 +73,8 @@ public class App {
 				.stream(m.getArray())
 				.map(row -> Arrays
 						.stream(row)
-						.mapToObj(v -> ""+v).collect(Collectors.joining(" ")))
+						.mapToObj(Double::toString)
+						.collect(Collectors.joining(" ")))
 				.collect(Collectors.joining("\n"));
 	} 
 	
