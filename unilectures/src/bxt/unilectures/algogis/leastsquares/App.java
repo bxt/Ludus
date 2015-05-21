@@ -15,7 +15,7 @@ public class App {
 	public static void main(String[] args) {
 		String input = ""
 				+ "4\n"
-				+ "5\n" // + "6\n" // probably wrong in assignment
+				+ "5\n"
 				+ "1 2 4.1 1\n"
 				+ "2 3 -7 1\n"
 				+ "3 4 1.1 1\n"
