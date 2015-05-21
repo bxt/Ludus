@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import Jama.Matrix;
 
 /**
- * Performs Least Squares Adjustments which allow to estimate a set of unknowns
+ * Performs Least Squares Adjustments which allows to estimate a set of unknowns
  * from a set of observations and a function mapping from observations to unknowns.
  */
 public class LeastSquaresAdjustment {
@@ -20,8 +20,8 @@ public class LeastSquaresAdjustment {
 	/**
 	 * Calculate a least square adjustment for the given values.
 	 * The variance/reliability values are assumed to be all 1.
-	 * @param observations
-	 * @param phi
+	 * @param observations Column vector of observations, aka L
+	 * @param phi Linear mapping from unknowns/estimations to observations/measurements, aka A
 	 */
 	public LeastSquaresAdjustment(Matrix observations, Matrix phi) {
 		this(observations, phi, Matrix.identity(observations.getRowDimension(), observations.getRowDimension()));
@@ -29,8 +29,8 @@ public class LeastSquaresAdjustment {
 	
 	/**
 	 * Calculate a least square adjustment for the given values.
-	 * @param observations Column vector of observations
-	 * @param phi Linear mapping from observations to measurements
+	 * @param observations Column vector of observations, aka L
+	 * @param phi Linear mapping from unknowns/estimations to observations/measurements, aka A
 	 * @param covariance List containing variance/reliability values for observations
 	 */
 	public LeastSquaresAdjustment(Matrix observations, Matrix phi, double[] covariance) {
@@ -39,9 +39,9 @@ public class LeastSquaresAdjustment {
 	
 	/**
 	 * Calculate a least square adjustment for the given values.
-	 * @param observations Column vector of observations
-	 * @param phi Linear mapping from observations/measurements to unknowns/estimations.
-	 * @param covariance Diagonal matrix containing variance/reliability values for observations
+	 * @param observations Column vector of observations, aka L
+	 * @param phi Linear mapping from unknowns/estimations to observations/measurements, aka A
+	 * @param covariance Diagonal matrix containing variance/reliability values for observations, aka P
 	 */
 	public LeastSquaresAdjustment(Matrix observations, Matrix phi, Matrix covariance) {
 		if(phi.getRowDimension() != observations.getRowDimension())
@@ -51,18 +51,19 @@ public class LeastSquaresAdjustment {
 		if(covariance.getRowDimension() != observations.getRowDimension())
 			throw new IllegalArgumentException("Observartion and covatiance dimenstions must agree!");
 		
-		Matrix atp = phi.transpose().times(covariance);
-		Matrix atpa = atp.times(phi);
-		Matrix atpl = atp.times(observations);
+		Matrix at = phi.transpose(); // Aᵀ
+		Matrix atp = at.times(covariance); // AᵀP
+		Matrix atpa = atp.times(phi); // AᵀPA
+		Matrix atpl = atp.times(observations); // AᵀPL
 		
-		unknowns = atpa.solve(atpl);
-		trueObservations = phi.times(unknowns);
-		error = observations.minus(trueObservations);
+		unknowns = atpa.solve(atpl); // Solve AᵀPA X = AᵀPL for X
+		trueObservations = phi.times(unknowns); // L̂ = AX
+		error = observations.minus(trueObservations); // v = L-L̂
 		
-		variance = error.transpose().times(covariance).times(error).get(0, 0)
-				/ (observations.getRowDimension()-unknowns.getRowDimension());
-		unknownVariance = atpa.inverse().times(variance);
-		observationVariance = phi.times(unknownVariance).times(phi.transpose());
+		variance = error.transpose().times(covariance).times(error).get(0, 0) // σ₀² = vᵀPv /
+				/ (observations.getRowDimension()-unknowns.getRowDimension()); //      n-u
+		unknownVariance = atpa.inverse().times(variance); // Σxx = (AᵀPA)⁻¹ * σ₀²
+		observationVariance = phi.times(unknownVariance).times(at); // Σll = AΣxxAᵀ
 	}
 	
 	/**
