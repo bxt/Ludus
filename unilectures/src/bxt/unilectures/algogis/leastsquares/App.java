@@ -1,6 +1,5 @@
 package bxt.unilectures.algogis.leastsquares;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.function.BiFunction;
@@ -36,10 +35,10 @@ public class App {
 				.collect(Collectors.joining("\n"));
 		
 		Stream.of( "Least-squares estimates of heights:"
-		         , matrixToString(l.getUnknowns())
+		         , Util.matrixToString(l.getUnknowns())
 		         
 		         , "Corrected measurements:"
-		         , matrixToString(l.getTrueObservations())
+		         , Util.matrixToString(l.getTrueObservations())
 		         
 		         , "Standard deviation of heights:"
 		         , printSqrtDiagonal.apply(m.getPointsSize()-1, l.getUnknownVariance())
@@ -67,15 +66,5 @@ public class App {
 		
 		return maseurements;
 	}
-	
-	private static String matrixToString(Matrix m) {
-		return Arrays
-				.stream(m.getArray())
-				.map(row -> Arrays
-						.stream(row)
-						.mapToObj(Double::toString)
-						.collect(Collectors.joining(" ")))
-				.collect(Collectors.joining("\n"));
-	} 
 	
 }
