@@ -9,12 +9,14 @@ public class Experiments {
 	
 	private static final DecimalFormat DF = new DecimalFormat("0.0000");
 	
+	private enum RandomMode {UNIFORM, BIASED, EVEN};
+	
 	public static void main(String[] args) {
-		int pointsSize = 5;
-		int measurementsSize = 20;
-		double standardDeviation = 3;
+		int pointsSize = 15;
+		int measurementsSize = 2000;
+		double standardDeviation = 30;
 		boolean hintVariance = true;
-		boolean randomPoints = true;
+		RandomMode randomMode = RandomMode.BIASED;
 
 		Random random = new Random();
 		
@@ -28,10 +30,17 @@ public class Experiments {
 		Measurements measurements = new Measurements(pointsSize);
 		IntStream.range(0, measurementsSize).forEach(i -> {
 			int from, to;
-			if (randomPoints) {
+			switch(randomMode) {	
+			case UNIFORM:
 				from = random.nextInt(pointsSize);
 				do to = random.nextInt(pointsSize); while (to == from);
-			} else {
+				break;
+			case BIASED:
+				from = Math.min(pointsSize-1, Math.abs((int)(random.nextGaussian()*4)));
+				do to = Math.min(pointsSize-1, Math.abs((int)(random.nextGaussian()*4))); while (to == from);
+				//System.out.println(String.format("%d:%d", from, to));
+				break;
+			case EVEN:
 				// TODO: find a formula for this calculation
 				int x = i % ((pointsSize*(pointsSize-1))/2);
 				from = 0;
@@ -40,6 +49,9 @@ public class Experiments {
 					x -= k;
 				}
 				to = 1 + from + x;
+				break;
+			default:
+				throw new IllegalStateException();
 			}
 			
 			double value = pointHeights[to] - pointHeights[from] + noise[i]; 
