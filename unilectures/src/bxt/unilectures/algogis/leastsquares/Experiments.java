@@ -29,7 +29,7 @@ public class Experiments {
 			int to;
 			do to = random.nextInt(pointsSize); while (to == from);
 			double value = pointHeights[to] - pointHeights[from] + noise[i]; 
-			double variance = hintVariance ? Math.abs(noise[i]) : 1;
+			double variance = hintVariance ? 1/(noise[i]*noise[i]) : 1;
 			measurements.addMeasurement(from + 1, to + 1, value, variance);
 		});
 		
