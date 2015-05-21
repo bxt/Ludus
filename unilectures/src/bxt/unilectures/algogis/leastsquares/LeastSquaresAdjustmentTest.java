@@ -30,6 +30,14 @@ public class LeastSquaresAdjustmentTest {
 	}
 	
 	@Test
+	public void testSingleDistanceWithFactors() {
+		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(2,4,6,8,10), column(1,2,3,4,5));
+		assertMatrixEquals(column(2), l.getUnknowns());
+		assertMatrixEquals(column(2,4,6,8,10), l.getTrueObservations());
+		assertMatrixEquals(column(0,0,0,0,0), l.getError());
+	}
+	
+	@Test
 	public void testSingleDistanceWithCovariance() {
 		LeastSquaresAdjustment l = new LeastSquaresAdjustment(column(1,2,3,4,5), column(1,1,1,1,1), new double[]{6,1,1,1,1});
 		assertMatrixEquals(column(2), l.getUnknowns());
