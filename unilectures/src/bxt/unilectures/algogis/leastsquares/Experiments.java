@@ -14,6 +14,7 @@ public class Experiments {
 		int measurementsSize = 20;
 		double standardDeviation = 3;
 		boolean hintVariance = true;
+		boolean randomPoints = true;
 
 		Random random = new Random();
 		
@@ -22,12 +23,25 @@ public class Experiments {
 		System.out.println("Acutal heights:");
 		System.out.println(Arrays.toString(pointHeights));
 		
-		Measurements measurements = new Measurements(pointsSize);
 		double[] noise = IntStream.range(0, measurementsSize).mapToDouble(i -> random.nextGaussian()*standardDeviation).toArray();
+		
+		Measurements measurements = new Measurements(pointsSize);
 		IntStream.range(0, measurementsSize).forEach(i -> {
-			int from = random.nextInt(pointsSize);
-			int to;
-			do to = random.nextInt(pointsSize); while (to == from);
+			int from, to;
+			if (randomPoints) {
+				from = random.nextInt(pointsSize);
+				do to = random.nextInt(pointsSize); while (to == from);
+			} else {
+				// TODO: find a formula for this calculation
+				int x = i % ((pointsSize*(pointsSize-1))/2);
+				from = 0;
+				for (int k = pointsSize-1; x >= k; k--) {
+					from++;
+					x -= k;
+				}
+				to = 1 + from + x;
+			}
+			
 			double value = pointHeights[to] - pointHeights[from] + noise[i]; 
 			double variance = hintVariance ? 1/(noise[i]*noise[i]) : 1;
 			measurements.addMeasurement(from + 1, to + 1, value, variance);
