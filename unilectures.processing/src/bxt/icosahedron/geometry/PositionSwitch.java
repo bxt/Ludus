@@ -1,6 +1,6 @@
 package bxt.icosahedron.geometry;
 
-import bxt.icosahedron.processing.Drawable;
+import bxt.util.Drawable;
 import processing.core.PVector;
 
 /**

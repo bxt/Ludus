@@ -1,4 +1,4 @@
-package bxt.icosahedron.processing;
+package bxt.util;
 
 /**
  * Should be redrawn in Processing's render loop. 

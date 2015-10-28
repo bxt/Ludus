@@ -4,6 +4,7 @@ package bxt.icosahedron.processing;
 import bxt.icosahedron.geometry.Icosahedron;
 import bxt.icosahedron.geometry.PositionSwitch;
 import bxt.icosahedron.geometry.Vertex;
+import bxt.util.Drawable;
 import processing.core.PApplet;
 import processing.core.PVector;
 

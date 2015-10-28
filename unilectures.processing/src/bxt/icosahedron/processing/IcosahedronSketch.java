@@ -1,5 +1,6 @@
 package bxt.icosahedron.processing;
 import bxt.icosahedron.geometry.PositionSwitch;
+import bxt.util.Drawable;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -29,7 +30,7 @@ public class IcosahedronSketch extends PApplet {
 	public void settings() {
 		size(1280, 800, P3D);
 		pixelDensity(2);
-		smooth(2);
+		smooth(4);
 	}
 	
 	public void setup() {
