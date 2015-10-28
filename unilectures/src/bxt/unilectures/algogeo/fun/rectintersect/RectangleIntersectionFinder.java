@@ -35,9 +35,16 @@ public class RectangleIntersectionFinder {
 		for (Event e : events) {
 			Rectangle2D r = e.getRectangle();
 			if (e.getMark() == Mark.START) {
-				if(startsBeforeEndY(r, scanline.floor(r))
-						|| startsBeforeEndY(scanline.ceiling(r), r)) {
+				Rectangle2D prev = scanline.floor(r);
+				Rectangle2D next = scanline.ceiling(r);
+				
+				if(startsBeforeEndY(r, prev)) {
 					intersecting.add(r);
+					intersecting.add(prev);
+				}
+				if(startsBeforeEndY(next, r)) {
+					intersecting.add(r);
+					intersecting.add(next);
 				}
 				
 				scanline.add(r);
