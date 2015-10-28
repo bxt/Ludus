@@ -32,6 +32,7 @@ public class GrowingRectangle implements Drawable {
 	}
 	
 	public Rectangle2D getSpace() {
+		//return base;
 		return new Rectangle2D.Double(base.getX()-PADDING, base.getY()-PADDING, base.getWidth()+2*PADDING, base.getHeight()+2*PADDING);
 	}
 	

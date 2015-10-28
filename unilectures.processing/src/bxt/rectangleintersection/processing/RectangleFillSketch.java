@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import bxt.unilectures.algogeo.fun.rectintersect.RectangleIntersectionFinder;
 import processing.core.PApplet;
+import processing.event.KeyEvent;
 
 public class RectangleFillSketch extends PApplet {
 	
@@ -20,7 +21,7 @@ public class RectangleFillSketch extends PApplet {
 	}
 	
 	public void settings() {
-		size(700, 400);
+		size(1000, 600);
 		pixelDensity(2);
 	}
 	
@@ -66,6 +67,13 @@ public class RectangleFillSketch extends PApplet {
 			}
 		}
 	}
-
+	
+	@Override
+	public void keyPressed(KeyEvent event) {
+		if (event.getKey() == 'S') {
+			save("jau2.png");
+			System.out.println("Saved.");
+		}
+	}
 
 }
