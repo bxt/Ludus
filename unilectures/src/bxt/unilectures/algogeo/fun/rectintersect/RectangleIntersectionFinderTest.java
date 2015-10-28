@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
 import org.junit.Test;
 
 public class RectangleIntersectionFinderTest {
@@ -95,22 +92,6 @@ public class RectangleIntersectionFinderTest {
 				new Rectangle2D.Double(30, 30, 5, 7),
 				new Rectangle2D.Double(40, 30, 5, 7),
 				new Rectangle2D.Double(12, 23, 15, 15))));
-	}
-
-	@Test
-	public void testFindIntersectingRectangles() {
-		List<Rectangle2D> rects = Arrays.asList(
-				new Rectangle2D.Double(10, 10,  5,  7),
-				new Rectangle2D.Double(20, 20, 40, 40),
-				new Rectangle2D.Double(40, 40, 20, 10),
-				new Rectangle2D.Double(30, 25, 10, 10));
-		
-		Set<Rectangle2D> intersecting = RectangleIntersectionFinder.findIntersectingRectangles(rects);
-		
-		assertFalse(intersecting.contains(rects.get(0)));
-		assertTrue(intersecting.contains(rects.get(1)));
-		assertTrue(intersecting.contains(rects.get(2)));
-		assertTrue(intersecting.contains(rects.get(3)));
 	}
 
 }
