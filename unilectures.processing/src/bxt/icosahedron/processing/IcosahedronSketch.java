@@ -8,8 +8,6 @@ import processing.core.PFont;
  */
 public class IcosahedronSketch extends PApplet {
 
-	private static final long serialVersionUID = 1L;
-	
 	private PFont font;
 	
 	private Drawable[] drawables;
