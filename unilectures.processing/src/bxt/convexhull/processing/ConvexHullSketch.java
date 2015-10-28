@@ -12,8 +12,6 @@ import bxt.unilectures.algogeo.fun.convexhull.StableConvexHullBuilder;
 
 public class ConvexHullSketch extends PApplet {
 
-	private static final long serialVersionUID = 1L;
-	
 	private List<Point2D> points = new LinkedList<Point2D>();
 	
 	private ConvexHullBuilder[] cbhs = new ConvexHullBuilder[]{
@@ -30,9 +28,12 @@ public class ConvexHullSketch extends PApplet {
 	public static void main(String args[]) {
 		PApplet.main(new String[]{ConvexHullSketch.class.getCanonicalName()});
 	}
+	
+	public void settings() {
+	  size(700, 400);
+	}
+	
 	public void setup() {
-		size(700, 400);
-		
 		randomPoints(80000);
 	}
 	

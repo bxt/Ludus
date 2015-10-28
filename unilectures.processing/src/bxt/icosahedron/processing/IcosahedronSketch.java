@@ -28,9 +28,14 @@ public class IcosahedronSketch extends PApplet {
 				"--present",IcosahedronSketch.class.getCanonicalName()});
 	}
 	
+	public void settings() {
+		size(1280, 800, P3D);
+		pixelDensity(2);
+		smooth(2);
+	}
+	
 	public void setup() {
 		
-		size(1920, 1200, P3D);
 		hint(DISABLE_DEPTH_TEST); // make transparency kinda work
 		//frameRate(100);
 		
