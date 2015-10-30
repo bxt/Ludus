@@ -9,5 +9,8 @@
 	<classpathentry kind="lib" path="/Applications/Processing.app/Contents/Java/core/library/jogl-all.jar"/>
 	<classpathentry kind="lib" path="/Applications/Processing.app/Contents/Java/core/library/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="/Applications/Processing.app/Contents/Java/core/library/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="/Users/bernhardhaussner/Documents/Processing/libraries/video/library/gstreamer-java.jar"/>
+	<classpathentry kind="lib" path="/Users/bernhardhaussner/Documents/Processing/libraries/video/library/jna.jar"/>
+	<classpathentry kind="lib" path="/Users/bernhardhaussner/Documents/Processing/libraries/video/library/video.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

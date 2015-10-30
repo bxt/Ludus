@@ -11,6 +11,7 @@ import bxt.toprightregion.processing.artistic.ColorProvider;
 import bxt.toprightregion.processing.artistic.ColorScheme;
 import bxt.toprightregion.processing.artistic.ColorSchemeProvider;
 import bxt.unilectures.algogeo.fun.lagresttopright.TopRightRegionFinder;
+import bxt.util.Drawable;
 import bxt.util.FpsPrinter;
 import bxt.util.GeomDrawer;
 import processing.core.PApplet;
@@ -50,6 +51,8 @@ public class TopRightRegionSketchArtistic extends PApplet {
 	}
 	
 	public void draw() {
+		if (c instanceof Drawable) ((Drawable) c).draw();
+		
 		if (add) {
 			randomPoints(BATCH_SIZE);
 			add = points.size() < UPPER_LIMIT;
