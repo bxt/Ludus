@@ -9,9 +9,12 @@ import bxt.unilectures.algogeo.fun.convexhull.ConvexHullBuilder;
 import bxt.unilectures.algogeo.fun.convexhull.FirstConvexHullBuilder;
 import bxt.unilectures.algogeo.fun.convexhull.GiftWrapppingConvexHullBuilder;
 import bxt.unilectures.algogeo.fun.convexhull.StableConvexHullBuilder;
+import bxt.util.GeomDrawer;
 
 public class ConvexHullSketch extends PApplet {
-
+	
+	private GeomDrawer d = new GeomDrawer(this);
+	
 	private List<Point2D> points = new LinkedList<Point2D>();
 	
 	private ConvexHullBuilder[] cbhs = new ConvexHullBuilder[]{
@@ -43,14 +46,14 @@ public class ConvexHullSketch extends PApplet {
 		stroke(color(0,0,255));
 		List<Point2D> complexHull = cbhs[2].build(points);
 		for (int i = 1; i < complexHull.size(); i++) {
-			line(complexHull.get(i-1), complexHull.get(i));
+			d.draw(complexHull.get(i-1), complexHull.get(i));
 		}
 		if(complexHull.size() >= 2)
-			line(complexHull.get(complexHull.size()-1), complexHull.get(0));
+			d.draw(complexHull.get(complexHull.size()-1), complexHull.get(0));
 		
 		stroke(255);
 		for(Point2D point : points) {
-			point((float)point.getX(), (float)point.getY());
+			d.draw(point);
 		}
 		
 	}
@@ -64,10 +67,6 @@ public class ConvexHullSketch extends PApplet {
 		//System.out.println(points);
 	}
 	
-	private void line(Point2D a, Point2D b) {
-		line((float)a.getX(), (float)a.getY(), (float)b.getX(), (float)b.getY());
-	}
-
 	private void randomPoints(int count) {
 		for (int i = 0; i < count; i++) {
 			points.add(new Point2D.Double(Math.random()*width, Math.random()*height));

@@ -3,6 +3,7 @@ package bxt.rectangleintersection.processing;
 import java.awt.geom.Rectangle2D;
 
 import bxt.util.Drawable;
+import bxt.util.GeomDrawer;
 import processing.core.PApplet;
 
 public class GrowingRectangle implements Drawable {
@@ -28,7 +29,8 @@ public class GrowingRectangle implements Drawable {
 
 	@Override
 	public void draw() {
-		rect(base);
+		p.fill(color);
+		new GeomDrawer(p).draw(base, PADDING*2);
 	}
 	
 	public Rectangle2D getSpace() {
@@ -54,8 +56,4 @@ public class GrowingRectangle implements Drawable {
 		return new Rectangle2D.Double(base.getX()-growX, base.getY()-growY, base.getWidth()+2*growX, base.getHeight()+2*growY);
 	}
 	
-	private void rect(Rectangle2D rect) {
-		p.fill(color);
-		p.rect((float)rect.getX(), (float)rect.getY(), (float)rect.getWidth(), (float)rect.getHeight(), PADDING*2);
-	}
 }
