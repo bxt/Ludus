@@ -1,8 +1,12 @@
 package bxt.unilectures.algogeo.fun.rectintersect;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Comparator;
 
 public class Event implements Comparable<Event>{
+	
+	private static final Comparator<Event> NATURAL_COMPARATOR =
+			Comparator.comparingDouble(Event::getPosition).thenComparing(Event::getMark);
 	
 	private Rectangle2D rectangle;
 	private Mark mark;
@@ -32,12 +36,7 @@ public class Event implements Comparable<Event>{
 
 	@Override
 	public int compareTo(Event o) {
-		int positionComparison = Double.compare(getPosition(), o.getPosition());
-		if(positionComparison == 0) {
-			return getMark().compareTo(o.getMark());
-		} else {
-			return positionComparison;
-		}
+		return NATURAL_COMPARATOR.compare(this, o);
 	}
 	
 }
