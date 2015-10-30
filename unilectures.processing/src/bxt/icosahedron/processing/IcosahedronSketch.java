@@ -1,6 +1,7 @@
 package bxt.icosahedron.processing;
 import bxt.icosahedron.geometry.PositionSwitch;
 import bxt.util.Drawable;
+import bxt.util.FpsPrinter;
 import processing.core.PApplet;
 import processing.core.PFont;
 

@@ -1,9 +1,8 @@
-package bxt.icosahedron.processing;
+package bxt.util;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import bxt.util.Drawable;
 import processing.core.PApplet;
 
 /**

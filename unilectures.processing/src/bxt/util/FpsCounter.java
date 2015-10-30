@@ -1,4 +1,4 @@
-package bxt.icosahedron.processing;
+package bxt.util;
 
 /**
  * FPS calculation. 

@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import bxt.icosahedron.processing.FpsPrinter;
 import bxt.unilectures.algogeo.fun.lagresttopright.TopRightRegionFinder;
+import bxt.util.FpsPrinter;
 import bxt.util.GeomDrawer;
 import processing.core.PApplet;
 
