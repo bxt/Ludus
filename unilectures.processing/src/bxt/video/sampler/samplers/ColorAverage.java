@@ -3,7 +3,7 @@ package bxt.video.sampler.samplers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColorAverage {
+class ColorAverage {
 	
 	private List<Integer> colors = new ArrayList<>();
 	

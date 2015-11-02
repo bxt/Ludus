@@ -16,8 +16,8 @@ import processing.video.Capture;
 
 public class SamplerSketch extends PApplet {
 	
-	FpsPrinter f = new FpsPrinter(this);
-	Capture cam;
+	private FpsPrinter f = new FpsPrinter(this);
+	private Capture cam;
 	
 	/**
 	 * Main-method for direct invocation, dispatches to 
@@ -55,19 +55,19 @@ public class SamplerSketch extends PApplet {
 	
 	private SampleDrawer circlesSampleDrawer() {
 		Sampler s = new FlatSampler(10, cam);
-		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilter.NONE, new ExtractHsColorFilter());
+		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilters.NONE, new ExtractHsColorFilter());
 	}
 
 	@SuppressWarnings("unused")
 	private SampleDrawer boxySampleDrawer() {
 		Sampler s = new SelectiveAverageSampler(20, cam, 10);
-		return new RectSampleDrawer(this, s, 0, 40, ColorFilter.INVERT);
+		return new RectSampleDrawer(this, s, 0, 40, ColorFilters.INVERT);
 	}
 
 	@SuppressWarnings("unused")
 	private SampleDrawer bwCirclesSampleDrawer() {
 		Sampler s = new FlatSampler(5, cam);
-		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilter.NONE, (c) -> 0xffffffff);
+		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilters.NONE, (c) -> 0xffffffff);
 	}
 
 	@Override
