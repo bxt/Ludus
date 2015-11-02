@@ -5,6 +5,7 @@ import java.util.Date;
 
 import bxt.util.Drawable;
 import bxt.util.FpsPrinter;
+import bxt.video.sampler.drawers.CircleSampleDrawer;
 import bxt.video.sampler.drawers.CircleSizeSampleDrawer;
 import bxt.video.sampler.drawers.RectSampleDrawer;
 import bxt.video.sampler.drawers.SampleDrawer;
@@ -28,12 +29,14 @@ public class SamplerSketch extends PApplet {
 		PApplet.main(new String[]{SamplerSketch.class.getCanonicalName()});
 	}
 	
+	@Override
 	public void settings() {
 	  size(640, 360);
 	  pixelDensity(displayDensity());
 	  fullScreen();
 	}
 	
+	@Override
 	public void setup() {
 		String[] cameras = Capture.list();
 		cam = new Capture(this, cameras[0]);
@@ -42,6 +45,7 @@ public class SamplerSketch extends PApplet {
 		noStroke();
 	}
 	
+	@Override
 	public void draw() {
 		if (cam.available()) {
 			cam.read();

@@ -41,15 +41,18 @@ public class TopRightRegionSketchArtistic extends PApplet {
 		PApplet.main(new String[]{TopRightRegionSketchArtistic.class.getCanonicalName()});
 	}
 	
+	@Override
 	public void settings() {
 	  size(700, 400);
 	  pixelDensity(displayDensity());
 	  fullScreen();
 	}
 	
+	@Override
 	public void setup() {
 	}
 	
+	@Override
 	public void draw() {
 		if (c instanceof Drawable) ((Drawable) c).draw();
 		
@@ -73,6 +76,7 @@ public class TopRightRegionSketchArtistic extends PApplet {
 		f.draw();
 	}
 	
+	@Override
 	public void mouseClicked() {
 		if(mouseButton == LEFT) {
 			points.clear();

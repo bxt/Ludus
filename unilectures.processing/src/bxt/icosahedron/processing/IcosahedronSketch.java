@@ -28,12 +28,14 @@ public class IcosahedronSketch extends PApplet {
 				"--present",IcosahedronSketch.class.getCanonicalName()});
 	}
 	
+	@Override
 	public void settings() {
 		size(1280, 800, P3D);
 		pixelDensity(2);
 		smooth(4);
 	}
 	
+	@Override
 	public void setup() {
 		
 		hint(DISABLE_DEPTH_TEST); // make transparency kinda work
@@ -53,6 +55,7 @@ public class IcosahedronSketch extends PApplet {
 		
 	}
 	
+	@Override
 	public void draw() {
 		background(10);
 		lights();
@@ -63,6 +66,7 @@ public class IcosahedronSketch extends PApplet {
 		
 	}
 	
+	@Override
 	public void mouseClicked() {
 		if(mouseButton == LEFT) {
 			positionSwitch.nextPosition();

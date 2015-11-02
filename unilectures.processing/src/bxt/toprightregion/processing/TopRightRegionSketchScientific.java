@@ -27,15 +27,18 @@ public class TopRightRegionSketchScientific extends PApplet {
 		PApplet.main(new String[]{TopRightRegionSketchScientific.class.getCanonicalName()});
 	}
 	
+	@Override
 	public void settings() {
 	  size(700, 400);
 	  pixelDensity(displayDensity());
 	}
 	
+	@Override
 	public void setup() {
 		//randomPoints(8000);
 	}
 	
+	@Override
 	public void draw() {
 		Map<Point2D, Rectangle2D> regions = TopRightRegionFinder.findLargestTopRightRegions(points);
 		
@@ -51,6 +54,7 @@ public class TopRightRegionSketchScientific extends PApplet {
 		f.draw();
 	}
 	
+	@Override
 	public void mouseClicked() {
 		if(mouseButton == LEFT) {
 			points.add(new Point2D.Double(mouseX, mouseY));

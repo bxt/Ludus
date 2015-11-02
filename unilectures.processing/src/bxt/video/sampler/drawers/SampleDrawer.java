@@ -29,9 +29,9 @@ public abstract class SampleDrawer implements Drawable {
 		});
 	}
 	
-	protected void drawStart(PApplet p, float size) {
-		
+	protected void drawStart(PApplet p, float size) {	
 	}
+	
 	protected abstract void drawEach(PApplet p, float x, float y, int color, float size);
 
 }

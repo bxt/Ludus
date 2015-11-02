@@ -19,11 +19,13 @@ public class ScanlinesSketch extends PApplet {
 		PApplet.main(new String[]{ScanlinesSketch.class.getCanonicalName()});
 	}
 	
+	@Override
 	public void settings() {
 	  size(640, 360);
 	  pixelDensity(displayDensity());
 	}
 	
+	@Override
 	public void setup() {
 		String[] cameras = Capture.list();
 		cam = new Capture(this, cameras[0]);
@@ -35,6 +37,7 @@ public class ScanlinesSketch extends PApplet {
 		}
 	}
 	
+	@Override
 	public void draw() {
 		if (cam.available()) {
 			cam.read();
