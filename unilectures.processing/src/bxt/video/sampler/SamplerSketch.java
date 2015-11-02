@@ -74,6 +74,12 @@ public class SamplerSketch extends PApplet {
 		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilters.NONE, (c) -> 0xffffffff);
 	}
 
+	@SuppressWarnings("unused")
+	private SampleDrawer colorCirclesSampleDrawer() {
+		Sampler s = new SelectiveAverageSampler(20, cam, 10);
+		return new CircleSampleDrawer(this, s, 0, 40, ColorFilters.NONE);
+	}
+
 	@Override
 	public void keyPressed() {
 		if (key == ' ' ) {
