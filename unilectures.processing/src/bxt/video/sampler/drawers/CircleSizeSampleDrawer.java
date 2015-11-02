@@ -16,11 +16,6 @@ public class CircleSizeSampleDrawer extends SampleDrawer implements Drawable {
 	}
 
 	@Override
-	protected void drawStart(PApplet p, float size) {
-		p.fill(0xffffffff);
-	}
-	
-	@Override
 	protected void drawEach(PApplet p, float x, float y, int color, float size) {
 		float grey = ColorFilters.grey(color);
 		p.fill(circleCf.map(color));
