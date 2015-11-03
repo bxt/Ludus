@@ -9,8 +9,10 @@ import bxt.util.TextDrawer;
 import bxt.video.sampler.colorfilters.ColorFilters;
 import bxt.video.sampler.colorfilters.ExtractHsColorFilter;
 import bxt.video.sampler.colorfilters.HueShiftingColorFilter;
+import bxt.video.sampler.colorfilters.ThresholdShiftingColorFilter;
 import bxt.video.sampler.drawers.CircleSampleDrawer;
 import bxt.video.sampler.drawers.CircleSizeSampleDrawer;
+import bxt.video.sampler.drawers.PixelSampleDrawer;
 import bxt.video.sampler.drawers.RectSampleDrawer;
 import bxt.video.sampler.drawers.SampleDrawer;
 import bxt.video.sampler.samplers.FlatSampler;
@@ -64,16 +66,22 @@ public class SamplerSketch extends PApplet {
 	}
 	
 	private Drawable getDrawable() {
-		int timeSlot = (frameCount / FRAMES_PER_TIME_SLOT) % 4;
+		int timeSlot = (frameCount / FRAMES_PER_TIME_SLOT) % 5;
 		switch (timeSlot) {
-		case 0: return circlesSampleDrawer();
-		case 1: return boxySampleDrawer();
-		case 2: return bwCirclesSampleDrawer();
-		case 3: return colorCirclesSampleDrawer();
+		case 0: return camThresholdDrawer();
+		case 1: return circlesSampleDrawer();
+		case 2: return boxySampleDrawer();
+		case 3: return bwCirclesSampleDrawer();
+		case 4: return colorCirclesSampleDrawer();
 		default: throw new IllegalStateException("Illegal time slot: " + timeSlot);
 		}
 	}
 	
+
+	private Drawable camThresholdDrawer() {
+		Sampler s = new FlatSampler(1, cam);
+		return new PixelSampleDrawer(this, s, 0, 40, new ThresholdShiftingColorFilter(100, this, 0xff330066, 0xffffdd88));
+	}
 
 	private SampleDrawer circlesSampleDrawer() {
 		Sampler s = new FlatSampler(10, cam);
