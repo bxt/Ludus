@@ -27,6 +27,7 @@ public abstract class SampleDrawer implements Drawable {
 		s.forEach((point, color) -> {
 			drawEach(p, (float)point.getX() + offsetX, (float)point.getY() + offsetY, cf.map(color), (float)s.getSize());
 		});
+		drawEnd(p, s.getSize());
 	}
 	
 	protected void drawStart(PApplet p, float size) {	
@@ -34,4 +35,7 @@ public abstract class SampleDrawer implements Drawable {
 	
 	protected abstract void drawEach(PApplet p, float x, float y, int color, float size);
 
+	protected void drawEnd(PApplet p, float size) {	
+	}
+	
 }
