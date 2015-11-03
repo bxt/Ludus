@@ -3,6 +3,9 @@ package bxt.video.sampler;
 import java.util.Arrays;
 import java.util.Date;
 
+import bxt.util.CaptureRefresher;
+import bxt.util.Cycler;
+import bxt.util.CyclerDrawable;
 import bxt.util.Drawable;
 import bxt.util.FpsStringSupplier;
 import bxt.util.TextDrawer;
@@ -23,10 +26,8 @@ import processing.video.Capture;
 
 public class SamplerSketch extends PApplet {
 	
-	private TextDrawer f = new TextDrawer(this, new FpsStringSupplier(5));
+	private Drawable[] drawables;
 	private Capture cam;
-	
-	private static final int FRAMES_PER_TIME_SLOT = 100;
 	
 	/**
 	 * Main-method for direct invocation, dispatches to 
@@ -46,38 +47,32 @@ public class SamplerSketch extends PApplet {
 	
 	@Override
 	public void setup() {
-		String[] cameras = Capture.list();
-		cam = new Capture(this, cameras[0]);
-		cam.start();
+		
+		TextDrawer fps = new TextDrawer(this, new FpsStringSupplier(5));
+		TextDrawer lol = new TextDrawer(this, new Cycler<>(this, 10, Arrays.asList("a", "b", "c")), 0xffff8800, 100, 20);
+		
+		CaptureRefresher cr = new CaptureRefresher(this, 0);
+		cam = cr.getCapture();
+		
+		Drawable cycle = new CyclerDrawable(this, 100,
+				camThresholdDrawer(),
+				circlesSampleDrawer(),
+				boxySampleDrawer(),
+				bwCirclesSampleDrawer(),
+				colorCirclesSampleDrawer()
+				);
+		
+		drawables = new Drawable[]{fps, lol, cr, cycle};
 		
 		noStroke();
 	}
 	
 	@Override
 	public void draw() {
-		if (cam.available()) {
-			cam.read();
-		}
-		
 		background(0);
-		Drawable d = getDrawable();
-
-		Arrays.stream(new Drawable[]{d, f}).forEach(Drawable::draw);
+		Arrays.stream(drawables).forEach(Drawable::draw);
 	}
 	
-	private Drawable getDrawable() {
-		int timeSlot = (frameCount / FRAMES_PER_TIME_SLOT) % 5;
-		switch (timeSlot) {
-		case 0: return camThresholdDrawer();
-		case 1: return circlesSampleDrawer();
-		case 2: return boxySampleDrawer();
-		case 3: return bwCirclesSampleDrawer();
-		case 4: return colorCirclesSampleDrawer();
-		default: throw new IllegalStateException("Illegal time slot: " + timeSlot);
-		}
-	}
-	
-
 	private Drawable camThresholdDrawer() {
 		Sampler s = new FlatSampler(1, cam);
 		return new PixelSampleDrawer(this, s, 0, 40, new ThresholdShiftingColorFilter(100, this, 0xff330066, 0xffffdd88));
