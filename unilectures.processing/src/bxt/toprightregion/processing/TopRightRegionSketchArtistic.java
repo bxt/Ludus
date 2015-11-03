@@ -12,8 +12,9 @@ import bxt.toprightregion.processing.artistic.ColorScheme;
 import bxt.toprightregion.processing.artistic.ColorSchemeProvider;
 import bxt.unilectures.algogeo.fun.lagresttopright.TopRightRegionFinder;
 import bxt.util.Drawable;
-import bxt.util.FpsPrinter;
+import bxt.util.FpsStringSupplier;
 import bxt.util.GeomDrawer;
+import bxt.util.TextPrinter;
 import processing.core.PApplet;
 
 public class TopRightRegionSketchArtistic extends PApplet {
@@ -30,7 +31,7 @@ public class TopRightRegionSketchArtistic extends PApplet {
 	private GeomDrawer d = new GeomDrawer(this);
 	private boolean add = true;
 	
-	FpsPrinter f = new FpsPrinter(this);
+	Drawable f = new TextPrinter(new FpsStringSupplier());
 	
 	/**
 	 * Main-method for direct invocation, dispatches to 

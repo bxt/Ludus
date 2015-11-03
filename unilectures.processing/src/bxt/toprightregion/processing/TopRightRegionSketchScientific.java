@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import bxt.unilectures.algogeo.fun.lagresttopright.TopRightRegionFinder;
-import bxt.util.FpsPrinter;
+import bxt.util.Drawable;
+import bxt.util.FpsStringSupplier;
 import bxt.util.GeomDrawer;
+import bxt.util.TextPrinter;
 import processing.core.PApplet;
 
 public class TopRightRegionSketchScientific extends PApplet {
@@ -16,7 +18,7 @@ public class TopRightRegionSketchScientific extends PApplet {
 	private List<Point2D> points = new LinkedList<Point2D>();
 	private GeomDrawer d = new GeomDrawer(this);
 	
-	FpsPrinter f = new FpsPrinter(this);
+	Drawable f = new TextPrinter(new FpsStringSupplier());
 	
 	/**
 	 * Main-method for direct invocation, dispatches to 

@@ -1,7 +1,8 @@
 package bxt.icosahedron.processing;
 import bxt.icosahedron.geometry.PositionSwitch;
 import bxt.util.Drawable;
-import bxt.util.FpsPrinter;
+import bxt.util.FpsStringSupplier;
+import bxt.util.TextPrinter;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -50,7 +51,7 @@ public class IcosahedronSketch extends PApplet {
 				positionSwitch,
 				new IcosahedronRenderer(SCALE, positionSwitch, this),
 				new RotationCamera(SCALE * 6.0f, this),
-				new FpsPrinter(this),
+				new TextPrinter(new FpsStringSupplier()),
 		};
 		
 	}

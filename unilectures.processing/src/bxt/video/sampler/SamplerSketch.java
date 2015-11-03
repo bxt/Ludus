@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 import bxt.util.Drawable;
-import bxt.util.FpsPrinter;
+import bxt.util.FpsStringSupplier;
+import bxt.util.TextDrawer;
 import bxt.video.sampler.colorfilters.ColorFilters;
 import bxt.video.sampler.colorfilters.ExtractHsColorFilter;
 import bxt.video.sampler.colorfilters.HueShiftingColorFilter;
@@ -20,7 +21,7 @@ import processing.video.Capture;
 
 public class SamplerSketch extends PApplet {
 	
-	private FpsPrinter f = new FpsPrinter(this);
+	private TextDrawer f = new TextDrawer(this, new FpsStringSupplier(5));
 	private Capture cam;
 	
 	private static final int FRAMES_PER_TIME_SLOT = 100;
@@ -57,12 +58,12 @@ public class SamplerSketch extends PApplet {
 		}
 		
 		background(0);
-		SampleDrawer sd = getSampleDrawer();
+		Drawable d = getDrawable();
 
-		Arrays.stream(new Drawable[]{sd, f}).forEach(Drawable::draw);
+		Arrays.stream(new Drawable[]{d, f}).forEach(Drawable::draw);
 	}
 	
-	private SampleDrawer getSampleDrawer() {
+	private Drawable getDrawable() {
 		int timeSlot = (frameCount / FRAMES_PER_TIME_SLOT) % 4;
 		switch (timeSlot) {
 		case 0: return circlesSampleDrawer();

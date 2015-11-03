@@ -1,12 +1,14 @@
 package bxt.video.scanlines;
 
-import bxt.util.FpsPrinter;
+import bxt.util.Drawable;
+import bxt.util.FpsStringSupplier;
+import bxt.util.TextPrinter;
 import processing.core.PApplet;
 import processing.video.Capture;
 
 public class ScanlinesSketch extends PApplet {
 	
-	FpsPrinter f = new FpsPrinter(this);
+	Drawable f = new TextPrinter(new FpsStringSupplier());
 	Capture cam;
 	Buffer[] buffers;
 	

@@ -10,7 +10,7 @@ public class FpsCounter {
 	private final static float MS_PER_S = 1000f;
 	
 	public FpsCounter() {
-		start = System.currentTimeMillis();
+		reset();
 	}
 	
 	/**
@@ -21,6 +21,13 @@ public class FpsCounter {
 	 */
 	public float getAvgFps(int frameCount) {
 		return MS_PER_S * (float)frameCount / (System.currentTimeMillis()-start);
+	}
+
+	/**
+	 * Resets the start of FPS averaging to now.
+	 */
+	public void reset() {
+		start = System.currentTimeMillis();
 	}
 
 }
