@@ -20,6 +20,8 @@ public class SamplerSketch extends PApplet {
 	private FpsPrinter f = new FpsPrinter(this);
 	private Capture cam;
 	
+	private static final int FRAMES_PER_TIME_SLOT = 100;
+	
 	/**
 	 * Main-method for direct invocation, dispatches to 
 	 * {@link PApplet#main(String[])}. 
@@ -52,29 +54,38 @@ public class SamplerSketch extends PApplet {
 		}
 		
 		background(0);
-		SampleDrawer sd = circlesSampleDrawer();
+		SampleDrawer sd = getSampleDrawer();
 
 		Arrays.stream(new Drawable[]{sd, f}).forEach(Drawable::draw);
 	}
 	
+	private SampleDrawer getSampleDrawer() {
+		int timeSlot = (frameCount / FRAMES_PER_TIME_SLOT) % 4;
+		switch (timeSlot) {
+		case 0: return circlesSampleDrawer();
+		case 1: return boxySampleDrawer();
+		case 2: return bwCirclesSampleDrawer();
+		case 3: return colorCirclesSampleDrawer();
+		default: throw new IllegalStateException("Illegal time slot: " + timeSlot);
+		}
+	}
+	
+
 	private SampleDrawer circlesSampleDrawer() {
 		Sampler s = new FlatSampler(10, cam);
 		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilters.NONE, new ExtractHsColorFilter());
 	}
 
-	@SuppressWarnings("unused")
 	private SampleDrawer boxySampleDrawer() {
 		Sampler s = new SelectiveAverageSampler(20, cam, 10);
-		return new RectSampleDrawer(this, s, 0, 40, ColorFilters.INVERT);
+		return new RectSampleDrawer(this, s, 0, 40, new HueShiftingColorFilter(100, this));
 	}
 
-	@SuppressWarnings("unused")
 	private SampleDrawer bwCirclesSampleDrawer() {
 		Sampler s = new FlatSampler(5, cam);
 		return new CircleSizeSampleDrawer(this, s, 0, 40, ColorFilters.NONE, (c) -> 0xffffffff);
 	}
 
-	@SuppressWarnings("unused")
 	private SampleDrawer colorCirclesSampleDrawer() {
 		Sampler s = new SelectiveAverageSampler(20, cam, 10);
 		return new CircleSampleDrawer(this, s, 0, 40, ColorFilters.NONE);
