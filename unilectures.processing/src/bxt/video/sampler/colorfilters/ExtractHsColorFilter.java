@@ -1,4 +1,4 @@
-package bxt.video.sampler;
+package bxt.video.sampler.colorfilters;
 
 public class ExtractHsColorFilter extends HsbColorFilter implements ColorFilter {
 	

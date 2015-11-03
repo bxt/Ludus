@@ -1,4 +1,4 @@
-package bxt.video.sampler;
+package bxt.video.sampler.colorfilters;
 
 import java.awt.Color;
 

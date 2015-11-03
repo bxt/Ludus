@@ -5,6 +5,9 @@ import java.util.Date;
 
 import bxt.util.Drawable;
 import bxt.util.FpsPrinter;
+import bxt.video.sampler.colorfilters.ColorFilters;
+import bxt.video.sampler.colorfilters.ExtractHsColorFilter;
+import bxt.video.sampler.colorfilters.HueShiftingColorFilter;
 import bxt.video.sampler.drawers.CircleSampleDrawer;
 import bxt.video.sampler.drawers.CircleSizeSampleDrawer;
 import bxt.video.sampler.drawers.RectSampleDrawer;

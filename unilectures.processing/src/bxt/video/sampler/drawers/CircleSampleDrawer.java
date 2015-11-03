@@ -1,7 +1,7 @@
 package bxt.video.sampler.drawers;
 
 import bxt.util.Drawable;
-import bxt.video.sampler.ColorFilter;
+import bxt.video.sampler.colorfilters.ColorFilter;
 import bxt.video.sampler.samplers.Sampler;
 import processing.core.PApplet;
 
