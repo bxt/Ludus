@@ -1,3 +1,5 @@
+module Hornsolve where
+
 import Data.Set (Set)
 import qualified Data.Set as Set
 

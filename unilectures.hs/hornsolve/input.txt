@@ -1,0 +1,4 @@
+(1 → A ∨ B) ∧ (A → C ∨ E) ∧ (A ∧ C → D) ∧ (B → C ∨ E) ∧ (E → 0)
+
+# This eliminates the second solution:
+(B → 0)
