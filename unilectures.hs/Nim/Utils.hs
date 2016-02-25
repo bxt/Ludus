@@ -1,4 +1,4 @@
-module Utils (adjust, padTo, readLnWith) where
+module Utils (adjust, padTo, readLnWith, readBoolWith) where
 
 import Control.Monad.Except (catchError)
 
@@ -41,3 +41,7 @@ padTo with to xs = replicate a with ++ xs ++ replicate b with where
 -- | Ask repeatadly for user input until read succeeds.
 readLnWith :: Read a => String -> IO a
 readLnWith s = putStrLn s >> (readLn `catchError` const (readLnWith s))
+
+-- | Ask for a boolean value
+readBoolWith :: String -> IO Bool
+readBoolWith s = putStr s >> putStrLn " (y/n)" >> fmap ('n' /=) getChar

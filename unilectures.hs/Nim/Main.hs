@@ -1,4 +1,4 @@
-module Main where
+module Main (main) where
 
 import Control.Monad
 import System.Random (randomRIO)
@@ -8,13 +8,13 @@ import Base
 import CpuPlayer
 
 randomPickIO :: [a] -> IO a
-randomPickIO xs = fmap (xs !!) $ randomRIO (0, pred $ length xs)
+randomPickIO xs = (xs !!) <$> randomRIO (0, pred $ length xs)
 
 newGame :: [Player] -> Game
 newGame ps = Game { heaps = [1,3,5,7], players = ps }
 
 showHeaps :: Heaps -> String
-showHeaps hs = concatMap aux $ zip [1..] $ hs where
+showHeaps hs = concatMap aux $ zip [1..] hs where
     aux (i,h) = show i ++ " " ++ padTo ' ' m (replicate h '|') ++ "\n"
     m = maximum hs
 
@@ -45,8 +45,9 @@ runPlayer Idiot            hs = do
   return (1,1)
 runPlayer CpuPlayer        hs = do
   putStr "CPU player takes their move... "
-  let opts = runCpuPlayer $ hs
-  m <- randomPickIO $ if null opts then possibleMoves hs else opts
+  let opts = runCpuPlayer hs
+  let moves = if null opts then possibleMoves hs else opts
+  m <- randomPickIO moves
   print m
   return m
 
@@ -60,16 +61,22 @@ nim g = do
              (Right hs) -> if null hs
                then winning (player g)
                else nextTurn g { heaps = hs }
-  where
-    nextTurn = nim . nextPlayer
+  where nextTurn = nim . nextPlayer
 
 winning :: Player -> IO()
-winning (CliPlayer name) = putStrLn $ "\n  +++ Congratulations, you won " ++ name ++ "! +++\n\n__      _____| | |   __| | ___  _ __   ___ \n\\ \\ /\\ / / _ \\ | |  / _` |/ _ \\| '_ \\ / _ \\\n \\ V  V /  __/ | | | (_| | (_) | | | |  __/\n  \\_/\\_/ \\___|_|_|  \\__,_|\\___/|_| |_|\\___|\n"
-winning Idiot            = putStrLn   "\n  +++ Wow, you lost. +++"
-winning CpuPlayer        = putStrLn   "\n  +++ Game over! +++"
+winning (CliPlayer name) = putStrLn $ "\n  +++ Congratulations, you won " ++ name ++ "! +++\n\n__      _____| | |   __| | ___  _ __   ___ \n\\ \\ /\\ / / _ \\ | |  / _` |/ _ \\| '_ \\ / _ \\\n \\ V  V /  __/ | | | (_| | (_) | | | |  __/\n  \\_/\\_/ \\___|_|_|  \\__,_|\\___/|_| |_|\\___|\n\n"
+winning Idiot            = putStrLn   "\n  +++ Wow, you lost. +++\n"
+winning CpuPlayer        = putStrLn   "\n  +++ Game over! +++\n"
 
 main :: IO()
 main = do
-  putStrLn "\n  +++ Welcome to NIM +++"
-  putStrLn " (try to take the last piece)"
-  nim $ newGame [CpuPlayer, CliPlayer "Bernhard"]
+  putStrLn "\n  +++ Welcome to NIM +++\n  (try to take the last piece)\n"
+  putStrLn " enter your name: "
+  name <- getLine
+  let game = newGame [CpuPlayer, CliPlayer name]
+  play game
+  where
+    play game = do
+      nim game
+      again <- readBoolWith "Play again?"
+      when again $ play game
