@@ -1,4 +1,4 @@
-module Nim where
+module Main where
 
 import Control.Monad
 import System.Random (randomRIO)
@@ -44,9 +44,11 @@ runPlayer Idiot            hs = do
   putStrLn "Idiot player takes away first piece..."
   return (1,1)
 runPlayer CpuPlayer        hs = do
-  putStrLn "CPU player takes their move..."
+  putStr "CPU player takes their move... "
   let opts = runCpuPlayer $ hs
-  randomPickIO $ if null opts then possibleMoves hs else opts
+  m <- randomPickIO $ if null opts then possibleMoves hs else opts
+  print m
+  return m
 
 nim :: Game -> IO()
 nim g = do
@@ -62,9 +64,9 @@ nim g = do
     nextTurn = nim . nextPlayer
 
 winning :: Player -> IO()
-winning (CliPlayer name) = putStr $ "\n  +++ Congratulations, you won " ++ name ++ "! +++\n"
-winning Idiot            = putStr   "\n  +++ Wow, you lost. +++\n"
-winning CpuPlayer        = putStr   "\n  +++ Game over! +++\n"
+winning (CliPlayer name) = putStrLn $ "\n  +++ Congratulations, you won " ++ name ++ "! +++\n\n__      _____| | |   __| | ___  _ __   ___ \n\\ \\ /\\ / / _ \\ | |  / _` |/ _ \\| '_ \\ / _ \\\n \\ V  V /  __/ | | | (_| | (_) | | | |  __/\n  \\_/\\_/ \\___|_|_|  \\__,_|\\___/|_| |_|\\___|\n"
+winning Idiot            = putStrLn   "\n  +++ Wow, you lost. +++"
+winning CpuPlayer        = putStrLn   "\n  +++ Game over! +++"
 
 main :: IO()
 main = do

@@ -40,4 +40,4 @@ padTo with to xs = replicate a with ++ xs ++ replicate b with where
 
 -- | Ask repeatadly for user input until read succeeds.
 readLnWith :: Read a => String -> IO a
-readLnWith s = putStr s >> (readLn `catchError` const (readLnWith s))
+readLnWith s = putStrLn s >> (readLn `catchError` const (readLnWith s))
