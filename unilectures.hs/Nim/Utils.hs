@@ -1,4 +1,6 @@
-module Utils where
+module Utils (adjust, padTo, readLnWith) where
+
+import Control.Monad.Except (catchError)
 
 -- | Update a value at a specific index with the result of the provided function.
 --   When the indext is out of bounds, the original list is returned.
@@ -35,3 +37,7 @@ padTo with to xs = replicate a with ++ xs ++ replicate b with where
   l = length xs
   a = (to-l) `div` 2
   b = to - l - a
+
+-- | Ask repeatadly for user input until read succeeds.
+readLnWith :: Read a => String -> IO a
+readLnWith s = putStr s >> (readLn `catchError` const (readLnWith s))
