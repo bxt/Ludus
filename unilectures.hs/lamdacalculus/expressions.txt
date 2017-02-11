@@ -1,0 +1,12 @@
+x
+(x)
+x y
+x y z
+λ x . y z
+(λ x . y) z
+λ x . λ y . x y
+λ x . x λ y . x y
+(λ x . x) λ y . x y
+(x x)
+x λ y . (x (y z))
+λ x . x

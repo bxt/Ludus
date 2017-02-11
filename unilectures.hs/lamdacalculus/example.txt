@@ -1,0 +1,66 @@
+e = l x . l y . y
+not   = l b . b false true
+
+not true
+(l b . b false true) true
+true false true
+(l x . l y . x) false true
+false
+
+not false
+(l b . false true) false
+false false true
+(l x . l y . y) false true
+true
+
+and = l b . l c . b c false
+or  = l b . l c . b true c
+
+and true true
+(l b . l c . b c false) true true
+true true false
+(l x . l y . x) true false
+true
+
+and true false
+(l b . l c . b c false) true false
+true false false
+(l x . l y . x) false false
+false
+
+and false true
+(l b . l c . b c false) false true
+false true false
+(l x . l y . y) true false
+false
+
+and false false
+(l b . l c . b c false) false false
+false false false
+(l x . l y . y) false false
+false
+
+or true true
+(l b . l c . b true c) true true
+true true true
+(l x . l y . x) true true
+true
+
+or true false
+(l b . l c . b true c) true false
+true true false
+(l x . l y . x) true false
+true
+
+or false true
+(l b . l c . b true c) false true
+false true true
+(l x . l y . y) true true
+true
+
+or false false
+(l b . l c . b true c) false false
+false true false
+(l x . l y . y) true false
+false
+
