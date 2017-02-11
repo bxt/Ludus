@@ -17,17 +17,16 @@ Suchen und Sortieren
 * Grep: [hs](unilectures.hs/grep/grep.hs), [py](unilectures.py/src/bxt/unilectures/theoinf/hausaufg07/aufg05.py)
 * Äqualisierung: [py](unilectures.py/src/bxt/unilectures/crypto/fun/puddle_of_mudd.py)
 * Sortieralgoritmen: [java](https://github.com/bxt/Ludus/tree/master/unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting)
-  * Bubble sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/BubbleSort.java)
-  * Heap sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/HeapSort.java), [coffee (extern)](https://github.com/bxt/Rainbow-Sort/blob/master/main.coffee#L177)
-  * Insertion sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/InsertionSort.java)
-  * Merge sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/MergeSort.java)
-  * Patience sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/PatienceSort.java)
-  * Quick sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/QuickSort.java)
-  * Quick sort with merge sort for small arrays [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/CombinedQuickSort.java)
-  * Selection sort [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/SelectionSort.java)
-  * Bubble sort [java](xxx)
-* A* [ruby (extern)](https://github.com/bxt/adventofcode/blob/master/2016/day11/a_star.rb)
-* Problem des Handlungsreisenden [ruby (extern)](https://github.com/bxt/adventofcode/blob/master/2015/day09/main.hs)
+  * Bubble sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/BubbleSort.java)
+  * Heap sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/HeapSort.java), [coffee (extern)](https://github.com/bxt/Rainbow-Sort/blob/master/main.coffee#L177)
+  * Insertion sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/InsertionSort.java)
+  * Merge sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/MergeSort.java)
+  * Patience sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/PatienceSort.java)
+  * Quick sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/QuickSort.java)
+  * Quick sort with merge sort for small arrays: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/CombinedQuickSort.java)
+  * Selection sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/SelectionSort.java)
+* A*: [ruby (extern)](https://github.com/bxt/adventofcode/blob/master/2016/day11/a_star.rb)
+* Problem des Handlungsreisenden: [ruby (extern)](https://github.com/bxt/adventofcode/blob/master/2015/day09/main.hs)
 
 Restklassenalgebren und Lineare Algebra
 ---------------------------------------
@@ -102,7 +101,7 @@ Algorithmische Geometrie
 * Flächenberechnung von Polygonen: [java](unilectures/src/bxt/unilectures/vorkurs/flaechenberechnung/Flaechenberechnung.java)
 * Konvexe Hülle (naiv): [java](unilectures/src/bxt/unilectures/algogeo/fun/convexhull/FirstConvexHullBuilder.java)
 * Jarvis' gift wrapping Algorithmus: [java](unilectures/src/bxt/unilectures/algogeo/fun/convexhull/GiftWrapppingConvexHullBuilder.java)
-* Andrew's monotone chain convex hull algorithm: [java](unilectures/src/bxt/unilectures/algogeo/fun/convexhull/StableConvexHullBuilder.java) [processing](unilectures.processing/src/bxt/convexhull/processing/ConvexHullSketch.java)
+* Andrew's monotone chain convex hull algorithm: [java](unilectures/src/bxt/unilectures/algogeo/fun/convexhull/StableConvexHullBuilder.java), [processing](unilectures.processing/src/bxt/convexhull/processing/ConvexHullSketch.java)
 
 Sonstiges
 ---------
