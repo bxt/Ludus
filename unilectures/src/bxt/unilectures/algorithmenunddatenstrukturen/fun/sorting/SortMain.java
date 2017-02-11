@@ -21,7 +21,8 @@ public class SortMain {
 				new BubbleSort(),
 				new MergeSort(),
 				new SelectionSort(),
-				new CombinedQuickSort(3)
+				new CombinedQuickSort(3),
+				new PatienceSort(),
 				};
 		for (Sort sort : sortList) {
 			System.out.println(String.format(
