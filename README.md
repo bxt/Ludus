@@ -21,7 +21,7 @@ Suchen und Sortieren
   * Heap sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/HeapSort.java), [coffee (extern)](https://github.com/bxt/Rainbow-Sort/blob/master/main.coffee#L177)
   * Insertion sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/InsertionSort.java)
   * Merge sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/MergeSort.java)
-  * Patience sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/PatienceSort.java)
+  * Patience sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/PatienceSort.java), [ruby](unilectures.rb/patience-sort.rb)
   * Quick sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/QuickSort.java)
   * Quick sort with merge sort for small arrays: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/CombinedQuickSort.java)
   * Selection sort: [java](unilectures/src/bxt/unilectures/algorithmenunddatenstrukturen/fun/sorting/SelectionSort.java)
