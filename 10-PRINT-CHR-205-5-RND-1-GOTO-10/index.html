@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      a, body {
+        line-height: 0.85;
+        background-color: rgb(24, 11, 56);
+        color: rgb(147, 137, 168);
+      }
+
+      code {
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <code>
+      Loading...
+    <code>
+
+    <a href="https://www.amazon.de/10-PRINT-CHR-205-5-RND-ebook/dp/B00C9K9OE2"><code>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</code></a>
+
+    <script>
+      var output = [];
+
+      for (var i = 0; i < 100000; i++) {
+        output.push(String.fromCharCode(Math.ceil(9584.5+Math.random())))
+      }
+
+      var outputElement = document.getElementsByTagName('code')[0];
+      outputElement.firstChild.nodeValue = output.join('');
+      console.log({output, oj: output.join(''), nv: outputElement.firstChild.nodeValue});
+    </script>
+  </body>
+</html>
