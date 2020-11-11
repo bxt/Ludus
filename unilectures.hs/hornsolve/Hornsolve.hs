@@ -5,7 +5,7 @@ import qualified Data.Set as Set
 
 type Rule a = (Set a, Set a)
 
--- | Heper for constructing implications from body a and head b
+-- | Helper for constructing implications from body a and head b
 a ~> b = (Set.fromList a, Set.fromList b)
 
 -- | List of models from list of implications
